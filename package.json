@@ -1,0 +1,26 @@
+{
+  "name": "travelmate",
+  "version": "1.0.0",
+  "description": "Web app for travelers to create lists of places to visit",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha --exit"
+  },
+  "keywords": [
+    "travel"
+  ],
+  "author": "Alex Warnes",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "faker": "^4.1.0",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^5.0.0"
+  }
+}
