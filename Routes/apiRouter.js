@@ -9,7 +9,7 @@ function makeFakeList() {
 		city: faker.address.city(),
 		country: faker.address.country(),
 		title: faker.company.catchPhrase(),
-		description: faker.lorem.sentence(),
+		description: faker.lorem.paragraph(),
 		places: [
 			{
 				placeName: 'Cafe ' + faker.lorem.word(),
