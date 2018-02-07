@@ -19,8 +19,8 @@ describe('Serving static public resources', function() {
 		return closeServer();
 	});
 
-	describe('app start', function() {
-		it('should serve HTML on page load', function() {
+	describe('HTML loads', function() {
+		it('link to home (/) should serve HTML', function() {
 			let res;
 			return chai.request(app)
 			.get('/')
@@ -28,6 +28,42 @@ describe('Serving static public resources', function() {
 				res = _res;
 				expect(res).to.have.status(200);
 				expect(res).to.be.html;
+			});
+		});
+
+		it('link to (/about) should serve HTML', function() {
+			let res;
+			return chai.request(app)
+			.get('/about')
+			.then(function(_res) {
+				res = _res;
+				expect(res).to.have.status(200);
+				expect(res).to.be.html;
+			});
+		});
+	});
+});
+
+describe('List and Traveler API Resource', function() {
+	
+	before(function() {
+		return runServer();
+	});
+	
+	after(function() {
+		return closeServer();
+	});
+
+	describe('GET endpoint', function() {
+		it('should return all the lists', function() {
+			let res;
+			return chai.request(app)
+			.get('/api/lists')
+			.then(function(_res) {
+				res = _res;
+				expect(res).to.have.status(200);
+				expect(res).to.be.json;
+				expect(res.noContent).to.be.false;
 			});
 		});
 	});

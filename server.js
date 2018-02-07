@@ -2,13 +2,18 @@
 
 const express = require('express');
 const morgan = require('morgan');
-// const bodyParser = require('body-parser');
+const listRouter = require('./Routes/listRouter');
+const travelerRouter = require('./Routes/travelerRouter');
+const apiRouter = require('./Routes/apiRouter');
 
 const {PORT} = require('./config');
 
 const app = express();
 app.use(morgan('common'));
 app.use(express.static('public'));
+app.use('/lists', listRouter);
+app.use('/travelers', travelerRouter);
+app.use('/api', apiRouter);
 
 let server;
 
@@ -29,6 +34,11 @@ function closeServer() {
 		}
 	});
 }
+
+app.get('/about', (req, res) => {
+	console.log(__dirname);
+	res.status(200).sendFile(__dirname + '/public/about.html');
+});
 
 if (require.main === module) {
 	runServer();
