@@ -49,7 +49,6 @@ const userSchema = mongoose.Schema({
 	//have lists with userIDs instead of users with a big array
 	//of full lists. I think we can get "listsMade" number using
 	//a db.lists.count(userName: userName)
-	listsMade: {type: Number, required: false},
 	dateJoined: {type: Date, default: Date.now}
 });
 

@@ -38,6 +38,8 @@ function generateList() {
 			}
 		],
 		author: 'req.user',
+		//consider converting date to mongo date format and 
+		//adding comparisons in tests
 		dateCreated: faker.date.recent()
 	};
 };
@@ -53,13 +55,27 @@ function seedListData() {
 	return List.insertMany(seedData);
 };
 
-function generateUsers() {
-
+function generateUser() {
+	return {
+		userName: faker.internet.userName(),
+		userDescription: `I love ${faker.company.catchPhraseAdjective} travel`,
+		email: faker.internet.email(),
+		countriesVisited: [faker.address.country(), 'Canada', 'Mexico', 'United States'],
+		listsMade: faker.random.number(),
+		dateJoined: faker.date.recent()
+	};
 }
 
 function seedUserData() {
+	console.info('Seeding "User" data');
+	const seedData = [];
 
-}
+	for (let i = 0; i <= 10; i++) {
+		seedData.push(generateUser());
+	}
+
+	return User.insertMany(seedData);
+};
 
 function tearDownDatabase() {
 	console.warn('\x1b[31m%s\x1b[0m', 'DELETING DATABASE');
@@ -67,10 +83,7 @@ function tearDownDatabase() {
 }
 
 
-//==================== TESTING AREA ===============================
-
-
-// TESTING STATIC PUBLIC ASSETS
+//==================== TESTING STATIC PUBLIC ASSETS ====================
 
 describe('Serving static public resources', function() {
 	
@@ -108,7 +121,7 @@ describe('Serving static public resources', function() {
 });
 
 
-// TESTING LIST API ENDPOINTS AND METHODS
+//==================== TESTING CRUD on LISTS COLLECTION ====================
 
 describe('API Resource for Lists', function() {
 	
@@ -127,6 +140,9 @@ describe('API Resource for Lists', function() {
 	after(function() {
 		return closeServer();
 	});
+
+
+//==================== GET /api/lists TESTING  ====================
 
 	describe('GET endpoint', function() {
 		it('should return all the lists', function() {
@@ -181,6 +197,9 @@ describe('API Resource for Lists', function() {
 		});
 	});
 
+
+//==================== POST /api/lists TESTING  ====================
+
 	describe('POST endpoint', function() {
 		it('should add a new List', function() {
 
@@ -218,6 +237,9 @@ describe('API Resource for Lists', function() {
 		});
 	});
 
+
+//==================== PUT /api/lists/:id TESTING  ====================
+
 	describe('PUT endpoint', function() {
 		it('should update only the fields you send over for the specified list', function() {
 			
@@ -247,6 +269,9 @@ describe('API Resource for Lists', function() {
 		});
 	});
 
+
+//==================== DELETE /api/lists/:id TESTING  ====================
+
 	describe('DELETE endpoint', function() {
 		it('should delete the list you specify', function() {
 
@@ -271,6 +296,172 @@ describe('API Resource for Lists', function() {
 });
 
 
+
+//==================== TESTING CRUD on USERS COLLECTION ====================
+//==========================================================================
+
+
+
+describe('API Resource for Users', function() {
+	
+	before(function() {
+		return runServer(TEST_DATABASE_URL);
+	});
+
+	beforeEach(function() {
+		return seedUserData();
+	});
+
+	afterEach(function() {
+		return tearDownDatabase();
+	});
+	
+	after(function() {
+		return closeServer();
+	});
+
+
+//==================== GET /api/users TESTING  ====================
+
+	describe('GET endpoint', function() {
+		it('should return all the users', function() {
+			
+			let res;
+			
+			return chai.request(app)
+			.get('/api/users')
+			.then(function(_res) {
+				res = _res;
+				expect(res).to.have.status(200);
+				expect(res).to.be.json;
+				expect(res.noContent).to.be.false;
+				expect(res.body).to.have.length.of.at.least(1);
+				return User.count();
+			})
+			.then(function(count) {
+				expect(res.body).to.have.lengthOf(count);
+			});
+		});
+
+		it('should return Users with the correct fields', function() {
+			
+			let responseUser;
+			
+			return chai.request(app)
+			.get('/api/users')
+			.then(function(res) {
+				expect(res).to.have.status(200);
+				expect(res).to.be.json;
+				expect(res.body).to.be.a('array');
+				expect(res.body).to.have.length.of.at.least(1);
+
+				res.body.forEach(function(entry) {
+					expect(entry).to.be.a('object');
+					expect(entry).to.include.keys(
+						'id', 'userName', 'userDescription', 'dateJoined');
+				});
+				responseUser = res.body[0];
+				return User.findById(responseUser.id);
+			})
+			.then(function(user) {
+				expect(responseUser.id).to.equal(user.id);
+				expect(responseUser.userName).to.equal(user.userName);
+				expect(responseUser.userDescription).to.equal(user.userDescription);
+				expect(responseUser.dateJoined).not.to.be.null;
+			});
+		});
+	});
+
+
+//==================== POST /api/users TESTING  ====================
+
+	describe('POST endpoint', function() {
+		it('should add a new User', function() {
+
+			const newUser = generateUser();
+
+			return chai.request(app)
+			.post('/api/users')
+			.send(newUser)
+			.then(function(res) {
+				expect(res).to.have.status(201);
+				expect(res).to.be.json;
+				expect(res.body).to.be.a('object');
+				expect(res.body).to.include.keys(
+					'id', 'userName', 'userDescription', 'dateJoined');
+				expect(res.body.id).to.not.be.null;
+				expect(res.body.userName).to.equal(newUser.userName);
+				expect(res.body.userDescription).to.equal(newUser.userDescription);
+				expect(res.body.dateJoined).not.to.be.null;
+
+				return User.findById(res.body.id);
+			})
+			.then(function(user) {
+				expect(user.id).not.to.be.null;
+				expect(user.userName).to.equal(newUser.userName);
+				expect(user.userDescription).to.equal(newUser.userDescription);
+				expect(user.dateJoined).not.to.be.null;
+			});
+		});
+	});
+
+
+//==================== PUT /api/users/:id TESTING  ====================
+
+	describe('PUT endpoint', function() {
+		it('should update only the fields you send over for the specified user', function() {
+			
+			const updateData = {
+				userName: 'Kyoto Frog',
+				userDescription: 'On the long road to Okinawa.'
+			};
+
+			return User
+			.findOne()
+			.then(function(user) {
+				updateData.id = user.id;
+
+				return chai.request(app)
+				.put(`/api/users/${user.id}`)
+				.send(updateData);
+			})
+			.then(function(res) {
+				expect(res).to.have.status(204);
+				return User.findById(updateData.id);
+			})
+			.then(function(user) {
+				expect(user.userName).to.equal(updateData.userName);
+				expect(user.userDescription).to.equal(updateData.userDescription);
+				expect(user.userDescription).to.be.a('string');
+			});
+		});
+	});
+
+
+//==================== DELETE /api/users/:id TESTING  ====================
+
+	describe('DELETE endpoint', function() {
+		it('should delete the user you specify', function() {
+
+			let user;
+
+			return User
+			.findOne()
+			.then(function (_user) {
+				user = _user;
+				return chai.request(app)
+				.delete(`/api/users/${user.id}`);
+			})
+			.then(function(res) {
+				expect(res).to.have.status(204);
+				return User.findById(user.id);
+			})
+			.then(function(user) {
+				expect(user).to.be.null;
+			});
+		});
+	});
+});
 
 
 
