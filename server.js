@@ -2,11 +2,14 @@
 
 const express = require('express');
 const morgan = require('morgan');
-const listRouter = require('./Routes/listRouter');
-const travelerRouter = require('./Routes/travelerRouter');
-const apiRouter = require('./Routes/apiRouter');
+const mongoose = require('mongoose');
+	mongoose.Promise = global.Promise;
 
-const {PORT} = require('./config');
+const listRouter = require('./routes/listRouter');
+const travelerRouter = require('./routes/travelerRouter');
+const apiRouter = require('./routes/apiRouter');
+
+const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
 
 const app = express();
 app.use(morgan('common'));
@@ -17,21 +20,35 @@ app.use('/api', apiRouter);
 
 let server;
 
-function runServer(port = PORT) {
-	server = app.listen(port, () => {
-		console.log(`The Matrix has you on port ${port}`);	
-	})
-		.on('error', err => {
-			reject(err);
+function runServer(databaseURL, port = PORT) {
+	return new Promise((resolve, reject) => {
+		mongoose.connect(databaseURL, err => {
+			if(err) {
+				return reject(err);
+			}
+			server = app.listen(port, () => {
+			console.log(`The Matrix has you on port \x1b[32m${port}\x1b[0m`);
+			resolve();	
+		})
+			.on('error', err => {
+				mongoose.disconnect();
+				reject(err);
+			});
 		});
+	});
 }
 
 function closeServer() {
-	console.log('Closing server');
-	server.close(err => {
-		if (err) {
-			return reject(err);
-		}
+	return mongoose.disconnect().then(() => {
+		return new Promise((resolve, reject) => {
+			console.log('Closing server');
+			server.close(err => {
+				if (err) {
+					return reject(err);
+				}
+				resolve();
+			});	
+		});
 	});
 }
 
@@ -41,8 +58,7 @@ app.get('/about', (req, res) => {
 });
 
 if (require.main === module) {
-	runServer();
-	// .catch(err => console.error(err));
+	runServer(DATABASE_URL).catch(err => console.error(err));
 };
 
 module.exports = {app, runServer, closeServer};
