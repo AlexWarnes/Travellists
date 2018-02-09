@@ -5,8 +5,6 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 	mongoose.Promise = global.Promise;
 
-const listRouter = require('./routes/listRouter');
-const travelerRouter = require('./routes/travelerRouter');
 const apiRouter = require('./routes/apiRouter');
 
 const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
@@ -14,8 +12,6 @@ const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
 const app = express();
 app.use(morgan('common'));
 app.use(express.static('public'));
-app.use('/lists', listRouter);
-app.use('/travelers', travelerRouter);
 app.use('/api', apiRouter);
 
 let server;
