@@ -3,7 +3,21 @@ body {
 	padding: 20px;
 }
 
-.list {
+.close {
+	float: right;
+    font-size: 45px;
+    text-shadow: 1px 1px 2px silver;
+    color: silver;
+}
+
+.close:hover {
+	color: gray;
+    text-shadow: 1px 1px 2px silver;
+    color: gray;
+    cursor: pointer;
+}
+
+.listPreview {
 	position: relative;
 	display: inline-block;
 	vertical-align: middle;
@@ -14,33 +28,42 @@ body {
 	border: 1px solid black;
 	background-color: gray;
 	color: white;
+	cursor: pointer;
 }
 
-.list a {
-	color: white;
-	text-decoration: none;
+.listPreview:hover {
+	background-color: silver;
 }
 
-.listLocation {
+.listPreviewLocation {
 	font-size: 14px;
 	font-weight: 200;
 	text-align: center;
 }
 
-.listTitle {
+.listPreviewTitle {
 	font-size: 18px;
 	font-weight: 400;
 }
 
-.listDescription {
+.listPreviewDescription {
 	font-size: 16px;
 	font-weight: 300;
 }
 
-.placesCount {
+.listPreviewPlacesCount {
 	position: absolute;
 	right: 5px;
 	bottom: 0;
 	font-size: 12px;
 	opacity: .8;
+}
+
+.listView {
+	display: none;
+	position: absolute;
+	background-color: white;
+	padding: 20px;
+	box-shadow: 5px 5px 10px black;
+	z-index: 1;
 }
