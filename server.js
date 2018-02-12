@@ -49,8 +49,11 @@ function closeServer() {
 }
 
 app.get('/about', (req, res) => {
-	console.log(__dirname);
 	res.status(200).sendFile(__dirname + '/public/about.html');
+});
+
+app.get('/travelers', (req, res) => {
+	res.status(200).sendFile(__dirname + '/public/profiles.html');
 });
 
 if (require.main === module) {

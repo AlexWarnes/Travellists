@@ -43,10 +43,17 @@ function getListData(callback) {
 
 //========== VIEW INDIVIDUAL LIST =========
 
+function clearListHtml() {
+	$('.singleList').html('');
+	$('.listPlaces').html('');
+}
+
 function viewThisList() {
 	$('.listsGrid').on('click', '.listPreview', function(e) {
+		clearListHtml();
 		const listId = this.id;
 		console.log(`Getting info for ${listId}`);
+		$('.listsGrid').toggle(750);
 		getThisListData(listId, displayThisList);
 	})
 }
@@ -85,19 +92,11 @@ function getThisListData(id, callback) {
 function closeThisWindow() {
 	$('.close').on('click', function(e) {
 		e.preventDefault();
-		$(this).parent().toggle(1000);
-	$('.singleList').html('');
-	$('.listPlaces').html('');	
+		$(this).parent().toggle(750);
+		$('.listsGrid').toggle(1000);		
+		clearListHtml();
 	})
 }
-
-
-
-
-
-
-
-
 
 
 $(dynamicSTORE);

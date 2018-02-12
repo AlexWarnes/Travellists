@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8" name="Description" content="Travelmate is where travelers can find or create lists of their favorite places in cities around the world. Find lists of places that match your travel-style before your next trip. Help others by creating lists of the best places when you get back.">
+	<meta charset="UTF-8" name="Description" content="Travellists is where travelers can find or create lists of their favorite places in cities around the world. Find lists of places that match your travel-style before your next trip. Help others by creating lists of the best places when you get back.">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Travelmate</title>
+	<title>Travellists: Home</title>
 	<link rel="icon" href="./Assets/coffeePlace.png">
 
 	<!-- STYLES -->
@@ -17,30 +17,35 @@
 			<link rel="stylesheet" href="./Styles/main.css">
 </head>
 <body>
+	<nav role="navigation">
+		<p class="navItem"><a href="/">Home</a><p>
+		<p class="navItem"><a href="/travelers">Travelers</a><p>
+		<p class="navItem"><a href="#">My Profile</a><p>
+		<p class="navItem"><a href="/about">About</a><p>
+	</nav>
 
 	<!-- HOME PAGE SHOWING LISTS -->
-	<a href="/about">About</a>
-	<h1>HELLO WORLD!</h1>
-	<h2>Welcome to Travelmate</h2>
-	<p>Here are some sample lists.</p>
+	<main>
+		<h1>Travellists</h1>
+		<p>Take a look at some recently added lists.</p>
 
-	<section class="listsGrid">
-		
-	</section>
-
-<!-- VIEW SINGLE LIST PAGE -->
-		<div class="listView">
-			<i class="close far fa-times-circle"></i>
-
-			<section class="singleList">
-
-			</section>
+		<section class="listsGrid">
 			
-			<ul class="listPlaces">
-					
-			</ul>
-		</div>
+		</section>
 
+	<!-- VIEW SINGLE LIST PAGE -->
+			<div class="listView">
+				<i class="close far fa-times-circle"></i>
+
+				<section class="singleList">
+
+				</section>
+				
+				<ul class="listPlaces">
+						
+				</ul>
+			</div>
+	</main>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="./Scripts/index.js"></script>
 </body>
