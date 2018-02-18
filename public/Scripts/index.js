@@ -63,7 +63,7 @@ function viewThisList() {
 		clearListInfo();
 		const listId = this.id;
 		console.log(`Getting info for ${listId}`);
-		$('.listsGrid').toggle(750);
+		$('.gridView').toggle(750);
 		getThisListData(listId, displayThisList);
 	})
 }
@@ -108,7 +108,7 @@ function xThisWindow() {
 	$('.close').on('click', function(e) {
 		e.preventDefault();
 		$(this).parent().toggle(750);
-		$('.listsGrid').toggle(1000);		
+		$('.gridView').toggle(1000);		
 		clearListInfo();
 
 	})
@@ -116,7 +116,7 @@ function xThisWindow() {
 
 function closeWindow() {
 	$('.listView').toggle(750);
-	$('.listsGrid').toggle(1000);		
+	$('.gridView').toggle(1000);		
 	clearListInfo();
 }
 
@@ -128,6 +128,7 @@ function closeWindow() {
 function openListForm() {
 	$('.newListButton').on('click', function(e) {
 		e.preventDefault();
+		$('.gridView').toggle(750);
 		$('.newListFieldset').toggle(1000);
 	});
 }
@@ -136,6 +137,7 @@ function closeForm() {
 	$('.cancelButton').on('click', function(e) {
 		e.preventDefault();
 		$(this).closest('fieldset').toggle(750);
+		$('.gridView').toggle(1000);
 		resetListForm();
 	})
 }
@@ -223,22 +225,29 @@ function resetListForm() {
 
 function deleteThisList() {
 	$('.trash').on('click', function(e) {
-		// e.preventDefault();
+		e.preventDefault();
+		$('.deleteWarning').toggle(500);
+	});
+
+	$('.doNotDelete').on('click', function(e) {
+		e.preventDefault();
+		$('.deleteWarning').toggle(500);
+	});
+
+	$('.confirmDelete').on('click', function(e) {
+		e.preventDefault();
 		const listId = $('.editIcons').attr('id');
-		console.log(`Delete list ${listId}`)
-
-		//add ARE YOU SURE Prompt
-
 		const settings = {
 			url: `/api/lists/${listId}`,
 			type: 'DELETE',
 			success: [successfulDelete, closeWindow, showLists]
 		}
-		$.ajax(settings);		
-	});
+		$.ajax(settings);
+	});	
 }
 
 function successfulDelete() {
+	$('.deleteWarning').toggle(500);
 	console.log('successfully deleted that list');
 }
 
@@ -253,7 +262,7 @@ function successfulDelete() {
 // 					PUT update fields in AJAX 
 // 			click cancel 
 // 				turn inputs into listView
-				
+
 
 
 

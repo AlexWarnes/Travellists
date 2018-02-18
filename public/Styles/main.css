@@ -110,6 +110,10 @@ button:hover {
 
 /* ========== LISTS ==========*/
 
+.tempGreeting {
+	margin-top: 0;
+}
+
 .listPreview {
 	position: relative;
 	display: inline-block;
@@ -190,6 +194,46 @@ button:hover {
 	list-style: none;
 }
 
+.deleteWarning {
+	display: none;
+	position: absolute;
+	top: 30%;
+	left: 20%;
+	width: 60%;
+	z-index: 5;
+	text-align: center;
+	background-color: white;
+	border: 2px solid red;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.doNotDelete {
+	padding: 10px;
+	color: white;
+	background: steelblue;
+	border: none;
+	border-radius: 5px;
+}
+
+.doNotDelete:hover {
+	box-shadow: 5px 5px 5px silver;
+	cursor: pointer;
+}
+
+.confirmDelete {
+	padding: 10px;
+	color: white;
+	background: red;
+	border: none;
+	border-radius: 5px;
+}
+
+.confirmDelete:hover {
+	box-shadow: 5px 5px 5px silver;
+	cursor: pointer;
+}
+
 /* ========== PROFILES ==========*/
 
 .profilePreview {
@@ -244,3 +288,6 @@ button:hover {
 	font-weight: 600;
 }
 
+.hidden {
+	display: none;
+}

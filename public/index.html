@@ -28,8 +28,6 @@
 	<main>
 		<h1>Travellists</h1>
 
-		<button class="newListButton">New List</button>
-
 	<!-- CREATE NEW LIST FORM -->
 
 	<fieldset class="newListFieldset">
@@ -64,11 +62,16 @@
 		</form>
 	</fieldset>
 
-		<p>Take a look at some recently added lists.</p>
 
-		<section class="listsGrid">
-			
-		</section>
+		<div class="gridView">
+			<p class="tempGreeting">Take a look at some recently added lists.</p>
+			<button class="newListButton">New List</button>
+
+			<section class="listsGrid">
+				
+
+			</section>
+		</div>
 
 	<!-- VIEW SINGLE LIST PAGE -->
 			<div class="listView">
@@ -86,6 +89,12 @@
 					<i class="trash far fa-trash-alt"></i>
 					<i class="edit fas fa-pencil-alt"></i>
 				</div>
+			</div>
+
+			<div class="deleteWarning">
+				<p>Are you sure you want to delete this list?</p>
+				<button class="doNotDelete">No, do not delete this list</button>
+				<button class="confirmDelete">Yes, delete this list</button>
 			</div>
 
 
