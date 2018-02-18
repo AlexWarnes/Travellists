@@ -20,6 +20,7 @@ router.use(bodyParser.json());
 router.get('/lists', (req, res, next) => {
 	List
 		.find()
+		.sort({dateCreated: -1})
 		.then(data => {
 			res.status(200)
 			.json(data.map((list) => list.serialize()));

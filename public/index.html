@@ -27,6 +27,43 @@
 	<!-- HOME PAGE SHOWING LISTS -->
 	<main>
 		<h1>Travellists</h1>
+
+		<button class="newListButton">New List</button>
+
+	<!-- CREATE NEW LIST FORM -->
+
+	<fieldset class="newListFieldset">
+		<form class="newListForm">
+			<label for="newListCity">City</label>
+			<input type="text" name="city" id="newListCity" class="listInput">
+
+			<label for="newListCountry">Country</label>
+			<input type="text" name="country" id="newListCountry" class="listInput">
+
+			<label for="newListTitle">Title</label>
+			<input type="text" name="title" id="newListTitle" class="listInput">
+
+			<label for="newListDescription">Description</label>
+			<input type="text" name="description" id="newListDescription" class="listInput">
+			
+			<h3>Add some places to your list!</h3>
+
+			<ul class="listFormPlaces">
+				<li class="newListPlace">
+					<label for="placeName-0">Place Name</label>
+					<input type="text" name="placeName" id="placeName-0" class="newListPlaceName listInput">
+
+					<label for="placeDescription-0">Place Description</label>
+					<input type="text" name="placeDescription" id="placeDescription-0" class="newListPlaceDescription listInput">
+				</li>
+			</ul>
+			<button class="addPlace">+ Add Another Place</button> 
+			
+			<button class="submitListButton completeButton">Submit this List!</button>
+			<button class="cancelButton">Cancel</button>
+		</form>
+	</fieldset>
+
 		<p>Take a look at some recently added lists.</p>
 
 		<section class="listsGrid">
@@ -44,7 +81,14 @@
 				<ul class="listPlaces">
 						
 				</ul>
+
+				<div class="editIcons">
+					<i class="trash far fa-trash-alt"></i>
+					<i class="edit fas fa-pencil-alt"></i>
+				</div>
 			</div>
+
+
 	</main>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="./Scripts/index.js"></script>

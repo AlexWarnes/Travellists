@@ -39,6 +39,77 @@ main {
     cursor: pointer;
 }
 
+.editIcons {
+	width: 100%;
+	text-align: right;
+	padding: 5px;
+	color: navy;
+}
+
+.editIcons i:hover {
+	cursor: pointer;
+}
+
+.editIcons .trash {
+	margin-right: 10px;
+}
+
+.editIcons .trash:hover {
+	color: red;
+}
+
+.editIcons .edit:hover {
+	color: blue;
+}
+
+button {
+	margin: 10px;
+}
+
+button:hover {
+	box-shadow: 2px 2px 10px black;
+}
+
+.newListButton {
+	position: absolute;
+	top: 45px;
+	right: 20px;
+	padding: 10px;
+	color: white;
+	background-color: green;
+	font-size: 20px;
+	border: none;
+	border-radius: 20px;
+}
+
+.addPlace {
+	display: block;
+	background-color: white;
+	border-radius: 3px;
+	border: 1px solid navy;
+	margin-left: 40px;
+	margin-bottom: 30px;
+}
+
+.completeButton {
+	background-color: green;
+	color: white;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+}
+
+.cancelButton {
+	background-color: darkred;
+	border: none;
+	color: white;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+
+/* ========== LISTS ==========*/
+
 .listPreview {
 	position: relative;
 	display: inline-block;
@@ -87,9 +158,36 @@ main {
 	margin-right: auto;
 	margin-left: auto;
 	background-color: white;
+	padding: 20px 20px 0 20px;
+	box-shadow: 5px 5px 10px black;
+	z-index: 1;
+}
+
+
+/* ========== NEW LIST FORM ==========*/
+
+.newListFieldset {
+	display: none;
+	position: absolute;
+	z-index: 1;
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: white;
 	padding: 20px;
 	box-shadow: 5px 5px 10px black;
 	z-index: 1;
+}
+
+.listInput {
+	display: block;
+	width: 90%;
+	padding: 10px;
+	margin: 20px auto 20px auto;
+}
+
+.listFormPlaces {
+	list-style: none;
 }
 
 /* ========== PROFILES ==========*/
@@ -130,3 +228,19 @@ main {
 	font-size: 12px;
 	opacity: .8;
 }
+
+.profileView {
+	display: none;
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: white;
+	padding: 20px;
+	box-shadow: 5px 5px 10px black;
+	z-index: 1;
+}
+
+.profileCoutriesVisited {
+	font-weight: 600;
+}
+

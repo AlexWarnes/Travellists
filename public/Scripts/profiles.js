@@ -2,8 +2,8 @@
 
 function dynamicSTORE() {
 	showProfiles();
-	// viewThisProfile();
-	// closeThisWindow();
+	viewThisProfile();
+	closeThisWindow();
 }
 
 //========== HOME SCREEN FUNCTIONS ==========
@@ -38,6 +38,56 @@ function getProfileData(callback) {
 		success: callback
 	};
 	$.ajax(settings);
+}
+
+
+//========== VIEW INDIVIDUAL PROFILE =========
+
+function clearProfileHtml() {
+	$('.singleProfile').html('');
+}
+
+function viewThisProfile() {
+	$('.profilesGrid').on('click', '.profilePreview', function(e) {
+		clearProfileHtml();
+		const profileId = this.id;
+		console.log(`Getting info for ${profileId}`);
+		$('.profilesGrid').toggle(750);
+		getThisProfileData(profileId, displayThisProfile);
+	})
+}
+
+function displayThisProfile(data) {
+	console.log(data);
+	const countriesVisited = data.countriesVisited //add spacing between words;
+	const profileHtml = `
+		<div class="profileIntro">
+			<h1 class="profileUserName">${data.userName}</h1>
+			<h2 class="profileUserDescription">${data.userDescription}</h2>
+			<p class="profileCountries"><span class="profileCoutriesVisited">Countries Visited: </span>${countriesVisited}</p>
+		</div>`;
+
+	$('.singleProfile').html(profileHtml);
+	$('.profileView').toggle(1000);
+}
+
+function getThisProfileData(id, callback) {
+	const settings = {
+		url: `/api/users/${id}`,
+		dataType: 'JSON',
+		method: 'GET',
+		success: callback
+	};
+	$.ajax(settings);
+}
+
+function closeThisWindow() {
+	$('.close').on('click', function(e) {
+		e.preventDefault();
+		$(this).parent().toggle(750);
+		$('.profilesGrid').toggle(1000);		
+		clearProfileHtml();
+	})
 }
 
 $(dynamicSTORE);
