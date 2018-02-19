@@ -114,7 +114,7 @@ function xThisWindow() {
 	})
 }
 
-function closeWindow() {
+function closeListView() {
 	$('.listView').toggle(750);
 	$('.gridView').toggle(1000);		
 	clearListInfo();
@@ -195,14 +195,16 @@ function submitList() {
 			data: newListJson,
 			contentType: 'application/json',
 			type: 'POST',
-			success: [successfulPost, showLists]
+			success: successfulPost
 		}
 		$.ajax(settings);
 	});
 }
 
 function successfulPost() {
-	$('fieldset').toggle(750);
+	$('fieldset').toggle(500);
+	$('.gridView').toggle(500);
+	showLists();
 	resetListForm();
 }
 
@@ -240,7 +242,7 @@ function deleteThisList() {
 		const settings = {
 			url: `/api/lists/${listId}`,
 			type: 'DELETE',
-			success: [successfulDelete, closeWindow, showLists]
+			success: [successfulDelete, closeListView, showLists]
 		}
 		$.ajax(settings);
 	});	
