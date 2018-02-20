@@ -1,9 +1,14 @@
 'use strict'
 
+function switchView(currentView, nextView) {
+	currentView.toggle(500);
+	nextView.toggle(500);
+}
+
 function STARTUP() {
 	showLists();
 	viewThisList();
-	xThisWindow();
+	xListWindow();
 	openListForm();
 	closeForm();
 	addAnotherPlace();
@@ -13,7 +18,7 @@ function STARTUP() {
 
 
 //========== HOME SCREEN FUNCTIONS ==========
-// ====================================
+// ==========================================
 
 function showLists() {
 		console.log('Getting some lists...');
@@ -50,7 +55,7 @@ function getListData(callback) {
 
 
 //========== VIEW INDIVIDUAL LIST =========
-// ====================================
+// ========================================
 
 function clearListInfo() {
 	$('.singleList').html('');
@@ -62,8 +67,9 @@ function viewThisList() {
 	$('.listsGrid').on('click', '.listPreview', function(e) {
 		clearListInfo();
 		const listId = this.id;
+		switchView($('.gridView'), $('.listView'));
 		console.log(`Getting info for ${listId}`);
-		$('.gridView').toggle(750);
+		// $('.gridView').toggle(750);
 		getThisListData(listId, displayThisList);
 	})
 }
@@ -87,7 +93,7 @@ function displayThisList(data) {
 	});
 	$('.singleList').html(listHtml);
 	$('.editIcons').attr('id', `${data.id}`);
-	$('.listView').toggle(1000);
+	// $('.listView').toggle(1000);
 }
 
 function getThisListData(id, callback) {
@@ -101,43 +107,35 @@ function getThisListData(id, callback) {
 }
 
 
-//========== CLOSE WINDOW =========
+//========== CLOSE WINDOW =============
 // ====================================
 
-function xThisWindow() {
+function xListWindow() {
 	$('.close').on('click', function(e) {
 		e.preventDefault();
-		$(this).parent().toggle(750);
-		$('.gridView').toggle(1000);		
+		switchView($('.listView'), $('.gridView'))		
 		clearListInfo();
-
+		// $(this).parent().toggle(750);
+		// $('.gridView').toggle(1000);		
+		// clearListInfo();
 	})
 }
 
-function closeListView() {
-	$('.listView').toggle(750);
-	$('.gridView').toggle(1000);		
-	clearListInfo();
-}
-
-
-//========== CREATE NEW LIST =========
+//========== CREATE NEW LIST ==========
 // ====================================
 
 
 function openListForm() {
 	$('.newListButton').on('click', function(e) {
 		e.preventDefault();
-		$('.gridView').toggle(750);
-		$('.newListFieldset').toggle(1000);
+		switchView($('.gridView'), $('.newListFieldset'));
 	});
 }
 
 function closeForm() {
 	$('.cancelButton').on('click', function(e) {
 		e.preventDefault();
-		$(this).closest('fieldset').toggle(750);
-		$('.gridView').toggle(1000);
+		switchView($('.newListFieldset'), $('.gridView'));
 		resetListForm();
 	})
 }
@@ -202,8 +200,7 @@ function submitList() {
 }
 
 function successfulPost() {
-	$('fieldset').toggle(500);
-	$('.gridView').toggle(500);
+	switchView($('fieldset'), $('.gridView'));
 	showLists();
 	resetListForm();
 }
@@ -222,18 +219,18 @@ function resetListForm() {
 }
 
 
-//========== DELETE LIST =========
+//========== DELETE LIST ==============
 // ====================================
 
 function deleteThisList() {
 	$('.trash').on('click', function(e) {
 		e.preventDefault();
-		$('.deleteWarning').toggle(500);
+		$('.deleteWarning').fadeIn(500);
 	});
 
 	$('.doNotDelete').on('click', function(e) {
 		e.preventDefault();
-		$('.deleteWarning').toggle(500);
+		$('.deleteWarning').fadeOut(500);
 	});
 
 	$('.confirmDelete').on('click', function(e) {
@@ -242,19 +239,22 @@ function deleteThisList() {
 		const settings = {
 			url: `/api/lists/${listId}`,
 			type: 'DELETE',
-			success: [successfulDelete, closeListView, showLists]
+			success: successfulDelete
 		}
 		$.ajax(settings);
 	});	
 }
 
 function successfulDelete() {
-	$('.deleteWarning').toggle(500);
+	$('.deleteWarning').fadeOut(500);
+	switchView($('.listView'), $('.gridView'))		
+	clearListInfo();
+	showLists();
 	console.log('successfully deleted that list');
 }
 
 
-//========== EDIT LIST =========
+//========== EDIT LIST ================
 // ====================================
 
 // click edit
@@ -264,8 +264,6 @@ function successfulDelete() {
 // 					PUT update fields in AJAX 
 // 			click cancel 
 // 				turn inputs into listView
-
-
 
 
 $(STARTUP);
