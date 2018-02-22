@@ -21,7 +21,7 @@ nav a {
 }
 
 main {
-	padding: 10px;
+	/*padding: 10px;*/
 }
 
 
@@ -112,7 +112,8 @@ button:hover {
 /* ========== LISTS ==========*/
 
 .tempGreeting {
-	margin-top: 0;
+	margin: 30px;
+	max-width: 75%;
 }
 
 .listPreview {
@@ -121,7 +122,7 @@ button:hover {
 	vertical-align: middle;
 	max-width: 300px;
 	height: 300px;
-	margin: 10px;
+	margin: 15px;
 	padding: 5px;
 	border-radius: 5px;
 	box-shadow: 0px 3px 10px lightgrey;
@@ -161,12 +162,10 @@ button:hover {
 
 .listView {
 	display: none;
-	width: 90%;
-	margin-right: auto;
-	margin-left: auto;
+	width: 100%;
+	margin: 0 auto 50px auto;
 	background-color: white;
 	padding: 20px 20px 0 20px;
-	box-shadow: 0px 3px 10px lightgrey;
 	border-radius: 5px;
 	z-index: 1;
 }
@@ -178,12 +177,12 @@ button:hover {
 	display: none;
 	position: absolute;
 	z-index: 1;
-	width: 90%;
+	width: 100%;
 	margin-right: auto;
 	margin-left: auto;
 	background-color: white;
 	padding: 20px;
-	box-shadow: 5px 5px 10px black;
+	/*box-shadow: 5px 5px 10px black;*/
 	z-index: 1;
 }
 
@@ -236,6 +235,21 @@ button:hover {
 .confirmDelete:hover {
 	box-shadow: 5px 5px 5px silver;
 	cursor: pointer;
+}
+
+/* ========== EDIT LIST ========== */
+
+.editListFieldset {
+	display: none;
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: white;
+	padding: 20px;
+	/*box-shadow: 5px 5px 10px black;*/
+	z-index: 1;
 }
 
 /* ========== PROFILES ==========*/

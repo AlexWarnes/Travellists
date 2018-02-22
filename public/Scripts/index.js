@@ -1,8 +1,8 @@
 'use strict'
 
 function switchView(currentView, nextView) {
-	currentView.toggle(500);
-	nextView.toggle(500);
+	currentView.slideToggle(500);
+	nextView.slideToggle(500);
 }
 
 function STARTUP() {
@@ -10,10 +10,12 @@ function STARTUP() {
 	viewThisList();
 	xListWindow();
 	openListForm();
-	closeForm();
+	cancelNewList();
 	addAnotherPlace();
 	submitList();
 	deleteThisList();
+	editList();
+	cancelEditList();
 }
 
 
@@ -60,7 +62,6 @@ function getListData(callback) {
 function clearListInfo() {
 	$('.singleList').html('');
 	$('.listPlaces').html('');
-	$('.editIcons').removeAttr('id');
 }
 
 function viewThisList() {
@@ -69,7 +70,6 @@ function viewThisList() {
 		const listId = this.id;
 		switchView($('.gridView'), $('.listView'));
 		console.log(`Getting info for ${listId}`);
-		// $('.gridView').toggle(750);
 		getThisListData(listId, displayThisList);
 	})
 }
@@ -92,8 +92,6 @@ function displayThisList(data) {
 		$('.listPlaces').append(place);
 	});
 	$('.singleList').html(listHtml);
-	$('.editIcons').attr('id', `${data.id}`);
-	// $('.listView').toggle(1000);
 }
 
 function getThisListData(id, callback) {
@@ -115,9 +113,6 @@ function xListWindow() {
 		e.preventDefault();
 		switchView($('.listView'), $('.gridView'))		
 		clearListInfo();
-		// $(this).parent().toggle(750);
-		// $('.gridView').toggle(1000);		
-		// clearListInfo();
 	})
 }
 
@@ -132,8 +127,8 @@ function openListForm() {
 	});
 }
 
-function closeForm() {
-	$('.cancelButton').on('click', function(e) {
+function cancelNewList() {
+	$('.cancelNewButton').on('click', function(e) {
 		e.preventDefault();
 		switchView($('.newListFieldset'), $('.gridView'));
 		resetListForm();
@@ -235,7 +230,7 @@ function deleteThisList() {
 
 	$('.confirmDelete').on('click', function(e) {
 		e.preventDefault();
-		const listId = $('.editIcons').attr('id');
+		const listId = $('.listIntro').attr('id');
 		const settings = {
 			url: `/api/lists/${listId}`,
 			type: 'DELETE',
@@ -265,6 +260,31 @@ function successfulDelete() {
 // 			click cancel 
 // 				turn inputs into listView
 
+function editList() {
+	$('.editList').on('click', function(e) {
+		e.preventDefault();
+		const listId = $('.listIntro').attr('id');
+		console.log(`Getting info for ${listId}`);
+		switchView($('.listView'), $('.editListFieldset'));
+		getThisListData(listId, populateEditFields);
+	})
+}
+
+function populateEditFields(data) {
+	$('#editListCity').val(`${data.city}`);
+	$('#editListCountry').val(`${data.country}`);
+	$('#editListTitle').val(`${data.title}`);
+	$('#editListDescription').val(`${data.description}`);
+	//Loop over data.places and add fields for editing
+}
+
+function cancelEditList() {
+	$('.cancelEditButton').on('click', function(e) {
+		e.preventDefault();
+		switchView($('.editListFieldset'), $('.listView'));
+		resetListForm();
+	})
+}
 
 $(STARTUP);
 
