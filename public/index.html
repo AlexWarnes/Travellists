@@ -29,7 +29,7 @@
 
 	<!-- CREATE NEW LIST FORM -->
 
-	<fieldset class="newListFieldset">
+	<fieldset class="newListFieldset listForm">
 		<form class="newListForm">
 			<label for="newListCity">City</label>
 			<input type="text" name="city" id="newListCity" class="listInput">
@@ -96,7 +96,10 @@
 			<button class="doNotDelete">No, do not delete this list</button>
 		</div>
 
-	<fieldset class="editListFieldset">
+
+	<!-- EDIT LIST PAGE -->
+
+	<fieldset class="editListFieldset listForm">
 		<form class="editListForm">
 			<label for="editListCity">City</label>
 			<input type="text" name="city" id="editListCity" class="listInput">
@@ -112,14 +115,8 @@
 			
 			<h3>Add some places to your list!</h3>
 
-			<ul class="listFormPlaces">
-				<li class="editListPlace">
-					<label for="placeName-0">Place Name</label>
-					<input type="text" name="placeName" id="placeName-0" class="editListPlaceName listInput">
-
-					<label for="placeDescription-0">Place Description</label>
-					<input type="text" name="placeDescription" id="placeDescription-0" class="editListPlaceDescription listInput">
-				</li>
+			<ul class="editListPlaces">
+				
 			</ul>
 			<button class="addPlace">+ Add Another Place</button> 
 			
