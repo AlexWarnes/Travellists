@@ -1,15 +1,21 @@
 'use strict';
 
 const express = require('express');
-const faker = require('faker');
+const passport = require('passport');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 	mongoose.Promise = global.Promise;
 
 const { List, User } = require('../models');
+const {localStrategy, jwtStrategy} = require('../auth/strategies')
 
 const router = express.Router();
-router.use(bodyParser.json());
+const jsonParser = bodyParser.json();
+
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 
 //==================== GET REQUESTS ====================
@@ -17,7 +23,7 @@ router.use(bodyParser.json());
 
 // GET LISTS
 
-router.get('/lists', (req, res, next) => {
+router.get('/lists', jwtAuth, (req, res, next) => {
 	List
 		.find()
 		.sort({dateCreated: -1})
@@ -31,7 +37,7 @@ router.get('/lists', (req, res, next) => {
 		});
 });
 
-router.get('/lists/:id', (req, res, next) => {
+router.get('/lists/:id', jwtAuth, (req, res, next) => {
 	List
 		.findById(req.params.id)
 		.then(list => {
@@ -47,7 +53,7 @@ router.get('/lists/:id', (req, res, next) => {
 
 // GET USERS
 
-router.get('/users', (req, res, next) => {
+router.get('/users', jwtAuth, (req, res, next) => {
 	User
 		.find()
 		.then(data => {
@@ -60,7 +66,7 @@ router.get('/users', (req, res, next) => {
 		});
 });
 
-router.get('/users/:id', (req, res, next) => {
+router.get('/users/:id', jwtAuth, (req, res, next) => {
 	User
 		.findById(req.params.id)
 		.then(user => {
@@ -76,8 +82,8 @@ router.get('/users/:id', (req, res, next) => {
 
 //==================== POST REQUESTS ====================
 
-router.post('/lists', (req, res, next) => {
-	const requiredFields = ['city', 'country', 'title', 'description', 'places', 'author', 'dateCreated'];
+router.post('/lists', jsonParser, jwtAuth, (req, res, next) => {
+	const requiredFields = ['city', 'country', 'title', 'description', 'places'];
 	for (let i = 0; i < requiredFields.length; i++) {
 		const field = requiredFields[i];
 		if (!(field in req.body)) {
@@ -94,8 +100,7 @@ router.post('/lists', (req, res, next) => {
 			title: req.body.title,
 			description: req.body.description,
 			places: req.body.places,
-			author: req.body.author,
-			dateCreated: req.body.dateCreated
+			author: req.user.userName,
 		})
 		.then(list => {
 			res.status(201)
@@ -107,33 +112,135 @@ router.post('/lists', (req, res, next) => {
 		});
 });
 
-router.post('/users', (req, res, next) => {
-	const requiredFields = ['userName', 'userDescription', 'dateJoined'];
-	for (let i = 0; i < requiredFields.length; i++) {
-		const field = requiredFields[i];
-		if (!(field in req.body)) {
-			const message = `Missing ${field} in request body`;
-			console.error(message);
-			return res.status(400).send(message);
-		}
+router.post('/users', jsonParser, (req, res, next) => {
+	// const requiredFields = ['userName', 'password', 'userDescription', 'dateJoined'];
+	// for (let i = 0; i < requiredFields.length; i++) {
+	// 	const field = requiredFields[i];
+	// 	if (!(field in req.body)) {
+	// 		const missingField = `Missing ${field} in request body`;
+	// 		console.error(missingField);
+	// 		return res.status(422).json({
+	// 			code: 422,
+	// 			reason: 'ValidationError',
+	// 			message: missingField
+	// 		});
+	// 	}
+	// }
+	const requiredFields = ['userName', 'password', 'userDescription'];
+	const missingField = requiredFields.find(field => !(field in req.body));
+
+	if (missingField) {
+		return res.status(422).json({
+			code: 422,
+			reason: 'ValidationError',
+			message: 'Missing field',
+			location: missingField
+		});
 	}
 
-	User
-		.create({
-			userName: req.body.userName,
-			userDescription: req.body.userDescription,
-			countriesVisited: req.body.countriesVisited,
-			email: req.body.email,
-			dateCreated: req.body.dateCreated
-		})
-		.then(user => {
-			res.status(201)
-			.json(user.serialize());
-		})
-		.catch(err => {
-			console.error(err);
-			res.status(500).json({message: 'Internal server error'});
+	const stringFields = ['username', 'password', 'userDescription'];
+	const nonStringField = stringFields.find(
+		field => field in req.body && typeof req.body[field] !== 'string'
+	);
+
+	if (nonStringField) {
+		return res.status(422).json({
+			code: 422,
+			reason: 'ValidationError',
+			message: 'Incorrect field type: expected string',
+			location: nonStringField
 		});
+	}
+
+	const explicityTrimmedFields = ['userName', 'password'];
+	const nonTrimmedField = explicityTrimmedFields.find(
+		field => req.body[field].trim() !== req.body[field]
+	);
+
+	if (nonTrimmedField) {
+		return res.status(422).json({
+		code: 422,
+		reason: 'ValidationError',
+		message: 'Cannot start or end with whitespace',
+		location: nonTrimmedField
+		});
+	}
+
+	const sizedFields = {
+		userName: {
+			min: 1
+		},
+		password: {
+			min: 10,
+			// bcrypt truncates after 72 characters, so don't give the illusion
+			// of security by storing extra (unused) info
+			max: 72
+		}
+	};
+	
+	const tooSmallField = Object.keys(sizedFields).find(
+	field =>
+		'min' in sizedFields[field] &&
+		req.body[field].trim().length < sizedFields[field].min
+	);
+	
+	const tooLargeField = Object.keys(sizedFields).find(
+	field =>
+		'max' in sizedFields[field] &&
+			req.body[field].trim().length > sizedFields[field].max
+	);
+
+	if (tooSmallField || tooLargeField) {
+		return res.status(422).json({
+			code: 422,
+			reason: 'ValidationError',
+			message: tooSmallField
+				? `Must be at least ${sizedFields[tooSmallField]
+					.min} characters long`
+				: `Must be at most ${sizedFields[tooLargeField]
+					.max} characters long`,
+			location: tooSmallField || tooLargeField
+		});
+	}
+
+	let {userName, password} = req.body;
+	return User.find({userName})
+		.count()
+		.then(count => {
+			if (count > 0) {
+				// There is an existing user with the same username
+				return Promise.reject({
+					code: 422,
+					reason: 'ValidationError',
+					message: 'Username already taken',
+					location: 'userName'
+				});
+      		}
+	
+			// If there is no existing user, hash the password
+			return User.hashPassword(password);
+		})
+	    .then(hash => {
+			return User
+				.create({
+					userName: userName,
+					password: hash,
+					userDescription: req.body.userDescription,
+					countriesVisited: req.body.countriesVisited,
+					email: req.body.email,
+				})
+				.then(user => {
+					res.status(201)
+					.json(user.serialize());
+				})
+				.catch(err => {
+					if (err.reason === 'ValidationError') {
+						return res.status(err.code).json(err);
+					}
+					console.error(err);
+					res.status(500).json({message: 'Internal server error'});
+				});
+			});
 });
 
 
@@ -217,4 +324,4 @@ router.use('*', (req, res, next) => {
 	res.status(404).json({message: 'Not Found'});
 });
 
-module.exports = router;
+module.exports = {router};

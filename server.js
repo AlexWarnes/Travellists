@@ -1,18 +1,27 @@
 'use strict';
 
+require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
+const passport = require('passport');
 const mongoose = require('mongoose');
 	mongoose.Promise = global.Promise;
 
-const apiRouter = require('./routes/apiRouter');
+const {router: apiRouter} = require('./routes/apiRouter');
+const {router: authRouter} = require('./routes/authRouter');
+const {localStrategy, jwtStrategy} = require('./auth/strategies')
 
 const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
 
 const app = express();
 app.use(morgan('common'));
 app.use(express.static('public'));
+passport.use(localStrategy);
+passport.use(jwtStrategy);
 app.use('/api', apiRouter);
+app.use('/auth', authRouter);
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 let server;
 
