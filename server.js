@@ -15,9 +15,9 @@ const { PORT, DATABASE_URL, TEST_DATABASE_URL } = require('./config');
 
 const app = express();
 app.use(morgan('common'));
-app.use(express.static('public'));
 passport.use(localStrategy);
 passport.use(jwtStrategy);
+app.use(express.static('public'));
 app.use('/api', apiRouter);
 app.use('/auth', authRouter);
 
@@ -56,6 +56,10 @@ function closeServer() {
 		});
 	});
 }
+
+app.get('/lists', (req, res) => {
+	res.status(200).sendFile(__dirname + '/public/lists.html');
+});
 
 app.get('/about', (req, res) => {
 	res.status(200).sendFile(__dirname + '/public/about.html');

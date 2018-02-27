@@ -23,7 +23,7 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 
 // GET LISTS
 
-router.get('/lists', jwtAuth, (req, res, next) => {
+router.get('/lists', (req, res, next) => {
 	List
 		.find()
 		.sort({dateCreated: -1})
@@ -37,7 +37,7 @@ router.get('/lists', jwtAuth, (req, res, next) => {
 		});
 });
 
-router.get('/lists/:id', jwtAuth, (req, res, next) => {
+router.get('/lists/:id', (req, res, next) => {
 	List
 		.findById(req.params.id)
 		.then(list => {

@@ -4,6 +4,7 @@ body * {
 
 body {
 	font-family: 'Montserrat', sans-serif;
+	padding-top: 60px;
 }
 
 nav {
@@ -24,10 +25,8 @@ nav a {
 }
 
 main {
-	margin-top: 40px;
-	padding-top: 30px;
-}
 
+}
 
 .close {
 	float: right;
@@ -75,27 +74,6 @@ button:hover {
 	cursor: pointer;
 }
 
-.newListButton {
-	position: absolute;
-	top: 45px;
-	right: 10px;
-	padding: 10px;
-	color: seagreen;
-	background-color: white;
-	font-size: 20px;
-	border: 1px solid seagreen;
-	border-radius: 20px;
-}
-
-.addPlace {
-	display: block;
-	background-color: white;
-	border-radius: 3px;
-	border: 1px solid navy;
-	margin-left: 40px;
-	margin-bottom: 30px;
-}
-
 .completeButton {
 	background-color: green;
 	color: white;
@@ -116,12 +94,52 @@ fieldset {
 	border: none;
 }
 
-/* ========== LISTS ==========*/
+/*===================================================*/
+/* HOME PAGE */
+/*===================================================*/
 
-.tempGreeting {
-	margin: 30px;
-	max-width: 75%;
+header {
+	width: 100%;
+	height: 80vh;
+	margin-top: -20px;
+	padding: 20px;
+	background-color: darksalmon;
+	color: white;
+	text-align: center;
 }
+
+header h1 {
+	font-size: 7vh;
+}
+
+.subtitle {
+	width: 80%;
+	margin: 40px auto;
+}
+
+.createAccount {
+	background-color: #349680;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	padding: 15px;
+	font-size: 18px;
+}
+
+.learn {
+	width: 50%;
+	margin: 55px auto 0 auto;
+	text-align: center;
+}
+
+.learnIcon {
+	font-size: 40px;
+	color: skyblue;
+}
+
+/*===================================================*/
+/* LISTS PAGE */
+/*===================================================*/
 
 .listPreview {
 	position: relative;
@@ -178,7 +196,31 @@ fieldset {
 }
 
 
-/* ========== NEW LIST FORM ==========*/
+/*===================================================*/
+/* NEW LIST FORM */
+/*===================================================*/
+
+
+.newListButton {
+	position: absolute;
+	top: 45px;
+	right: 10px;
+	padding: 10px;
+	color: seagreen;
+	background-color: white;
+	font-size: 20px;
+	border: 1px solid seagreen;
+	border-radius: 20px;
+}
+
+.addPlace {
+	display: block;
+	background-color: white;
+	border-radius: 3px;
+	border: 1px solid navy;
+	margin-left: 40px;
+	margin-bottom: 30px;
+}
 
 .newListFieldset {
 	display: none;
@@ -193,7 +235,7 @@ fieldset {
 	z-index: 1;
 }
 
-.listInput {
+input {
 	display: block;
 	width: 90%;
 	padding: 10px;
@@ -203,6 +245,10 @@ fieldset {
 .listFormPlaces {
 	list-style: none;
 }
+
+/*===================================================*/
+/* EDIT/DELETE ROLES */
+/*===================================================*/
 
 .deleteWarning {
 	display: none;
@@ -244,7 +290,9 @@ fieldset {
 	cursor: pointer;
 }
 
-/* ========== EDIT LIST ========== */
+/*===================================================*/
+/* EDIT LIST FORM */
+/*===================================================*/
 
 .editListFieldset {
 	display: none;
@@ -259,7 +307,9 @@ fieldset {
 	z-index: 1;
 }
 
-/* ========== PROFILES ==========*/
+/*===================================================*/
+/* PROFILES PAGE */
+/*===================================================*/
 
 .profilePreview {
 	position: relative;
