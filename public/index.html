@@ -24,31 +24,68 @@
 		<p class="navItem"><a href="#">My Profile</a><p>
 		<p class="navItem"><a href="/about">About</a><p>
 	</nav>
+	<div class="homeView view">
+		<header role="banner">
+			<h1>Travellists</h1>
+			<p class="subtitle">Travellists is where travelers can find or create lists of their favorite places in cities around the world. Create an account to make custom lists and find other travelers with travel-styles like you.</p>
+			<button class="openCreateAccount">Create an Account</button>
+			<p>Already have an account? <a href="" class="loginLink">Login here</a></p>
+		</header>
 
-	<header role="banner">
-		<h1>Travellists</h1>
-		<p class="subtitle">Travellists is where travelers can find or create lists of their favorite places in cities around the world. Create an account to make custom lists and find other travelers with travel-styles like you.</p>
-		<button class="createAccount">Create Account</button>
-		<p>Already have an account? <a href="#">Login here</a></p>
-	</header>
+		<main role="main">
+			<section class="learn learnFindLists">
+				<i class="fas fa-list learnIcon"></i>
+				<h2>Find lists for your upcoming trips</h2>
+				<p>Whether you're looking for cafes, photography spots, or good afternoon strolls, you can find a list created by another traveler with ideas to get you prepared and inspired.</p>
+			</section>
+			<section class="learn learnCreateLists">
+				<i class="fas fa-coffee learnIcon"></i>
+				<h2>Create lists to share</h2>
+				<p>Have a great day while traveling? Share your favorite spots, routes, or itineraries for other travelers to find. The theme of your lists is up to you!</p>
+			</section>
+			<section class="learn learnFindUsers">
+				<i class="fas fa-users learnIcon"></i>
+				<h2>Find travelers who travel like you</h2>
+				<p>If you found a great list, check out the author's profile. See where they've been, how they like to travel, and browse other lists they've created.</p>
+			</section>
+		</main>
+	</div>
 
-	<main role="main">
-		<section class="learn learnFindLists">
-			<i class="fas fa-list learnIcon"></i>
-			<h2>Find lists for your upcoming trips</h2>
-			<p>Whether you're looking for cafes, photography spots, or good afternoon strolls, you can find a list created by another traveler with ideas to get you prepared and inspired.</p>
-		</section>
-		<section class="learn learnCreateLists">
-			<i class="fas fa-coffee learnIcon"></i>
-			<h2>Create lists to share</h2>
-			<p>Have a great day while traveling? Share your favorite spots, routes, or itineraries for other travelers to find. The theme of your lists is up to you!</p>
-		</section>
-		<section class="learn learnFindUsers">
-			<i class="fas fa-users learnIcon"></i>
-			<h2>Find travelers who travel like you</h2>
-			<p>If you found a great list, check out the author's profile. See where they've been, how they like to travel, and browse other lists they've created.</p>
-		</section>
-	</main>
+	<!-- CREATE NEW ACCOUNT FORM -->
+
+	<fieldset class="createAccountFields view">
+		<i class="close far fa-times-circle"></i>
+		<form action="#" class="createAccountForm">
+			<label for="createUsername">Username</label>
+			<input type="text" id="createUsername" name="userName" required="true">
+
+			<label for="createPassword">Password</label>
+			<input type="password" id="createPassword" name="password" required="true">
+
+			<label for="confirmPassword">Confirm Password</label>
+			<input type="password" id="confirmPassword" required="true">
+
+			<p class="passwordWarning">Your passwords do not match!</p>
+
+			<button class="createNewAccountButton createLogin">Create Account!</button>
+		</form>
+	</fieldset>
+
+	<!-- LOGIN FORM FOR EXISTING USER -->
+
+	<fieldset class="loginFields view">
+		<i class="close far fa-times-circle"></i>
+		<form action="#" class="loginForm">
+			<label for="loginUsername">Username</label>
+			<input type="text" id="loginUsername" name="userName" required="true">
+
+			<label for="loginPassword">Password</label>
+			<input type="password" id="loginPassword" name="password" required="true">
+
+			<button class="loginButton createLogin">Login</button>
+		</form>
+	</fieldset>
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="./Scripts/index.js"></script>
 </body>

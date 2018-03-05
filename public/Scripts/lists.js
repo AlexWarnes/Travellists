@@ -1,5 +1,13 @@
 'use strict'
 
+
+//==================================================
+//========== TOOLBOX ===============================
+
+const STORE = {
+	userToken: localStorage.getItem('userToken')
+}
+
 function switchView(currentView, nextView) {
 	currentView.slideToggle({
 		duration: 500, 
@@ -7,10 +15,31 @@ function switchView(currentView, nextView) {
 	});
 }
 
+function closeView() {
+	$('.close').on('click', function() {
+		const currentView = $(event.currentTarget).closest('.view');
+		switchView(currentView, $('.gridView'));
+		$('input').val('');
+		clearListInfo();
+	});
+}
+
+function clearListInfo() {
+	$('.singleList').html('');
+	$('.listPlaces').html('');
+}
+
+function verifyLogin() {
+	if (STORE.userToken) {
+		$('.fa-compass').addClass('fa-spin');
+	}
+}
+
 function STARTUP() {
+	verifyLogin();
 	showLists();
 	viewThisList();
-	xListWindow();
+	closeView();
 	openListForm();
 	cancelNewList();
 	addAnotherPlace();
@@ -18,12 +47,14 @@ function STARTUP() {
 	deleteThisList();
 	updateList();
 	editList();
+	editAddAnotherPlace();
 	cancelEditList();
 }
 
 
-//========== HOME SCREEN FUNCTIONS ==========
-// ==========================================
+//==================================================
+//========== GRID VIEW FUNCTIONS ===================
+
 
 function showLists() {
 		console.log('Getting some lists...');
@@ -53,19 +84,18 @@ function getListData(callback) {
 		url: '/api/lists',
 		dataType: 'JSON',
 		method: 'GET',
+		beforeSend: function(xhr, settings) { 
+			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+		},
 		success: callback
 	};
 	$.ajax(settings);
 }
 
 
-//========== VIEW INDIVIDUAL LIST =========
-// ========================================
+//==================================================
+//========== VIEW INDIVIDUAL LIST ==================
 
-function clearListInfo() {
-	$('.singleList').html('');
-	$('.listPlaces').html('');
-}
 
 function viewThisList() {
 	$('.listsGrid').on('click', '.listPreview', function(e) {
@@ -102,27 +132,17 @@ function getThisListData(id, callback) {
 		url: `/api/lists/${id}`,
 		dataType: 'JSON',
 		method: 'GET',
+		beforeSend: function(xhr, settings) { 
+			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+		},
 		success: callback
 	};
 	$.ajax(settings);
 }
 
 
-//========== CLOSE WINDOW =============
-// ====================================
-
-function xListWindow() {
-	$('.close').on('click', function(e) {
-		e.preventDefault();
-		switchView($('.listView'), $('.gridView'))
-		showLists();	
-		clearListInfo();
-	})
-}
-
-//========== CREATE NEW LIST ==========
-// ====================================
-
+//==================================================
+//========== CREATE NEW LIST =======================
 
 function openListForm() {
 	$('.newListButton').on('click', function(e) {
@@ -178,7 +198,7 @@ function submitList() {
 		const arrayOfPlaces = renderNewListPlaces();
 		const dateCreated = new Date().toISOString();
 		const newList = {
-			author: 'testUser',
+			// author: 'testUser',
 			dateCreated: dateCreated,
 			city: $('#newListCity').val(),
 			country: $('#newListCountry').val(),
@@ -191,6 +211,9 @@ function submitList() {
 			url: '/api/lists',
 			data: newListJson,
 			contentType: 'application/json',
+			beforeSend: function(xhr, settings) { 
+			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+			},
 			type: 'POST',
 			success: successfulPost
 		}
@@ -218,8 +241,9 @@ function resetListForm() {
 }
 
 
-//========== DELETE LIST ==============
-// ====================================
+//==================================================
+//========== DELETE LIST ===========================
+
 
 function deleteThisList() {
 	$('.trash').on('click', function(e) {
@@ -238,6 +262,9 @@ function deleteThisList() {
 		const settings = {
 			url: `/api/lists/${listId}`,
 			type: 'DELETE',
+			beforeSend: function(xhr, settings) { 
+			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+			},
 			success: successfulDelete
 		}
 		$.ajax(settings);
@@ -253,16 +280,9 @@ function successfulDelete() {
 }
 
 
-//========== EDIT LIST ================
-// ====================================
+//==================================================
+//========== EDIT LIST =============================
 
-// click edit
-// 	turn listView into inputs
-// 			click save this list and 
-// 				if any input.val() !== data.string make it for update var
-// 					PUT update fields in AJAX 
-// 			click cancel 
-// 				turn inputs into listView
 
 function editList() {
 	$('.editList').on('click', function(e) {
@@ -299,6 +319,25 @@ function renderPlaces(data) {
 	}
 }
 
+function editAddAnotherPlace() {
+	$('.editAddPlace').on('click', function(e) {
+		e.preventDefault();
+		const placeIndex = $('.editListPlace').length;
+		console.log('place index is ' + placeIndex);
+		const placeFields = `
+			<li class="editListPlace">
+				<label for="editPlaceName-${placeIndex}">Place Name</label>
+				<input type="text" name="placeName" id="editPlaceName-${placeIndex}" class="editListPlaceName listInput">
+
+				<label for="editPlaceDescription-${placeIndex}">Place Description</label>
+				<input type="text" name="placeDescription" id="editPlaceDescription-${placeIndex}" class="editListPlaceDescription listInput">
+			</li>
+		`		
+		console.log(placeIndex);
+		$('.editListPlaces').append(placeFields);
+	});
+}
+
 function updateList() {
 	$('.updateListButton').on('click', function(e) {
 		e.preventDefault();
@@ -306,7 +345,6 @@ function updateList() {
 		const listId = $('.editListForm').attr('id');
 		
 		const updatedList = {
-			// author: req.user,
 			id: listId,
 			city: $('#editListCity').val(),
 			country: $('#editListCountry').val(),
@@ -322,6 +360,9 @@ function updateList() {
 			data: updatedListJson,
 			contentType: 'application/json',
 			type: 'PUT',
+			beforeSend: function(xhr, settings) { 
+			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+			},
 			success: successfulUpdate
 		}
 		console.log(updatedListJson);
@@ -366,5 +407,5 @@ function cancelEditList() {
 	});
 }
 
-$(STARTUP);
 
+$(STARTUP);

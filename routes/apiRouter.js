@@ -16,6 +16,7 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
+//consider using failureRedirect: '/' key: value above
 
 
 //==================== GET REQUESTS ====================
@@ -23,7 +24,7 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 
 // GET LISTS
 
-router.get('/lists', (req, res, next) => {
+router.get('/lists', jwtAuth, (req, res, next) => {
 	List
 		.find()
 		.sort({dateCreated: -1})
@@ -37,7 +38,7 @@ router.get('/lists', (req, res, next) => {
 		});
 });
 
-router.get('/lists/:id', (req, res, next) => {
+router.get('/lists/:id', jwtAuth, (req, res, next) => {
 	List
 		.findById(req.params.id)
 		.then(list => {
@@ -113,19 +114,6 @@ router.post('/lists', jsonParser, jwtAuth, (req, res, next) => {
 });
 
 router.post('/users', jsonParser, (req, res, next) => {
-	// const requiredFields = ['userName', 'password', 'userDescription', 'dateJoined'];
-	// for (let i = 0; i < requiredFields.length; i++) {
-	// 	const field = requiredFields[i];
-	// 	if (!(field in req.body)) {
-	// 		const missingField = `Missing ${field} in request body`;
-	// 		console.error(missingField);
-	// 		return res.status(422).json({
-	// 			code: 422,
-	// 			reason: 'ValidationError',
-	// 			message: missingField
-	// 		});
-	// 	}
-	// }
 	const requiredFields = ['userName', 'password', 'userDescription'];
 	const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -246,11 +234,15 @@ router.post('/users', jsonParser, (req, res, next) => {
 
 //==================== PUT REQUESTS ====================
 
-router.put('/lists/:id', (req, res, next) => {
+router.put('/lists/:id', jsonParser, jwtAuth, (req, res, next) => {
 	if (req.params.id !== req.body.id) {
 		const message = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match.`;
 		console.error(message);
 		return res.status(400).json({message: message});
+	// } else if (req.user.userName !== req.params.author) {
+	// 	const message = 'You cannot edit another traveler\'s list!';
+	// 	console.error(message);
+	// 	return res.status(400).json({message: message});
 	}
 
 	const toUpdate = {};
@@ -273,7 +265,7 @@ router.put('/lists/:id', (req, res, next) => {
 		});
 });
 
-router.put('/users/:id', (req, res, next) => {
+router.put('/users/:id', jsonParser, jwtAuth, (req, res, next) => {
 	if (req.params.id !== req.body.id) {
 		const message = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match.`;
 		console.error(message);
@@ -303,14 +295,14 @@ router.put('/users/:id', (req, res, next) => {
 
 //==================== DELETE REQUESTS ====================
 
-router.delete('/lists/:id', (req, res, next) => {
+router.delete('/lists/:id', jwtAuth, (req, res, next) => {
 	List
 		.findByIdAndRemove(req.params.id)
 		.then(list => res.status(204).end())
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-router.delete('/users/:id', (req, res, next) => {
+router.delete('/users/:id', jwtAuth, (req, res, next) => {
 	User
 		.findByIdAndRemove(req.params.id)
 		.then(user => res.status(204).end())

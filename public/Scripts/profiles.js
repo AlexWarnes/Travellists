@@ -1,6 +1,21 @@
 'use strict'
 
-function dynamicSTORE() {
+
+//==================================================
+//========== TOOLBOX ===============================
+
+const STORE = {
+	userToken: localStorage.getItem('userToken')
+}
+
+function switchView(currentView, nextView) {
+	currentView.slideToggle({
+		duration: 500, 
+		complete: nextView.slideToggle(500)
+	});
+}
+
+function STARTUP() {
 	showProfiles();
 	viewThisProfile();
 	closeThisWindow();
@@ -35,6 +50,9 @@ function getProfileData(callback) {
 		url: '/api/users',
 		dataType: 'JSON',
 		method: 'GET',
+		beforeSend: function(xhr, settings) { 
+			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+		},
 		success: callback
 	};
 	$.ajax(settings);
@@ -44,6 +62,7 @@ function getProfileData(callback) {
 //========== VIEW INDIVIDUAL PROFILE =========
 
 function clearProfileHtml() {
+	$('.profilePreview').attr('id');
 	$('.singleProfile').html('');
 }
 
@@ -52,7 +71,8 @@ function viewThisProfile() {
 		clearProfileHtml();
 		const profileId = this.id;
 		console.log(`Getting info for ${profileId}`);
-		$('.profilesGrid').toggle(750);
+		// $('.profilesGrid').toggle(750);
+		switchView($('.profileGridView'), $('.profileView'));
 		getThisProfileData(profileId, displayThisProfile);
 	})
 }
@@ -61,14 +81,14 @@ function displayThisProfile(data) {
 	console.log(data);
 	const countriesVisited = data.countriesVisited //add spacing between words;
 	const profileHtml = `
-		<div class="profileIntro">
+		<div class="profileIntro" id="${data.id}">
 			<h1 class="profileUserName">${data.userName}</h1>
 			<h2 class="profileUserDescription">${data.userDescription}</h2>
 			<p class="profileCountries"><span class="profileCoutriesVisited">Countries Visited: </span>${countriesVisited}</p>
 		</div>`;
 
 	$('.singleProfile').html(profileHtml);
-	$('.profileView').toggle(1000);
+	// $('.profileView').toggle(1000);
 }
 
 function getThisProfileData(id, callback) {
@@ -76,18 +96,21 @@ function getThisProfileData(id, callback) {
 		url: `/api/users/${id}`,
 		dataType: 'JSON',
 		method: 'GET',
+		beforeSend: function(xhr, settings) { 
+			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+		},
 		success: callback
 	};
 	$.ajax(settings);
 }
 
 function closeThisWindow() {
-	$('.close').on('click', function(e) {
-		e.preventDefault();
-		$(this).parent().toggle(750);
-		$('.profilesGrid').toggle(1000);		
+	$('.close').on('click', function() {
+		const currentView = $(event.currentTarget).closest('.view');
+		switchView(currentView, $('.profileGridView'));
 		clearProfileHtml();
 	})
 }
 
-$(dynamicSTORE);
+$(STARTUP);
+

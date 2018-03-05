@@ -46,7 +46,7 @@ const List = mongoose.model('List', listSchema);
 const userSchema = mongoose.Schema({
 	userName: {type: String, required: true, unique: true},
 	password: {type: String, required: true},
-	userDescription: {type: String, required: true},
+	userDescription: {type: String, required: false},
 	email: {type: String, required: false},
 	countriesVisited: {type: Array, required: false},
 	//have lists with userIDs instead of users with a big array
