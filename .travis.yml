@@ -1,7 +1,7 @@
 language: node_js
 node_js: node
 services:
-  - mongodb
+- mongodb
 deploy:
   provider: heroku
   api_key:
@@ -9,3 +9,6 @@ deploy:
   app: travellists
   on:
     repo: AlexWarnes/Travelmate
+env:
+  global:
+    secure: aJU8QptXcUi896QBE7NX84r6XbMOVrKeCOMDeyaT3A19g86ZXdeqn1jvGXFB9aXo4FE6iZUgnjkL9GsOUqZdhCW9xecU3k1r7XjhM7PWIrp5XTv69IggAoJXaj2V23P+IA59YKqIr2C9iPpZ96aaW2UoAAPafBJeKMTa8jk+bVMJb7A4WFQ7P9n7XKwT/DuJFaJDGffCVyvxRlQ7fsAfeREGCKPN0iR6FEvXSDP+/ZmrOFo89V0iximyK7YD6pFAWCDixUzspqr+ouk1/eFSqxiQOT61/9+/zl5cR0Fgt+fZ9nD+f9ctmEWSjJFkVJnGf2bA55/ehxAzjnw5O52qb5IO0ief9TurQkinOd8d7DbVO4n9jsRNuy0ORXJYizxoxqaQD1O60cgjshwmZYYfqdgs7S3+zrB+Dxscrn8LqPzqTaIXT0vKm4ibmjoG+h/XLcE8LJgh6GP7Mc5iuJfTIh8X16ooFFMTiO/5BlASKW55hPWspx2/NnmOVngZlvPBxSTB29NL9TFRGkWyeO7b5lL5pPDFsxaAyYP0jzQLbFBaAlPk11zRjam82hidttWPdC5cLCD4AnoZpekOh+H2GWCZjMCxrlz3PxvzhN4WTcs+0GBNug23iISMtVGTOxq1MzcrJ0BRZBXTEoedIxPbVYgTjHGhcIRZgEmQSuIrlZU=
