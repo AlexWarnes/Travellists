@@ -15,10 +15,29 @@ function switchView(currentView, nextView) {
 	});
 }
 
+function verifyLogin() {
+	if (STORE.userToken) {
+		$('.noAuth').toggle(100);
+		$('.auth').fadeIn(300);
+	}
+}
+
+function logout() {
+	$('.logout').on('click', function(e) {
+		e.preventDefault();
+		STORE.userToken = null;
+		localStorage.removeItem('userToken');
+		location.replace('/');
+		verifyLogin();
+	});
+}
+
 function STARTUP() {
+	verifyLogin();
 	showProfiles();
 	viewThisProfile();
 	closeThisWindow();
+	logout();
 }
 
 //========== HOME SCREEN FUNCTIONS ==========

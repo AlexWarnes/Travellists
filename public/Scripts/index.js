@@ -23,12 +23,31 @@ function closeForm() {
 	});
 }
 
+function verifyLogin() {
+	if (STORE.userToken) {
+		$('.noAuth').toggle();
+		$('.auth').fadeIn(300);
+	}
+}
+
+function logout() {
+	$('.logout').on('click', function(e) {
+		e.preventDefault();
+		STORE.userToken = null;
+		localStorage.removeItem('userToken');
+		location.replace('/');
+		verifyLogin();
+	});
+}
+
 function STARTUP() {
+	verifyLogin();
 	openCreateAccount();
 	closeForm();
 	openLoginForm();
 	login();
 	createNewAccount();
+	logout();
 }
 
 //==================================================
@@ -78,8 +97,10 @@ function createNewAccount() {
 }
 
 function successfulCreateAccount() {
-	closeCreateAccountForm();
+	$('.welcome').fadeIn(200);
 	switchView($('.createAccountFields'), $('.loginFields'));
+	closeForm();
+	//Great! Let's log in with the account you just created.
 }
 
 
@@ -120,7 +141,7 @@ function issueToken(userInfo) {
 function successfulLogin(data) {
 	alert('SUCCESS!');
 	localStorage.setItem('userToken', data.authToken);
-	switchView($('.loginFields'), $('.homeView'));
+	location.replace('/');
 }
 
 $(STARTUP);

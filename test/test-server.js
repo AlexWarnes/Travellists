@@ -57,10 +57,10 @@ describe('Serving static public resources', function() {
 			});
 		});
 
-		it('link to (/about) should serve HTML', function() {
+		it('link to (/profile) should serve HTML', function() {
 			let res;
 			return chai.request(app)
-			.get('/about')
+			.get('/profile')
 			.then(function(_res) {
 				res = _res;
 				expect(res).to.have.status(200);

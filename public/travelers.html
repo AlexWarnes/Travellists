@@ -17,12 +17,14 @@
 			<link rel="stylesheet" href="./Styles/main.css">
 </head>
 <body>
+	
 	<nav role="navigation">
-		<p class="navItem"><a href="/">Home</a><p>
-		<p class="navItem"><a href="/lists">Lists</a><p>
-		<p class="navItem"><a href="/travelers">Travelers</a><p>
-		<p class="navItem"><a href="#">My Profile</a><p>
-		<p class="navItem"><a href="/about">About</a><p>
+		<p class="navItem"><a href="/">Travellists</a><p>
+		<p class="navItem auth"><a href="/lists">Lists</a><p>
+		<p class="navItem auth"><a href="/travelers">Travelers</a><p>
+		<p class="navItem auth"><a href="#">My Profile</a><p>
+		<p class="navItem login noAuth"><a href="#" class="loginLink">Login</a></p>
+		<p class="navItem logout auth"><a href="#">Log Out</a></p>
 	</nav>
 
 
@@ -49,7 +51,32 @@
 			
 		</div>
 
+	<footer>
+		<section class="aboutTravellists">
+			<h3>About Travellists</h3>
+			<p>Travellists is one of three capstone projects created and coded by Alex Warnes as part of the <a href="https://www.thinkful.com/" target="_blank">Thinkful</a> Full Stack Flex program. To see more projects, head over to <a href="https://www.alexwarnes.com" target="_blank">Alex's personal site.</a></p>
+		</section>
+		<section class="travellistsTech">
+			<h3>Travellists Tech Stack</h3>
+			<h4>Back End</h4>
+			<ul>				
+				<li>MongoDB</li>
+				<li>Express</li>
+				<li>Node.js</li>
+				<li>Mocha and Chai</li>
+				<li>JWT Authentication</li>
+			</ul>
+			
+			<h4>Front End</h4>
+			<ul>
+				<li>HTML5</li>
+				<li>CSS3</li>
+				<li>jQuery</li>
+			</ul>
+			<h4><a href="https://github.com/AlexWarnes/Travellists" target="_blank">Sourcecode <i class="fab fa-github"></i></a></h4>
+		</section>
+	</footer>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript" src="./Scripts/profiles.js"></script>
+	<script type="text/javascript" src="./Scripts/travelers.js"></script>
 </body>
 </html>

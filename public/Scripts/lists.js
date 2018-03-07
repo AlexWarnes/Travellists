@@ -31,8 +31,19 @@ function clearListInfo() {
 
 function verifyLogin() {
 	if (STORE.userToken) {
-		$('.fa-compass').addClass('fa-spin');
+		$('.noAuth').toggle(100);
+		$('.auth').fadeIn(300);
 	}
+}
+
+function logout() {
+	$('.logout').on('click', function(e) {
+		e.preventDefault();
+		STORE.userToken = null;
+		localStorage.removeItem('userToken');
+		location.replace('/');
+		verifyLogin();
+	});
 }
 
 function STARTUP() {
@@ -49,6 +60,7 @@ function STARTUP() {
 	editList();
 	editAddAnotherPlace();
 	cancelEditList();
+	logout();
 }
 
 
