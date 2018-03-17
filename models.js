@@ -19,9 +19,8 @@ const listSchema = mongoose.Schema({
 			placeDescription: {type: String, required: false}
 		}
 	],
-	//need this to default to user as author, maybe
-	//with Passport MW and req.user
 	author: {type: String, required: true},
+	authorID: {type: String, required: false},
 	dateCreated: {type: Date, default: Date.now}
 });
 
@@ -34,6 +33,7 @@ listSchema.methods.serialize = function() {
 		description: this.description,
 		places: this.places,
 		author: this.author,
+		authorID: this.authorID,
 		dateCreated: this.dateCreated
 	};
 };

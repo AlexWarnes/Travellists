@@ -102,6 +102,7 @@ router.post('/lists', jsonParser, jwtAuth, (req, res, next) => {
 			description: req.body.description,
 			places: req.body.places,
 			author: req.user.userName,
+			authorID: req.user.id
 		})
 		.then(list => {
 			res.status(201)
@@ -281,6 +282,22 @@ router.put('/users/:id', jsonParser, jwtAuth, (req, res, next) => {
 		}
 	});
 
+	//Prevent duplicate userNames when updating profile
+	//BUG: This successfully prevents duplicate userNames, but
+	//the error on the client is in the catch with status 500
+	// if (toUpdate.userName) {
+	// 	if (User.find(toUpdate.userName).count() > 0) {
+	// 	// There is an existing user with the same username
+	// 		console.error('Username already taken');
+	// 		res.status(422).json({
+	// 			code: 422,
+	// 			reason: 'ValidationError',
+	// 			message: 'Username already taken',
+	// 			location: 'userName'
+	// 		});
+	// 	}
+ //    }
+
 	User
 		.findByIdAndUpdate(req.params.id, {$set: toUpdate})
 		.then(user => {
@@ -289,7 +306,7 @@ router.put('/users/:id', jsonParser, jwtAuth, (req, res, next) => {
 		.catch(err => {
 			console.error(err);
 			res.status(500).json({message: 'Internal server error'});
-		});
+		});  
 });
 
 

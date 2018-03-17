@@ -5,7 +5,8 @@
 //========== TOOLBOX ===============================
 
 const STORE = {
-	userToken: localStorage.getItem('userToken')
+	userToken: localStorage.getItem('userToken'),
+	userID: localStorage.getItem('userID')
 }
 
 function switchView(currentView, nextView) {
@@ -113,7 +114,6 @@ function viewThisList() {
 	$('.listsGrid').on('click', '.listPreview', function(e) {
 		clearListInfo();
 		const listId = this.id;
-		switchView($('.gridView'), $('.listView'));
 		console.log(`Getting info for ${listId}`);
 		getThisListData(listId, displayThisList);
 	})
@@ -137,6 +137,7 @@ function displayThisList(data) {
 		$('.listPlaces').append(place);
 	});
 	$('.singleList').html(listHtml);
+	switchView($('.gridView'), $('.listView'));
 }
 
 function getThisListData(id, callback) {
@@ -258,17 +259,17 @@ function resetListForm() {
 
 
 function deleteThisList() {
-	$('.trash').on('click', function(e) {
+	$('.list-trash').on('click', function(e) {
 		e.preventDefault();
-		$('.deleteWarning').fadeIn(500);
+		$('.list-warning-deleteList').fadeIn(500);
 	});
 
-	$('.doNotDelete').on('click', function(e) {
+	$('.list-doNotDelete').on('click', function(e) {
 		e.preventDefault();
-		$('.deleteWarning').fadeOut(500);
+		$('.list-warning-deleteList').fadeOut(500);
 	});
 
-	$('.confirmDelete').on('click', function(e) {
+	$('.list-confirmDelete').on('click', function(e) {
 		e.preventDefault();
 		const listId = $('.listIntro').attr('id');
 		const settings = {
@@ -277,14 +278,14 @@ function deleteThisList() {
 			beforeSend: function(xhr, settings) { 
 			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
 			},
-			success: successfulDelete
+			success: successfulListDelete
 		}
 		$.ajax(settings);
 	});	
 }
 
-function successfulDelete() {
-	$('.deleteWarning').fadeOut(500);
+function successfulListDelete() {
+	$('.list-warning-deleteList').fadeOut(500);
 	switchView($('.listView'), $('.gridView'))		
 	clearListInfo();
 	showLists();

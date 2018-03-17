@@ -5,7 +5,8 @@
 //========== TOOLBOX ===============================
 
 const STORE = {
-	userToken: localStorage.getItem('userToken')
+	userToken: localStorage.getItem('userToken'),
+	userID: localStorage.getItem('userID')
 }
 
 function switchView(currentView, nextView) {
@@ -141,6 +142,7 @@ function issueToken(userInfo) {
 function successfulLogin(data) {
 	alert('SUCCESS!');
 	localStorage.setItem('userToken', data.authToken);
+	localStorage.setItem('userID', data.userID);
 	location.replace('/');
 }
 

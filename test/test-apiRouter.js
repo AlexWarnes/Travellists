@@ -41,6 +41,7 @@ function generateList() {
 			}
 		],
 		author: 'exampleUser',
+		authorID: '123456789',
 		//consider converting date to mongo date format and 
 		//adding comparisons in tests
 		dateCreated: faker.date.recent()

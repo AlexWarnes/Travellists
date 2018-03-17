@@ -5,7 +5,8 @@
 //========== TOOLBOX ===============================
 
 const STORE = {
-	userToken: localStorage.getItem('userToken')
+	userToken: localStorage.getItem('userToken'),
+	userID: localStorage.getItem('userID')
 }
 
 function switchView(currentView, nextView) {
@@ -107,7 +108,6 @@ function displayThisProfile(data) {
 		</div>`;
 
 	$('.singleProfile').html(profileHtml);
-	// $('.profileView').toggle(1000);
 }
 
 function getThisProfileData(id, callback) {
