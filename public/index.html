@@ -27,12 +27,60 @@
 		<p class="navItem logout auth"><a href="#">Log Out</a></p>
 	</nav>
 
-	<div class="homeView view">
-		<header class="indexHeader" role="banner">
-			<h1>Travellists</h1>
-			<p class="subtitle">Travellists is where travelers can find or create lists of their favorite places in cities around the world. Create an account to make custom lists and find other travelers with travel-styles like you.</p>
-			<button class="openCreateAccount noAuth">Create an Account</button>
-		</header>
+	<!-- <div class="homeView view"> -->
+		<header class="index-header" role="banner">
+			
+			<div class="index-welcome view">
+				<h1>Travellists</h1>
+				<p class="subtitle">Travellists is where travelers can find or create lists of their favorite places in cities around the world. Create an account to make custom lists and find other travelers with travel-styles like you.</p>
+				<button class="openCreateAccount noAuth">Create an Account</button>
+			</div>
+		
+			<!-- CREATE NEW ACCOUNT FORM -->
+
+			<fieldset class="index-createAccount view">
+				<i class="close far fa-times-circle"></i>
+				<form action="#" class="createAccountForm">
+					<label for="createUsername">Username</label>
+					<input type="text" id="createUsername" name="userName" required="true">
+
+					<label for="createPassword">Password</label>
+					<input type="password" id="createPassword" name="password" required="true">
+
+					<label for="confirmPassword">Confirm Password</label>
+					<input type="password" id="confirmPassword" required="true">
+
+					<p class="passwordWarning">Your passwords do not match!</p>
+
+					<button class="createNewAccountButton createLogin">Create Account!</button>
+				</form>
+			</fieldset>
+
+			<!-- LOGIN FORM -->
+			<div class="index-login view">
+
+				<!-- WELCOME ALERT FOR NEW ACCOUNT -->
+				<section class="welcome">
+					<h2>Thanks for joining our growing community! Please log in to get started.</h2>
+				</section>
+
+				<!-- LOGIN FORM FOR EXISTING USER -->
+
+				<fieldset class="loginFields">
+					<i class="close far fa-times-circle"></i>
+					<form action="#" class="loginForm">
+						<label for="loginUsername">Username</label>
+						<input type="text" id="loginUsername" name="userName" required="true">
+
+						<label for="loginPassword">Password</label>
+						<input type="password" id="loginPassword" name="password" required="true">
+
+						<button class="loginButton createLogin">Login</button>
+					</form>
+				</fieldset>
+			</div>
+
+		</header>		
 
 		<main role="main">
 			<section class="learn learnFindLists">
@@ -51,52 +99,11 @@
 				<p>If you found a great list, check out the author's profile. See where they've been, how they like to travel, and browse other lists they've created.</p>
 			</section>
 		</main>
-	</div>
-
-	<!-- CREATE NEW ACCOUNT FORM -->
-
-	<fieldset class="createAccountFields view">
-		<i class="close far fa-times-circle"></i>
-		<form action="#" class="createAccountForm">
-			<label for="createUsername">Username</label>
-			<input type="text" id="createUsername" name="userName" required="true">
-
-			<label for="createPassword">Password</label>
-			<input type="password" id="createPassword" name="password" required="true">
-
-			<label for="confirmPassword">Confirm Password</label>
-			<input type="password" id="confirmPassword" required="true">
-
-			<p class="passwordWarning">Your passwords do not match!</p>
-
-			<button class="createNewAccountButton createLogin">Create Account!</button>
-		</form>
-	</fieldset>
-
-	<!-- WELCOME ALERT FOR NEW ACCOUNT -->
-	<section class="welcome">
-		<h2>Thanks for joining our growing community! Please log in to get started.</h2>
-	</section>
-
-	<!-- LOGIN FORM FOR EXISTING USER -->
-
-	<fieldset class="loginFields view">
-		<i class="close far fa-times-circle"></i>
-		<form action="#" class="loginForm">
-			<label for="loginUsername">Username</label>
-			<input type="text" id="loginUsername" name="userName" required="true">
-
-			<label for="loginPassword">Password</label>
-			<input type="password" id="loginPassword" name="password" required="true">
-
-			<button class="loginButton createLogin">Login</button>
-		</form>
-	</fieldset>
 
 	<footer>
 		<section class="aboutTravellists">
 			<h3>About Travellists</h3>
-			<p>Travellists is one of three capstone projects created and coded by Alex Warnes as part of the <a href="https://www.thinkful.com/" target="_blank">Thinkful</a> Full Stack Flex program. To see more projects, head over to <a href="https://www.alexwarnes.com" target="_blank">Alex's personal site.</a></p>
+			<p>Travellists is one of three capstone projects created, designed, and coded by Alex Warnes as part of the <a href="https://www.thinkful.com/" target="_blank">Thinkful</a> Full Stack Flex program. To see more projects, head over to <a href="https://www.alexwarnes.com" target="_blank">Alex's personal site.</a></p>
 		</section>
 		<section class="travellistsTech">
 			<h3>Travellists Tech Stack</h3>

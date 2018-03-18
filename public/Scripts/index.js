@@ -19,7 +19,7 @@ function switchView(currentView, nextView) {
 function closeForm() {
 	$('.close').on('click', function() {
 		const currentView = $(event.currentTarget).closest('.view');
-		switchView(currentView, $('.homeView'));
+		switchView(currentView, $('.index-welcome'));
 		$('input').val('');
 	});
 }
@@ -58,7 +58,7 @@ function STARTUP() {
 function openCreateAccount() {
 	$('.openCreateAccount').on('click', function(e) {
 		e.preventDefault();
-		switchView($('.homeView'), $('.createAccountFields'));
+		switchView($('.index-welcome'), $('.index-createAccount'));
 	});
 }
 
@@ -99,7 +99,7 @@ function createNewAccount() {
 
 function successfulCreateAccount() {
 	$('.welcome').fadeIn(200);
-	switchView($('.createAccountFields'), $('.loginFields'));
+	switchView($('.index-createAccount'), $('.index-login'));
 	closeForm();
 	//Great! Let's log in with the account you just created.
 }
@@ -111,7 +111,7 @@ function successfulCreateAccount() {
 function openLoginForm() {
 	$('.loginLink').on('click', function(e) {
 		e.preventDefault();
-		switchView($('.homeView'), $('.loginFields'));
+		switchView($('.index-welcome'), $('.index-login'));
 	});
 }
 
