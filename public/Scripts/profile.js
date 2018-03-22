@@ -26,8 +26,8 @@ function verifyLogin() {
 function closeView() {
 	$('.profile-singleList').on('click', '.close', function() {
 		const currentView = $(event.currentTarget).closest('.view');
-		switchView(currentView, $('.profile-listsGrid'));
-		$('.profile-listViews input').val('');
+		switchView(currentView, $('.gridView'));
+		$('.listViews input').val('');
 		clearListInfo();
 	});
 }
@@ -64,6 +64,8 @@ function STARTUP() {
 	editAddAnotherPlace();
 	updateList();
 	cancelEditList();
+	searchLists();
+	clearResults();
 	deleteProfile();
 	logout();
 }
@@ -122,7 +124,7 @@ function renderLists(item) {
 function displayMyLists(data) {
 	const query = STORE.userID;
 	const userLists = data.filter(list => list.authorID === query);
-	$('.profile-listsGrid').html(userLists.map(list => renderLists(list)));
+	$('.listsGrid').html(userLists.map(list => renderLists(list)));
 }
 
 function getMyLists(callback) {
@@ -246,7 +248,7 @@ function successfulProfileDelete() {
 //========== VIEW INDIVIDUAL LIST ==================
 
 function viewThisList() {
-	$('.profile-listsGrid').on('click', '.listPreview', function(e) {
+	$('.listsGrid').on('click', '.listPreview', function(e) {
 		clearListInfo();
 		const listId = this.id;
 		console.log(`Getting info for ${listId}`);
@@ -273,7 +275,7 @@ function displayThisList(data) {
 		$('.listPlaces').append(place);
 	});
 	$('.singleList').html(listHtml);
-	switchView($('.profile-listsGrid'), $('.profile-singleList'));
+	switchView($('.gridView'), $('.profile-singleList'));
 }
 
 function getThisListData(id, callback) {
@@ -296,14 +298,14 @@ function getThisListData(id, callback) {
 function openListForm() {
 	$('.newListButton').on('click', function(e) {
 		e.preventDefault();
-		$('.newListFieldset').slideDown(500);
+		switchView($('.gridView'), $('.newListFieldset'));
 	});
 }
 
 function cancelNewList() {
 	$('.cancelNewButton').on('click', function(e) {
 		e.preventDefault();
-		$('.newListFieldset').slideUp(500);
+		switchView($('.newListFieldset'), $('.gridView'));
 		resetListForm();
 	});
 }
@@ -370,9 +372,9 @@ function submitList() {
 }
 
 function successfulPost() {
-	$('.newListFieldset').slideUp(500);
-	getMyLists(displayMyLists);
+	switchView($('.newListFieldset'), $('.gridView'));
 	resetListForm();
+	getMyLists(displayMyLists);
 }
 
 function resetListForm() {
@@ -421,7 +423,7 @@ function deleteThisList() {
 
 function successfulListDelete() {
 	$('.list-warning-deleteList').fadeOut(500);
-	switchView($('.profile-singleList'), $('.profile-listsGrid'))		
+	switchView($('.profile-singleList'), $('.gridView'))		
 	clearListInfo();
 	getMyLists(displayMyLists);
 	console.log('successfully deleted that list');
@@ -535,7 +537,7 @@ function successfulUpdate() {
 	$('.editListFieldset').slideUp();
 	const listId = $('.listIntro').attr('id');
 	clearListInfo();
-	switchView($('.profile-singleList'), $('.profile-listsGrid'));	
+	switchView($('.profile-singleList'), $('.listsGrid'));	
 	getMyLists(displayMyLists);
 	resetEditListForm();
 }
@@ -553,5 +555,50 @@ function cancelEditList() {
 		resetEditListForm();
 	});
 }
+
+
+//==================================================
+//========== SEARCH TOOL =============================
+
+function searchLists() {
+	$('.lists-searchButton').on('click', function(e) {
+		e.preventDefault();
+		getMatchingLists(displayMatchedLists);
+	})
+}
+
+function displayMatchedLists(data) {
+	const query = $('#lists-search').val().toLowerCase();
+	//Return an array of lists that meet criteria
+	//On each list, create an array of values
+	//Return true if any string value contains the query
+	const matchedLists =
+		data.filter(list => Object.values(list)
+			.find(val => typeof val === "string" && val.toLowerCase().includes(query)));
+	$('.clearResults').toggle();
+	$('.listsGrid').html(matchedLists.map(list => renderLists(list)));
+	$('#lists-search').val("");
+}
+
+function getMatchingLists(callback) {
+	const settings = {
+		url: `/api/lists`,
+		dataType: 'JSON',
+		method: 'GET',
+		beforeSend: function(xhr, settings) { 
+			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+		},
+		success: callback
+	};
+	$.ajax(settings);
+}
+
+function clearResults() {
+	$('.clearResults').on('click', function() {
+		$('.clearResults').toggle();
+		getMyLists(displayMyLists);
+	});
+}
+
 
 $(STARTUP);

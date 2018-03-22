@@ -111,7 +111,7 @@ function successfulCreateAccount() {
 function openLoginForm() {
 	$('.loginLink').on('click', function(e) {
 		e.preventDefault();
-		switchView($('.index-welcome'), $('.index-login'));
+		switchView($('.index-login'), $('.index-welcome'));
 	});
 }
 

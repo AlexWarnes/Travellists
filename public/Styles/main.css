@@ -49,9 +49,9 @@ header h1 {
 .close {
 	float: right;
 	clear: right;
-    font-size: 40px;
-    color: #ffffff80;
-    transition: all .3s;
+	font-size: 40px;
+	color: #2f8a5480;
+	transition: all .3s;
 }
 
 .close:hover {
@@ -60,6 +60,7 @@ header h1 {
 }
 
 .editIcons {
+	display: none;
 	width: 100%;
 	text-align: right;
 	padding: 5px;
@@ -133,7 +134,7 @@ form {
 	    url('../Assets/paros.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
-	background-origin: 0 0;
+	background-position: left bottom;
 	text-align: center;
 	text-shadow: 0 0 20px #00000020;
 }
@@ -165,10 +166,15 @@ form {
 
 .index-createAccount, .index-login {
 	display: none;
-	width: 100%;
-	height: 100%;
+    margin: 0 auto;
+    width: 400px;
+    height: fit-content;
 	border: 1px solid transparent;
 	background-color: royalblue;
+	color: white;
+}
+
+.index-header .close {
 	color: white;
 }
 
@@ -210,10 +216,16 @@ form {
 	margin: 10px 0;
 }
 
+.listViews {
+	width: 100%;
+	min-height: 400px;
+	position: relative;
+}
+
 .lists-tools {
 	position: relative;
 	width: 100%;
-	height: 140px;
+	height: 155px;
 	margin-bottom: 30px;
 	padding: 10px;
 	border-bottom: 1px solid #00000025;
@@ -257,6 +269,21 @@ form {
 .lists-searchForm>button:hover {
 	box-shadow: 0px 0px 10px #0404042e;
 }
+
+.clearResults {
+	display: none;
+	position: absolute;
+	bottom: -5px;
+	left: 40px;
+	width: 120px;
+	background-color: #4169E1;
+	color: white;
+	padding: 5px;
+	border-radius: 15px;
+	border: none;
+}
+
+
 
 .listPreview {
 	position: relative;
@@ -312,10 +339,6 @@ form {
 	z-index: 1;
 }
 
-.list-close {
-	color: #2f8a5480;
-}
-
 
 /*===================================================*/
 /* NEW LIST FORM */
@@ -343,15 +366,11 @@ form {
 
 .newListFieldset {
 	display: none;
-	position: absolute;
-	z-index: 1;
 	width: 100%;
 	margin-right: auto;
 	margin-left: auto;
 	background-color: white;
 	padding: 20px;
-	/*box-shadow: 5px 5px 10px black;*/
-	z-index: 1;
 }
 
 input {
@@ -534,13 +553,6 @@ input {
 	cursor: pointer;
 }
 
-.profile-listViews {
-	width: 100%;
-	min-height: 400px;
-	position: relative;
-	padding: 10px 0;
-}
-
 .profile-editFields {
 	display: none;
 	width: 100%;
@@ -565,10 +577,6 @@ input {
 	margin-right: auto;
 }
 
-.profile-listsGrid {
-	width: 100%;
-}
-
 .profile-singleList {
 	display: none;
 	width: 100%;
@@ -583,14 +591,17 @@ input {
 
 .profile-delete-button {
 	font-size: 12px;
-	color: #808080;
-	margin: 20px;
+	background-color: black;
+	color: white;
+	margin: 0;
+	padding: 20px;
 	text-align: center;
 	transition: 1s;
 }
 
 .profile-delete-button:hover {
-	color: red;
+	/*color: red;*/
+	background-color: red;
 	cursor: pointer;
 }
 

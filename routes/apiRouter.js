@@ -314,7 +314,12 @@ router.put('/users/:id', jsonParser, jwtAuth, (req, res, next) => {
 
 router.delete('/lists/:id', jwtAuth, (req, res, next) => {
 	List
-		.findByIdAndRemove(req.params.id)
+	//BUG: This successfully prevents users from deleting other user 
+	//lists, but even when it blocks a delete the server still sends a 204 response.
+		.findOneAndRemove({
+			_id: req.params.id, 
+			authorID: req.user.id
+		})
 		.then(list => res.status(204).end())
 		.catch(err => res.status(500).json({message: 'Internal server error'}));
 });

@@ -53,7 +53,7 @@
 	
 	<!-- ALL LIST ACTIVITY HAPPENS HERE -->
 
-	<section class="profile-listViews">
+	<section class="listViews">
 
 		<!-- LIST SEARCH TOOLS AND GRID -->
 
@@ -62,15 +62,32 @@
 				<form action="#" class="lists-searchForm">
 					<label for="lists-search">Search Lists</label>
 					<input type="text" id="lists-search" placeholder="e.g. 'Coffee'">
-					<button><i class="fas fa-search"></i></button>
+					<button class="lists-searchButton"><i class="fas fa-search"></i></button>
 				</form>
+				<button class="clearResults">Clear Results</button>
 				<button class="newListButton">+ New List</button>
 			</div>
 
-			<div class="profile-listsGrid view">
+			<div class="listsGrid view">
 				<!-- List Tiles Populate Here -->
 			</div>
 		</section>
+
+<!-- 		<section class="gridView view">
+			<div class="lists-tools">
+				<form action="#" class="lists-searchForm">
+					<label for="lists-search">Search Lists</label>
+					<input type="text" id="lists-search" placeholder="e.g. 'Coffee'">
+					<button class="lists-searchButton"><i class="fas fa-search"></i></button>
+				</form>
+				<button class="clearResults">Clear Results</button>
+				<button class="newListButton">+ New List</button>
+			</div>
+			
+			<div class="listsGrid">
+
+			</div>
+		</section> -->
 
 
 		<!-- <button class="profile-newListButton newListButton">+ New List</button>
@@ -171,8 +188,6 @@
 		
 	</section>
 
-	<p class="profile-delete-button">Delete my profile <i class="trash profile-trash far fa-trash-alt"></i></p>
-
 	<div class="deleteWarning profile-warning-deleteProfile">
 		<p>Are you sure you want to delete your profile?</p>
 		<p>Note: Your lists will still be visible to other users. If you don't want that, delete your lists individually before deleting your profile.</p>
@@ -205,6 +220,8 @@
 			<h4><a href="https://github.com/AlexWarnes/Travellists" target="_blank">Sourcecode <i class="fab fa-github"></i></a></h4>
 		</section>
 	</footer>
+
+	<p class="profile-delete-button">Delete my Travellists profile <i class="trash profile-trash far fa-trash-alt"></i></p>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="./Scripts/profile.js"></script>

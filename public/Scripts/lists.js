@@ -61,6 +61,8 @@ function STARTUP() {
 	editList();
 	editAddAnotherPlace();
 	cancelEditList();
+	searchLists();
+	clearResults();
 	logout();
 }
 
@@ -121,11 +123,13 @@ function viewThisList() {
 
 function displayThisList(data) {
 	console.log(data);
+	const authorID = data.authorID;
 	const listHtml = `
 		<div class="listIntro" id=${data.id}>
 			<h1 class="listLocation">${data.city}, ${data.country}</h1>
 			<h2 class="listTitle">${data.title}</h2>
 			<p class="listDescription">${data.description}</p>
+			<p class="listAuthor" id=${data.authorID}></p>
 		</div>`;
 	
 	data.places.forEach((item) => {
@@ -137,7 +141,16 @@ function displayThisList(data) {
 		$('.listPlaces').append(place);
 	});
 	$('.singleList').html(listHtml);
+	verifyEditDeletePermission(authorID)
 	switchView($('.gridView'), $('.listView'));
+}
+
+function verifyEditDeletePermission(authorID) {
+	if (localStorage.userID === authorID) {
+		$('.editIcons').show();
+	} else {
+		$('.editIcons').hide();
+	}
 }
 
 function getThisListData(id, callback) {
@@ -280,6 +293,7 @@ function deleteThisList() {
 			},
 			success: successfulListDelete
 		}
+		console.log(settings);
 		$.ajax(settings);
 	});	
 }
@@ -420,5 +434,48 @@ function cancelEditList() {
 	});
 }
 
+
+//==================================================
+//========== SEARCH TOOL =============================
+
+function searchLists() {
+	$('.lists-searchButton').on('click', function(e) {
+		e.preventDefault();
+		getMatchingLists(displayMatchedLists);
+	})
+}
+
+function displayMatchedLists(data) {
+	const query = $('#lists-search').val().toLowerCase();
+	//Return an array of lists that meet criteria
+	//On each list, create an array of values
+	//Return true if any string value contains the query
+	const matchedLists =
+		data.filter(list => Object.values(list)
+			.find(val => typeof val === "string" && val.toLowerCase().includes(query)));
+	$('.clearResults').toggle();
+	$('.listsGrid').html(matchedLists.map(list => renderLists(list)));
+	$('#lists-search').val("");
+}
+
+function getMatchingLists(callback) {
+	const settings = {
+		url: `/api/lists`,
+		dataType: 'JSON',
+		method: 'GET',
+		beforeSend: function(xhr, settings) { 
+			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+		},
+		success: callback
+	};
+	$.ajax(settings);
+}
+
+function clearResults() {
+	$('.clearResults').on('click', function() {
+		$('.clearResults').toggle();
+		showLists();
+	});
+}
 
 $(STARTUP);
