@@ -196,6 +196,7 @@ router.post('/users', jsonParser, (req, res, next) => {
 	return User.find({userName})
 		.count()
 		.then(count => {
+			console.log(`COUNTING ${count} users with that name`)
 			if (count > 0) {
 				// There is an existing user with the same username
 				return Promise.reject({
@@ -205,7 +206,7 @@ router.post('/users', jsonParser, (req, res, next) => {
 					location: 'userName'
 				});
       		}
-	
+
 			// If there is no existing user, hash the password
 			return User.hashPassword(password);
 		})
@@ -223,13 +224,18 @@ router.post('/users', jsonParser, (req, res, next) => {
 					.json(user.serialize());
 				})
 				.catch(err => {
-					if (err.reason === 'ValidationError') {
-						return res.status(err.code).json(err);
-					}
 					console.error(err);
 					res.status(500).json({message: 'Internal server error'});
 				});
-			});
+			})
+	    .catch(err => {
+	    	if (err.reason === 'ValidationError') {
+	    		console.error(err);
+				return res.status(err.code).json(err);
+			}
+			console.error(err);
+			res.status(500).json({message: 'Internal server error'});
+	    });
 });
 
 
@@ -237,17 +243,14 @@ router.post('/users', jsonParser, (req, res, next) => {
 
 router.put('/lists/:id', jsonParser, jwtAuth, (req, res, next) => {
 	if (req.params.id !== req.body.id) {
-		const message = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match.`;
+		const badRequest = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match.`;
 		console.error(message);
-		return res.status(400).json({message: message});
-	// } else if (req.user.userName !== req.params.author) {
-	// 	const message = 'You cannot edit another traveler\'s list!';
-	// 	console.error(message);
-	// 	return res.status(400).json({message: message});
+		return res.status(400).json({message: badRequest});
 	}
 
 	const toUpdate = {};
 	const updateableFields = ['city', 'country', 'title', 'description', 'places']
+	const message = 'You do not have permission to edit this list!';
 
 	updateableFields.forEach(field => {
 		if (field in req.body) {	
@@ -256,18 +259,20 @@ router.put('/lists/:id', jsonParser, jwtAuth, (req, res, next) => {
 	});
 
 	List
-		.findByIdAndUpdate(req.params.id, {$set: toUpdate})
-		.then(list => {
-			res.status(204).end()
-		})
-		.catch(err => {
-			console.error(err);
-			res.status(500).json({message: 'Internal server error'});
-		});
+		.findOneAndUpdate(
+			{_id: req.params.id, authorID: req.user.id}, 
+			{$set: toUpdate}
+		)
+		.then(list => list === null ?
+			res.status(403).send(message) : res.status(204).end())
 });
 
 router.put('/users/:id', jsonParser, jwtAuth, (req, res, next) => {
-	if (req.params.id !== req.body.id) {
+	if (req.params.id !== req.user.id) {
+		const message = 'You are not allowed to edit other users!'
+		console.error(message);
+		return res.status(403).json({message: message})
+	} else if (req.params.id !== req.body.id) {
 		const message = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match.`;
 		console.error(message);
 		return res.status(400).json({message: message});
@@ -282,49 +287,79 @@ router.put('/users/:id', jsonParser, jwtAuth, (req, res, next) => {
 		}
 	});
 
-	//Prevent duplicate userNames when updating profile
-	//BUG: This successfully prevents duplicate userNames, but
-	//the error on the client is in the catch with status 500
-	// if (toUpdate.userName) {
-	// 	if (User.find(toUpdate.userName).count() > 0) {
-	// 	// There is an existing user with the same username
-	// 		console.error('Username already taken');
-	// 		res.status(422).json({
-	// 			code: 422,
-	// 			reason: 'ValidationError',
-	// 			message: 'Username already taken',
-	// 			location: 'userName'
-	// 		});
-	// 	}
- //    }
+	//If a userName is not being edited, we remove it from the DB update
+	if (toUpdate.userName === req.user.userName) {
+		delete toUpdate.userName;
+	}
 
-	User
-		.findByIdAndUpdate(req.params.id, {$set: toUpdate})
-		.then(user => {
-			res.status(204).end()
-		})
-		.catch(err => {
+	console.log(toUpdate);
+
+	//If there's no username to update, then we update the rest
+	if (!toUpdate.userName) {
+		return User
+			.findByIdAndUpdate(req.params.id, {$set: toUpdate})
+			.then(user => {
+				res.status(204).end();
+			})
+			.catch(err => {
+				console.error(err);
+				res.status(500).json({message: 'Internal server error'});
+			})
+	//If there is a username to update, we make sure it doesn't already exist
+	//before updating the rest
+	} else {
+		return User.find({userName: toUpdate.userName})
+			.count()
+			.then(count => {
+				console.log(`COUNTING ${count} users with that name`)
+				if (count > 0) {
+					// There is an existing user with the same username
+					return Promise.reject({
+						code: 422,
+						reason: 'ValidationError',
+						message: 'Username already taken',
+						location: 'userName'
+					});
+	      		}
+	      	return User.findByIdAndUpdate(req.params.id, {$set: toUpdate})
+	      	})
+			.then(user => {
+				res.status(204).end();
+			})
+			.catch(err => {
+				if (err.reason === 'ValidationError') {
+	    			console.error(err);
+					return res.status(err.code).json(err);
+				}
 			console.error(err);
 			res.status(500).json({message: 'Internal server error'});
-		});  
+			})
+		}	
 });
 
 
 //==================== DELETE REQUESTS ====================
 
-router.delete('/lists/:id', jwtAuth, (req, res, next) => {
+router.delete('/lists/:id', jsonParser, jwtAuth, (req, res, next) => {
+	const message = `You are not allowed to delete this list`;
+
 	List
-	//BUG: This successfully prevents users from deleting other user 
-	//lists, but even when it blocks a delete the server still sends a 204 response.
 		.findOneAndRemove({
 			_id: req.params.id, 
 			authorID: req.user.id
 		})
-		.then(list => res.status(204).end())
-		.catch(err => res.status(500).json({message: 'Internal server error'}));
+		.then(list => list === null ? 
+			res.status(403).send(message) : res.status(204).end())
 });
 
 router.delete('/users/:id', jwtAuth, (req, res, next) => {
+	
+	if (req.user.id !== req.params.id) {
+		const message = 'You are not allowed to delete other users!';
+		console.error(message);
+		res.status(403).send(message);
+	}
+	
 	User
 		.findByIdAndRemove(req.params.id)
 		.then(user => res.status(204).end())
