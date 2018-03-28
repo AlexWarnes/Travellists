@@ -17,9 +17,10 @@ function switchView(currentView, nextView) {
 }
 
 function verifyLogin() {
-	if (STORE.userToken) {
-		$('.noAuth').toggle(100);
+	if (STORE.userToken !== null) {
 		$('.auth').fadeIn(300);
+	} else {
+		$('.noAuth').fadeIn(300);
 	}
 }
 
@@ -28,6 +29,7 @@ function logout() {
 		e.preventDefault();
 		STORE.userToken = null;
 		localStorage.removeItem('userToken');
+		localStorage.removeItem('userID');
 		location.replace('/');
 		verifyLogin();
 	});
@@ -72,6 +74,15 @@ function getProfileData(callback) {
 		method: 'GET',
 		beforeSend: function(xhr, settings) { 
 			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+		},
+		statusCode: {
+			401: function() {
+				STORE.userToken = null;
+				localStorage.removeItem('userToken');
+				localStorage.removeItem('userID');
+				location.replace('/');
+				verifyLogin();
+			}
 		},
 		success: callback
 	};

@@ -4,7 +4,7 @@ body * {
 
 body {
 	font-family: 'Montserrat', sans-serif;
-	padding-top: 40px;
+	padding-top: 45px;
 }
 
 nav {
@@ -14,14 +14,37 @@ nav {
 	justify-content: space-evenly;
 	align-items: center;
 	width: 100%;
-	height: 40px;
-	background-color: #18453B;
+	height: 45px;
+	background-color: #F6F6F6;
 	z-index: 10;
+	border-bottom: 1px solid #17443b20;
+	box-shadow: 0 5px 15px #5656561a;
+}
+
+.auth, .noAuth {
+	display: none;
 }
 
 nav a {
-	color: white;
+	width: 100%;
+	height: 100%;
+	padding: 4px;
+	border-right: 1px solid #17443b20;
+	text-align: center;
+	font-size: 14px;
+	color: #349680;
 	text-decoration: none;
+	transition: all .3s;
+}
+
+nav a:hover {
+	background-color: #FFFFFF;
+	color: #41a3e1;
+}
+
+.navIcon {
+	display: block;
+	font-size: 20px;
 }
 
 .auth {
@@ -34,7 +57,7 @@ main {
 
 header {
 	width: 100%;
-	height: 75vh;
+	height: 60vh;
 	margin-top: 0;
 	padding: 0 20px 20px 20px;
 	color: white;
@@ -122,8 +145,8 @@ form {
 /*===================================================*/
 
 .index-header {
-	background-color: grey;
-	background-image: 
+	background-color: #344d96;
+/*	background-image: 
 	    -webkit-linear-gradient(rgba(255, 255, 255, 0.25), rgba(200, 200, 200, 0.25)), 
 	    url('../Assets/paros.jpg');
 	background-image: 
@@ -131,7 +154,7 @@ form {
 	    url('../Assets/paros.jpg');
 	background-image: 
 	    linear-gradient(rgba(255, 255, 255, 0.25), rgba(200, 200, 200, 0.25)), 
-	    url('../Assets/paros.jpg');
+	    url('../Assets/paros.jpg');*/
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: left bottom;
@@ -140,8 +163,9 @@ form {
 }
 
 .subtitle {
-	width: 80%;
-	margin: 40px auto;
+	width: 90%;
+	margin: 30px auto;
+	font-size: 18px;
 }
 
 .openCreateAccount, .createNewAccountButton, .loginButton {
@@ -167,7 +191,7 @@ form {
 .index-createAccount, .index-login {
 	display: none;
     margin: 0 auto;
-    width: 400px;
+    max-width: 400px;
     height: fit-content;
 	border: 1px solid transparent;
 	background-color: royalblue;
@@ -190,9 +214,9 @@ form {
 
 .welcome {
 	display: none;
-	width: 75%;
-	margin: 40px auto 0 auto;
-
+	width: 90%;
+	font-size: 13px;
+	margin: 0 auto 0 auto;
 }
 
 /*===================================================*/
@@ -207,22 +231,24 @@ form {
 }
 
 .lists-instructions {
-	max-width: 400px;
+	width: fit-content;
 	margin: 65px auto;
 	text-align: left;
+	font-weight: 200;
+	font-size: 20px;
 }
 
 .lists-instructions li {
-	margin: 10px 0;
+	margin: 20px 0;
 }
 
-.listViews {
+.list-views {
 	width: 100%;
 	min-height: 400px;
 	position: relative;
 }
 
-.lists-tools {
+.list-tools {
 	position: relative;
 	width: 100%;
 	height: 155px;
@@ -232,20 +258,20 @@ form {
 	box-shadow: 0 5px 5px #5656561a;
 }
 
-.lists-searchForm {
+.list-searchForm {
 	width: 70%;
 	display: inline-block;
 	margin-left: 40px;
 }
 
-.lists-searchForm>label {
+.list-searchForm>label {
 	display: block;
 	font-size: 25px;
 	font-weight: 200;
 	margin: 15px 0 -10px 0;
 }
 
-.lists-searchForm>input {
+.list-searchForm>input {
 	display: inline-block;
 	width: 400px;
 	height: 50px;
@@ -255,7 +281,7 @@ form {
 	box-shadow: 0px 0px 2px #4169E130;
 }
 
-.lists-searchForm>button {
+.list-searchForm>button {
 	height: 40px;
 	width: 40px;
 	margin: 0;
@@ -266,7 +292,7 @@ form {
 	color: #4169E1; /*royalblue*/
 }
 
-.lists-searchForm>button:hover {
+.list-searchForm>button:hover {
 	box-shadow: 0px 0px 10px #0404042e;
 }
 
@@ -289,7 +315,7 @@ form {
 	position: relative;
 	display: inline-block;
 	vertical-align: middle;
-	max-width: 300px;
+	width: 300px;
 	height: 300px;
 	margin: 15px;
 	padding: 5px;
@@ -352,7 +378,7 @@ form {
 	background-color: white;
 	font-size: 20px;
 	border: 1px solid seagreen;
-	border-radius: 20px;
+	border-radius: 3px;
 }
 
 .addPlace {
@@ -377,7 +403,7 @@ input {
 	display: block;
 	width: 90%;
 	padding: 10px;
-	margin: 20px auto 20px auto;
+	margin: 11px auto 20px auto;
 }
 
 .listFormPlaces {
@@ -570,24 +596,24 @@ input {
 	margin-top: 3px;
 }
 
-.profile-newListButton {
+/*.profile-newListButton {
 	position: static;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-}
+}*/
 
-.profile-singleList {
+/*.profile-singleList {
 	display: none;
-	width: 100%;
+	width: 100%;*/
 	/*this border prevents jQuery animation jumps*/
-	border: 1px solid transparent;
-}
+	/*border: 1px solid transparent;
+}*/
 
-.profile-listViews>.newListFieldset, .profile-listViews>.editListFieldset {
+/*.profile-listViews>.newListFieldset, .profile-listViews>.editListFieldset {
 	position: absolute;
 	top: 0;
-}
+}*/
 
 .profile-delete-button {
 	font-size: 12px;
@@ -605,6 +631,11 @@ input {
 	cursor: pointer;
 }
 
+/*===================================================*/
+/* FOOTER */
+/*===================================================*/
+
+
 footer {
 	display: flex;
 	justify-content: space-evenly;
@@ -613,11 +644,12 @@ footer {
 	margin-top: 40px;
 	background-color: black;
 	color: white;
-	font-size: small;
+	font-size: 13px;
+	font-weight: 200;
 }
 
 footer section {
-	min-width: 300px;
+	min-width: 320px;
 	max-width: 500px;
 	padding: 20px;
 	display: block;
@@ -625,6 +657,29 @@ footer section {
 
 footer h3 {
 	text-decoration: underline;
+	font-size: 24px;
+	font-weight: 200;
+	color: #2f8a54;
+}
+
+.footer-sourcecode {
+	display: block;
+	width: 100%;
+	margin: 0;
+	padding: 15px;
+	text-align: center;
+	transition: all .6s;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.footer-sourcecode:hover {
+	font-size: 20px;
+	background-color: #2f8a54;
+}
+
+.footer-github {
+	margin-right: 10px
 }
 
 footer a {
@@ -633,4 +688,87 @@ footer a {
 
 .hidden {
 	display: none;
+}
+
+@media only screen and (max-width: 640px) {
+	nav a {
+		font-size: 11px;
+	}
+
+	header h1 {
+		padding-top: 35px;
+	}
+
+	.subtitle {
+	    font-size: 14px;
+	}
+
+	input {
+		padding: 4px;
+		margin: 8px auto 15px auto;
+	}
+
+	.lists-instructions {
+		margin: 35px auto 0 auto;
+		font-size: 16px;
+	}
+
+	.learn {
+		width: 85%;
+	}
+
+	.list-tools {
+		height: 180px;
+		margin-bottom: 20px;
+	}
+
+	.list-searchForm {
+		width: 100%;
+		display: block;
+		margin-left: 0;
+	}
+
+	.list-searchForm>label {
+		display: block;
+		font-size: 20px;
+		margin: 5px 0 0 0;
+	}
+
+	.list-searchForm>input {
+		display: inline-block;
+		width: 85%;
+		height: 50px;
+		padding: 5px;
+	}
+
+	.list-searchForm>button {
+		height: 35px;
+		width: 35px;
+		border-radius: 20px;
+		box-shadow: none;
+		font-size: 22px;
+	}
+
+	.newListButton {
+		display: block;
+		position: absolute;
+		right: 20px;
+		width: 100px;
+		height: 45px;
+		font-size: 16px;
+		padding: 0;
+		margin: 0;
+	}
+
+	.clearResults {
+		bottom: 10px;
+		left: 0px;
+	}
+
+	.listPreview {
+		display: block;
+		width: 90%;
+		height: 250px;
+		margin: 15px auto;
+	}
 }

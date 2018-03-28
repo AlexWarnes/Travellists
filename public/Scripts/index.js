@@ -25,9 +25,10 @@ function closeForm() {
 }
 
 function verifyLogin() {
-	if (STORE.userToken) {
-		$('.noAuth').toggle();
+	if (STORE.userToken !== null) {
 		$('.auth').fadeIn(300);
+	} else {
+		$('.noAuth').fadeIn(300);
 	}
 }
 
@@ -100,8 +101,6 @@ function createNewAccount() {
 function successfulCreateAccount() {
 	$('.welcome').fadeIn(200);
 	switchView($('.index-createAccount'), $('.index-login'));
-	closeForm();
-	//Great! Let's log in with the account you just created.
 }
 
 

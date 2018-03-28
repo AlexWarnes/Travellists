@@ -4,7 +4,7 @@
 	<meta charset="UTF-8" name="Description" content="Travellists is where travelers can find or create lists of their favorite places in cities around the world. Find lists of places that match your travel-style before your next trip. Help others by creating lists of the best places when you get back.">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Travellists</title>
-	<link rel="icon" href="./Assets/coffeePlace.png">
+	<link rel="icon" href="./Assets/route.png">
 
 	<!-- STYLES -->
 
@@ -18,13 +18,13 @@
 </head>
 <body>
 
-	<nav role="navigation">
-		<p class="navItem"><a href="/">Travellists</a><p>
-		<p class="navItem auth"><a href="/lists">Lists</a><p>
-		<p class="navItem auth"><a href="/travelers">Travelers</a><p>
-		<p class="navItem auth"><a href="/profile">My Profile</a><p>
-		<p class="navItem login noAuth"><a href="#" class="loginLink">Login</a></p>
-		<p class="navItem logout auth"><a href="#">Log Out</a></p>
+	<nav class="nav-bar" role="navigation">
+		<a href="/" class="navItem"><i class="navIcon fas fa-home"></i>Travellists</a>
+		<a href="/lists" class="navItem auth"><i class="fas fa-list navIcon"></i>Lists</a>
+		<a href="/travelers" class="navItem auth"><i class="fas fa-users navIcon"></i>Travelers</a>
+		<a href="/profile" class="navItem auth"><i class="fas fa-user-circle navIcon"></i>Profile</a>
+		<a href="#" class="loginLink navItem login noAuth"><i class="fas fa-sign-in-alt navIcon"></i>Login</a>
+		<a href="#" class="navItem logout auth"><i class="fas fa-sign-out-alt navIcon"></i>Log Out</a>
 	</nav>
 
 	<header class="profile-header">
@@ -53,71 +53,74 @@
 	
 	<!-- ALL LIST ACTIVITY HAPPENS HERE -->
 
-	<section class="listViews">
-
+	<main class="list-views" id="list-views">
+		
 		<!-- LIST SEARCH TOOLS AND GRID -->
 
 		<section class="gridView view">
-			<div class="lists-tools">
-				<form action="#" class="lists-searchForm">
+			<div class="list-tools">
+				<form action="#" class="list-searchForm">
 					<label for="lists-search">Search Lists</label>
 					<input type="text" id="lists-search" placeholder="e.g. 'Coffee'">
-					<button class="lists-searchButton"><i class="fas fa-search"></i></button>
-				</form>
-				<button class="clearResults">Clear Results</button>
-				<button class="newListButton">+ New List</button>
-			</div>
-
-			<div class="listsGrid view">
-				<!-- List Tiles Populate Here -->
-			</div>
-		</section>
-
-<!-- 		<section class="gridView view">
-			<div class="lists-tools">
-				<form action="#" class="lists-searchForm">
-					<label for="lists-search">Search Lists</label>
-					<input type="text" id="lists-search" placeholder="e.g. 'Coffee'">
-					<button class="lists-searchButton"><i class="fas fa-search"></i></button>
+					<button class="lists-search-button"><i class="fas fa-search"></i></button>
 				</form>
 				<button class="clearResults">Clear Results</button>
 				<button class="newListButton">+ New List</button>
 			</div>
 			
 			<div class="listsGrid">
-
+				<!-- List Tiles Populate Here -->
 			</div>
-		</section> -->
+		</section>		
 
+		<!-- VIEW SINGLE LIST PAGE -->
 
-		<!-- <button class="profile-newListButton newListButton">+ New List</button>
+		<section class="listView view">
+			<i class="list-close close far fa-times-circle"></i>
+
+			<section class="singleList">
+				<!-- List Intro Populates Here -->
+			</section>
 			
-		Grid of User Lists
-		<article class="profile-listsGrid view">
-
-		</article> -->
-
-		<!-- Individual List View -->
-		<article class="profile-singleList view">
-			
-			<div class="singleList">
-			</div>
-
 			<ul class="listPlaces">
+				<!-- List's Places Populate Here -->
 			</ul>
 
 			<div class="editIcons">
 				<i class="trash list-trash far fa-trash-alt"></i>
 				<i class="editList fas fa-pencil-alt"></i>
 			</div>
+		</section>
+
+
+		<!-- EDIT LIST PAGE -->
+
+		<fieldset class="editListFieldset listForm view">
+			<form class="editListForm">
+				<label for="editListCity">City</label>
+				<input type="text" name="city" id="editListCity" class="listInput">
+
+				<label for="editListCountry">Country</label>
+				<input type="text" name="country" id="editListCountry" class="listInput">
+
+				<label for="editListTitle">Title</label>
+				<input type="text" name="title" id="editListTitle" class="listInput">
+
+				<label for="editListDescription">Description</label>
+				<input type="text" name="description" id="editListDescription" class="listInput">
+				
+				<h3>Add some places to your list!</h3>
+
+				<ul class="editListPlaces">
+					
+				</ul>
+				<button class="editAddPlace">+ Add Another Place</button> 
+				
+			</form>
 			
-			<div class="deleteWarning list-warning-deleteList">
-				<p>Are you sure you want to delete this list?</p>
-				<button class="list-confirmDelete confirmDelete">Yes, delete this list</button>
-				<button class="list-doNotDelete doNotDelete">No, do not delete this list</button>
-			</div>
-			
-		</article>
+			<button class="updateListButton completeButton">Submit this List!</button>
+			<button class="cancelEditButton cancelButton">Cancel</button>
+		</fieldset>
 
 
 		<!-- CREATE NEW LIST FORM -->
@@ -155,38 +158,16 @@
 			<button class="cancelNewButton cancelButton">Cancel</button>
 		</fieldset>
 
-		
-		<!-- EDIT LIST PAGE -->
 
-		<fieldset class="editListFieldset listForm view">
-			<form class="editListForm">
-				<label for="editListCity">City</label>
-				<input type="text" name="city" id="editListCity" class="listInput">
+		<!-- DELETE WARNING POP-UP -->
 
-				<label for="editListCountry">Country</label>
-				<input type="text" name="country" id="editListCountry" class="listInput">
+		<div class="deleteWarning list-warning-deleteList">
+			<p>Are you sure you want to delete this list?</p>
+			<button class="list-confirmDelete confirmDelete">Yes, delete this list</button>
+			<button class="list-doNotDelete doNotDelete">No, do not delete this list</button>
+		</div>
 
-				<label for="editListTitle">Title</label>
-				<input type="text" name="title" id="editListTitle" class="listInput">
-
-				<label for="editListDescription">Description</label>
-				<input type="text" name="description" id="editListDescription" class="listInput">
-				
-				<h3>Add some places to your list!</h3>
-
-				<ul class="editListPlaces">
-					
-				</ul>
-				<button class="editAddPlace">+ Add Another Place</button> 
-				
-			</form>
-			
-			<button class="updateListButton completeButton">Submit this List!</button>
-			<button class="cancelEditButton cancelButton">Cancel</button>
-		</fieldset>
-
-		
-	</section>
+	</main>
 
 	<div class="deleteWarning profile-warning-deleteProfile">
 		<p>Are you sure you want to delete your profile?</p>
@@ -217,8 +198,8 @@
 				<li>CSS3</li>
 				<li>jQuery</li>
 			</ul>
-			<h4><a href="https://github.com/AlexWarnes/Travellists" target="_blank">Sourcecode <i class="fab fa-github"></i></a></h4>
 		</section>
+		<a href="https://github.com/AlexWarnes/Travellists" target="_blank" class="footer-sourcecode"><i class="footer-github fab fa-github"></i>Sourcecode</a>
 	</footer>
 
 	<p class="profile-delete-button">Delete my Travellists profile <i class="trash profile-trash far fa-trash-alt"></i></p>

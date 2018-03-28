@@ -4,7 +4,7 @@
 	<meta charset="UTF-8" name="Description" content="Travellists is where travelers can find or create lists of their favorite places in cities around the world. Find lists of places that match your travel-style before your next trip. Help others by creating lists of the best places when you get back.">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Travellists: Profiles</title>
-	<link rel="icon" href="./Assets/coffeePlace.png">
+	<link rel="icon" href="./Assets/route.png">
 
 	<!-- STYLES -->
 
@@ -18,13 +18,13 @@
 </head>
 <body>
 	
-	<nav role="navigation">
-		<p class="navItem"><a href="/">Travellists</a><p>
-		<p class="navItem auth"><a href="/lists">Lists</a><p>
-		<p class="navItem auth"><a href="/travelers">Travelers</a><p>
-		<p class="navItem auth"><a href="/profile">My Profile</a><p>
-		<p class="navItem login noAuth"><a href="#" class="loginLink">Login</a></p>
-		<p class="navItem logout auth"><a href="#">Log Out</a></p>
+	<nav class="nav-bar" role="navigation">
+		<a href="/" class="navItem"><i class="navIcon fas fa-home"></i>Travellists</a>
+		<a href="/lists" class="navItem auth"><i class="fas fa-list navIcon"></i>Lists</a>
+		<a href="/travelers" class="navItem auth"><i class="fas fa-users navIcon"></i>Travelers</a>
+		<a href="/profile" class="navItem auth"><i class="fas fa-user-circle navIcon"></i>Profile</a>
+		<a href="#" class="loginLink navItem login noAuth"><i class="fas fa-sign-in-alt navIcon"></i>Login</a>
+		<a href="#" class="navItem logout auth"><i class="fas fa-sign-out-alt navIcon"></i>Log Out</a>
 	</nav>
 
 
@@ -73,8 +73,8 @@
 				<li>CSS3</li>
 				<li>jQuery</li>
 			</ul>
-			<h4><a href="https://github.com/AlexWarnes/Travellists" target="_blank">Sourcecode <i class="fab fa-github"></i></a></h4>
 		</section>
+		<a href="https://github.com/AlexWarnes/Travellists" target="_blank" class="footer-sourcecode"><i class="footer-github fab fa-github"></i>Sourcecode</a>
 	</footer>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="./Scripts/travelers.js"></script>

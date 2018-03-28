@@ -12,22 +12,15 @@ const STORE = {
 function switchView(currentView, nextView) {
 	currentView.slideToggle({
 		duration: 500, 
-		complete: nextView.slideToggle("slow")
+		complete: nextView.slideToggle(500)
 	});
 }
 
-function verifyLogin() {
-	if (STORE.userToken) {
-		$('.noAuth').toggle();
-		$('.auth').fadeIn(300);
-	}
-}
-
 function closeView() {
-	$('.profile-singleList').on('click', '.close', function() {
+	$('.close').on('click', function() {
 		const currentView = $(event.currentTarget).closest('.view');
 		switchView(currentView, $('.gridView'));
-		$('.listViews input').val('');
+		$('input').val('');
 		clearListInfo();
 	});
 }
@@ -37,11 +30,25 @@ function clearListInfo() {
 	$('.listPlaces').html('');
 }
 
+function scrollToListViews() {
+	const locationOfListViews = document.documentElement.clientHeight * 0.60;
+	window.scrollTo({top: locationOfListViews, behavior: 'smooth'});
+}
+
+function verifyLogin() {
+	if (STORE.userToken !== null) {
+		$('.auth').fadeIn(300);
+	} else {
+		$('.noAuth').fadeIn(300);
+	}
+}
+
 function logout() {
 	$('.logout').on('click', function(e) {
 		e.preventDefault();
 		STORE.userToken = null;
 		localStorage.removeItem('userToken');
+		localStorage.removeItem('userID');
 		location.replace('/');
 		verifyLogin();
 	});
@@ -103,6 +110,15 @@ function getMyProfileData(callback) {
 		method: 'GET',
 		beforeSend: function(xhr, settings) { 
 			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+		},
+		statusCode: {
+			401: function() {
+				STORE.userToken = null;
+				localStorage.removeItem('userToken');
+				localStorage.removeItem('userID');
+				location.replace('/');
+				verifyLogin();
+			}
 		},
 		success: callback
 	};
@@ -247,6 +263,7 @@ function successfulProfileDelete() {
 //==================================================
 //========== VIEW INDIVIDUAL LIST ==================
 
+
 function viewThisList() {
 	$('.listsGrid').on('click', '.listPreview', function(e) {
 		clearListInfo();
@@ -258,12 +275,13 @@ function viewThisList() {
 
 function displayThisList(data) {
 	console.log(data);
+	const authorID = data.authorID;
 	const listHtml = `
-		<i class="close far fa-times-circle"></i>
 		<div class="listIntro" id=${data.id}>
 			<h1 class="listLocation">${data.city}, ${data.country}</h1>
 			<h2 class="listTitle">${data.title}</h2>
 			<p class="listDescription">${data.description}</p>
+			<p class="listAuthor" id=${data.authorID}></p>
 		</div>`;
 	
 	data.places.forEach((item) => {
@@ -275,7 +293,17 @@ function displayThisList(data) {
 		$('.listPlaces').append(place);
 	});
 	$('.singleList').html(listHtml);
-	switchView($('.gridView'), $('.profile-singleList'));
+	verifyEditDeletePermission(authorID)
+	scrollToListViews();
+	switchView($('.gridView'), $('.listView'));
+}
+
+function verifyEditDeletePermission(authorID) {
+	if (localStorage.userID === authorID) {
+		$('.editIcons').show();
+	} else {
+		$('.editIcons').hide();
+	}
 }
 
 function getThisListData(id, callback) {
@@ -305,9 +333,10 @@ function openListForm() {
 function cancelNewList() {
 	$('.cancelNewButton').on('click', function(e) {
 		e.preventDefault();
+		scrollToListViews();
 		switchView($('.newListFieldset'), $('.gridView'));
 		resetListForm();
-	});
+	})
 }
 
 function addAnotherPlace() {
@@ -335,10 +364,12 @@ function renderNewListPlaces() {
 		const currentPlaceName = `placeName-${i}`;
 		const currentPlaceDescription = `placeDescription-${i}`;
 
-		arrayOfPlaces[i] = {
-			placeName: $('#' + currentPlaceName).val(),
-			placeDescription: $('#' + currentPlaceDescription).val()
-		}
+		if ($('#' + currentPlaceName).val() && $('#' + currentPlaceDescription).val()) {
+			arrayOfPlaces[i] = {
+				placeName: $('#' + currentPlaceName).val(),
+				placeDescription: $('#' + currentPlaceDescription).val()
+			}
+		} else { i++ }
 	}
 	return arrayOfPlaces;
 }
@@ -349,6 +380,7 @@ function submitList() {
 		const arrayOfPlaces = renderNewListPlaces();
 		const dateCreated = new Date().toISOString();
 		const newList = {
+			// author: 'testUser',
 			dateCreated: dateCreated,
 			city: $('#newListCity').val(),
 			country: $('#newListCountry').val(),
@@ -372,9 +404,10 @@ function submitList() {
 }
 
 function successfulPost() {
+	scrollToListViews();
 	switchView($('.newListFieldset'), $('.gridView'));
-	resetListForm();
 	getMyLists(displayMyLists);
+	resetListForm();
 }
 
 function resetListForm() {
@@ -417,13 +450,15 @@ function deleteThisList() {
 			},
 			success: successfulListDelete
 		}
+		console.log(settings);
 		$.ajax(settings);
 	});	
 }
 
 function successfulListDelete() {
 	$('.list-warning-deleteList').fadeOut(500);
-	switchView($('.profile-singleList'), $('.gridView'))		
+	scrollToListViews();
+	switchView($('.listView'), $('.gridView'))		
 	clearListInfo();
 	getMyLists(displayMyLists);
 	console.log('successfully deleted that list');
@@ -439,7 +474,8 @@ function editList() {
 		e.preventDefault();
 		const listId = $('.listIntro').attr('id');
 		console.log(`Getting info for ${listId}`);
-		$('.editListFieldset').slideDown(500);
+		scrollToListViews();
+		switchView($('.listView'), $('.editListFieldset'));
 		getThisListData(listId, populateEditFields);
 	});
 }
@@ -456,6 +492,7 @@ function populateEditFields(data) {
 function renderPlaces(data) {
 	const numberOfPlaces = data.places.length;
 	for (let i = 0; i < numberOfPlaces; i++) {
+		// console.log(data.places[i]);
 		$('.editListPlaces').append(`
 			<li class="editListPlace">
 				<label for="editPlaceName-${i}">Place Name</label>
@@ -514,6 +551,7 @@ function updateList() {
 			},
 			success: successfulUpdate
 		}
+		console.log(updatedListJson);
 		$.ajax(settings);
 	});
 }
@@ -525,20 +563,22 @@ function renderUpdatedListPlaces() {
 		const currentPlaceName = `editPlaceName-${i}`;
 		const currentPlaceDescription = `editPlaceDescription-${i}`;
 
-		arrayOfPlaces[i] = {
-			placeName: $('#' + currentPlaceName).val(),
-			placeDescription: $('#' + currentPlaceDescription).val()
-		}
+		if ($('#' + currentPlaceName).val() && $('#' + currentPlaceDescription).val()) {
+			arrayOfPlaces[i] = {
+				placeName: $('#' + currentPlaceName).val(),
+				placeDescription: $('#' + currentPlaceDescription).val()
+			}
+		} else { i++ }
 	}
 	return arrayOfPlaces;
 }
 
 function successfulUpdate() {
-	$('.editListFieldset').slideUp();
+	switchView($('.editListFieldset'), $('.listView'));
+	scrollToListViews();
 	const listId = $('.listIntro').attr('id');
 	clearListInfo();
-	switchView($('.profile-singleList'), $('.listsGrid'));	
-	getMyLists(displayMyLists);
+	getThisListData(listId, displayThisList);
 	resetEditListForm();
 }
 
@@ -551,7 +591,8 @@ function resetEditListForm() {
 function cancelEditList() {
 	$('.cancelEditButton').on('click', function(e) {
 		e.preventDefault();
-		$('.editListFieldset').slideUp();
+		scrollToListViews();
+		switchView($('.editListFieldset'), $('.listView'));
 		resetEditListForm();
 	});
 }
@@ -561,7 +602,7 @@ function cancelEditList() {
 //========== SEARCH TOOL =============================
 
 function searchLists() {
-	$('.lists-searchButton').on('click', function(e) {
+	$('.lists-search-button').on('click', function(e) {
 		e.preventDefault();
 		getMatchingLists(displayMatchedLists);
 	})
@@ -575,8 +616,13 @@ function displayMatchedLists(data) {
 	const matchedLists =
 		data.filter(list => Object.values(list)
 			.find(val => typeof val === "string" && val.toLowerCase().includes(query)));
-	$('.clearResults').toggle();
-	$('.listsGrid').html(matchedLists.map(list => renderLists(list)));
+
+	//Filter matchedLists for those that are 
+	//authored by the user
+	const matchedListsByMe = matchedLists.filter(list => list.authorID === STORE.userID);
+
+	$('.clearResults').show();
+	$('.listsGrid').html(matchedListsByMe.map(list => renderLists(list)));
 	$('#lists-search').val("");
 }
 
@@ -595,10 +641,14 @@ function getMatchingLists(callback) {
 
 function clearResults() {
 	$('.clearResults').on('click', function() {
-		$('.clearResults').toggle();
+		$('.clearResults').hide();
 		getMyLists(displayMyLists);
 	});
 }
 
 
+
+
+
 $(STARTUP);
+

@@ -4,7 +4,7 @@
 	<meta charset="UTF-8" name="Description" content="Travellists is where travelers can find or create lists of their favorite places in cities around the world. Find lists of places that match your travel-style before your next trip. Help others by creating lists of the best places when you get back.">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Travellists: About</title>
-	<link rel="icon" href="./Assets/coffeePlace.png">
+	<link rel="icon" href="./Assets/route.png">
 
 	<!-- STYLES -->
 
@@ -17,12 +17,13 @@
 			<link rel="stylesheet" href="./Styles/main.css">
 </head>
 <body>
-	<nav role="navigation">
-		<p class="navItem"><a href="/">Home</a><p>
-		<p class="navItem"><a href="/lists">Lists</a><p>
-		<p class="navItem"><a href="/travelers">Travelers</a><p>
-		<p class="navItem"><a href="#">My Profile</a><p>
-		<p class="navItem"><a href="/about">About</a><p>
+	<nav class="nav-bar" role="navigation">
+		<a href="/" class="navItem"><i class="navIcon fas fa-home"></i>Travellists</a>
+		<a href="/lists" class="navItem auth"><i class="fas fa-list navIcon"></i>Lists</a>
+		<a href="/travelers" class="navItem auth"><i class="fas fa-users navIcon"></i>Travelers</a>
+		<a href="/profile" class="navItem auth"><i class="fas fa-user-circle navIcon"></i>Profile</a>
+		<a href="#" class="loginLink navItem login noAuth"><i class="fas fa-sign-in-alt navIcon"></i>Login</a>
+		<a href="#" class="navItem logout auth"><i class="fas fa-sign-out-alt navIcon"></i>Log Out</a>
 	</nav>
 	<main role="main">
 		<h1>Learn More About Travellists</h1>

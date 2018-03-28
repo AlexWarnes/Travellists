@@ -30,10 +30,16 @@ function clearListInfo() {
 	$('.listPlaces').html('');
 }
 
+function scrollToListViews() {
+	const locationOfListViews = document.documentElement.clientHeight * 0.60;
+	window.scrollTo({top: locationOfListViews, behavior: 'smooth'});
+}
+
 function verifyLogin() {
-	if (STORE.userToken) {
-		$('.noAuth').toggle(100);
+	if (STORE.userToken !== null) {
 		$('.auth').fadeIn(300);
+	} else {
+		$('.noAuth').fadeIn(300);
 	}
 }
 
@@ -42,6 +48,7 @@ function logout() {
 		e.preventDefault();
 		STORE.userToken = null;
 		localStorage.removeItem('userToken');
+		localStorage.removeItem('userID');
 		location.replace('/');
 		verifyLogin();
 	});
@@ -102,6 +109,15 @@ function getListData(callback) {
 		beforeSend: function(xhr, settings) { 
 			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
 		},
+		statusCode: {
+			401: function() {
+				STORE.userToken = null;
+				localStorage.removeItem('userToken');
+				localStorage.removeItem('userID');
+				location.replace('/');
+				verifyLogin();
+			}
+		},
 		success: callback
 	};
 	$.ajax(settings);
@@ -142,6 +158,7 @@ function displayThisList(data) {
 	});
 	$('.singleList').html(listHtml);
 	verifyEditDeletePermission(authorID)
+	scrollToListViews();
 	switchView($('.gridView'), $('.listView'));
 }
 
@@ -180,6 +197,7 @@ function openListForm() {
 function cancelNewList() {
 	$('.cancelNewButton').on('click', function(e) {
 		e.preventDefault();
+		scrollToListViews();
 		switchView($('.newListFieldset'), $('.gridView'));
 		resetListForm();
 	})
@@ -210,10 +228,12 @@ function renderNewListPlaces() {
 		const currentPlaceName = `placeName-${i}`;
 		const currentPlaceDescription = `placeDescription-${i}`;
 
-		arrayOfPlaces[i] = {
-			placeName: $('#' + currentPlaceName).val(),
-			placeDescription: $('#' + currentPlaceDescription).val()
-		}
+		if ($('#' + currentPlaceName).val() && $('#' + currentPlaceDescription).val()) {
+			arrayOfPlaces[i] = {
+				placeName: $('#' + currentPlaceName).val(),
+				placeDescription: $('#' + currentPlaceDescription).val()
+			}
+		} else { i++ }
 	}
 	return arrayOfPlaces;
 }
@@ -248,6 +268,7 @@ function submitList() {
 }
 
 function successfulPost() {
+	scrollToListViews();
 	switchView($('.newListFieldset'), $('.gridView'));
 	showLists();
 	resetListForm();
@@ -300,6 +321,7 @@ function deleteThisList() {
 
 function successfulListDelete() {
 	$('.list-warning-deleteList').fadeOut(500);
+	scrollToListViews();
 	switchView($('.listView'), $('.gridView'))		
 	clearListInfo();
 	showLists();
@@ -316,6 +338,7 @@ function editList() {
 		e.preventDefault();
 		const listId = $('.listIntro').attr('id');
 		console.log(`Getting info for ${listId}`);
+		scrollToListViews();
 		switchView($('.listView'), $('.editListFieldset'));
 		getThisListData(listId, populateEditFields);
 	});
@@ -404,16 +427,19 @@ function renderUpdatedListPlaces() {
 		const currentPlaceName = `editPlaceName-${i}`;
 		const currentPlaceDescription = `editPlaceDescription-${i}`;
 
-		arrayOfPlaces[i] = {
-			placeName: $('#' + currentPlaceName).val(),
-			placeDescription: $('#' + currentPlaceDescription).val()
-		}
+		if ($('#' + currentPlaceName).val() && $('#' + currentPlaceDescription).val()) {
+			arrayOfPlaces[i] = {
+				placeName: $('#' + currentPlaceName).val(),
+				placeDescription: $('#' + currentPlaceDescription).val()
+			}
+		} else { i++ }
 	}
 	return arrayOfPlaces;
 }
 
 function successfulUpdate() {
 	switchView($('.editListFieldset'), $('.listView'));
+	scrollToListViews();
 	const listId = $('.listIntro').attr('id');
 	clearListInfo();
 	getThisListData(listId, displayThisList);
@@ -429,6 +455,7 @@ function resetEditListForm() {
 function cancelEditList() {
 	$('.cancelEditButton').on('click', function(e) {
 		e.preventDefault();
+		scrollToListViews();
 		switchView($('.editListFieldset'), $('.listView'));
 		resetEditListForm();
 	});
@@ -439,7 +466,7 @@ function cancelEditList() {
 //========== SEARCH TOOL =============================
 
 function searchLists() {
-	$('.lists-searchButton').on('click', function(e) {
+	$('.lists-search-button').on('click', function(e) {
 		e.preventDefault();
 		getMatchingLists(displayMatchedLists);
 	})
@@ -453,7 +480,7 @@ function displayMatchedLists(data) {
 	const matchedLists =
 		data.filter(list => Object.values(list)
 			.find(val => typeof val === "string" && val.toLowerCase().includes(query)));
-	$('.clearResults').toggle();
+	$('.clearResults').show();
 	$('.listsGrid').html(matchedLists.map(list => renderLists(list)));
 	$('#lists-search').val("");
 }
@@ -473,7 +500,7 @@ function getMatchingLists(callback) {
 
 function clearResults() {
 	$('.clearResults').on('click', function() {
-		$('.clearResults').toggle();
+		$('.clearResults').hide();
 		showLists();
 	});
 }
