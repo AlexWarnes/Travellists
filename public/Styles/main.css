@@ -3,7 +3,7 @@ body * {
 }
 
 body {
-	font-family: 'Montserrat', sans-serif;
+	font-family: 'Raleway', sans-serif;
 	padding-top: 45px;
 }
 
@@ -47,6 +47,11 @@ nav a:hover {
 	font-size: 20px;
 }
 
+.nav-currentPage {
+	background-color: #FFFFFF;
+	color: #41a3e1;
+}
+
 .auth {
 	display: none;
 }
@@ -64,7 +69,8 @@ header {
 }
 
 header h1 {
-	font-size: 7vh;
+	font-size: 8vh;
+	font-family: 'Arima Madurai', cursive;
 	margin: 0;
 	padding-top: 60px;
 }
@@ -85,9 +91,10 @@ header h1 {
 .editIcons {
 	display: none;
 	width: 100%;
-	text-align: right;
+	height: 30px;
 	padding: 5px;
-	color: navy;
+	color: #778899;
+	transition: all .3s;
 }
 
 .editIcons i:hover {
@@ -95,15 +102,25 @@ header h1 {
 }
 
 .editIcons .trash {
-	margin-right: 10px;
+	position: absolute;
+	right: 15px;
+	transition: all .2s;
 }
 
 .editIcons .trash:hover {
-	color: red;
+	color: #BD7070;
+	font-size: 18px;
 }
 
-.editIcons .edit:hover {
-	color: blue;
+.editIcons .editList {
+	position: absolute;
+	right: 50px;
+	transition: all .2s;
+}
+
+.editIcons .editList:hover {
+	color: #5A9477;
+	font-size: 18px;
 }
 
 button {
@@ -166,6 +183,7 @@ form {
 	width: 90%;
 	margin: 30px auto;
 	font-size: 18px;
+	font-weight: 200;
 }
 
 .openCreateAccount, .createNewAccountButton, .loginButton {
@@ -192,24 +210,43 @@ form {
 	display: none;
     margin: 0 auto;
     max-width: 400px;
-    height: fit-content;
+    /*height: fit-content;*/
 	border: 1px solid transparent;
 	background-color: royalblue;
+	box-shadow: 0px 5px 15px #4040404C;
+	border-radius: 3px;
 	color: white;
+}
+
+.index-createAccount {
+	height: 440px;
+}
+
+.index-login {
+	height: 340px;
 }
 
 .index-header .close {
 	color: white;
 }
 
-.passwordWarning {
+.validation-warning {
+	width: 100%;
+	height: 40px;
+	margin-top: -8px;
+}
+
+.warning {
 	display: none;
-	color: red;
-	background-color: #f5f5f5;
-	border: 1px solid red;
-	padding: 10px;
+	margin: 0px;
+	padding: 8px 0px;
+	font-size: 13px;
 	text-align: center;
-	border-radius: 5px;
+	color: #BD7070;
+	background-color: #f5f5f5;
+	border: 1px solid #BD7070;
+	border-radius: 3px;
+	box-shadow: 0 0 10px red;
 }
 
 .welcome {
@@ -358,13 +395,64 @@ form {
 .listView {
 	display: none;
 	width: 100%;
-	margin: 0 auto 50px auto;
+	/*margin: 0 auto 50px auto;*/
 	background-color: white;
-	padding: 20px 20px 0 20px;
-	border-radius: 5px;
+	/*padding: 20px 20px 0 20px;*/
+	/*border-radius: 5px;*/
 	z-index: 1;
 }
 
+.listView-header {
+	padding: 20px;
+	text-align: center;
+	background-color: #4682B4;
+	height: fit-content;
+	margin-bottom: 25px;
+	color: white;
+}
+
+.listView-header h2 {
+	opacity: .6;
+}
+
+.listView-places {
+	list-style: none;
+	padding: 0 5px;
+}
+
+li.place {
+	width: 90%;
+	min-height: 100px;
+	margin: 10px auto;
+	padding: 5px;
+	border-radius: 3px;
+	border: 1px solid #4169e124;
+	box-shadow: -2px 2px 5px #4169e11c;
+}
+
+li.place>h3 {
+	margin: 10px 5px;
+}
+
+li.place>p {
+	margin: 0 5px 10px 15px;
+	font-weight: 200;
+}
+
+.back-arrow {
+	z-index: 1;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	color: #FFFFFF88;
+	font-size: 35px;
+	transition: all .3s;
+}
+
+.back-arrow:hover {
+	color: #8EEAB3;
+	cursor: pointer;
+}
 
 /*===================================================*/
 /* NEW LIST FORM */
@@ -414,17 +502,29 @@ input {
 /* EDIT/DELETE ROLES */
 /*===================================================*/
 
-.deleteWarning {
+.delete-mask {
 	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 4;
+	background-color: #ff000088;
+}
+
+.deleteWarning {
+	/*display: none;*/
 	position: fixed;
 	top: 30%;
 	left: 20%;
 	width: 60%;
 	z-index: 5;
 	text-align: center;
-	background-color: white;
-	border: 2px solid red;
-	border-radius: 5px;
+	background-color: #f5f5f5;
+	border: 1px solid #BD7070;
+	border-radius: 3px;
+	/*box-shadow: 0 0 10px red;*/
 	padding: 10px;
 }
 
@@ -460,14 +560,9 @@ input {
 
 .editListFieldset {
 	display: none;
-	position: absolute;
-	z-index: 1;
 	width: 100%;
-	margin-right: auto;
-	margin-left: auto;
 	background-color: white;
 	padding: 20px;
-	z-index: 1;
 }
 
 /*===================================================*/
@@ -547,7 +642,6 @@ input {
 .profile-userStats, .profile-userInfo {
 	display: inline-block;
 	vertical-align: top;
-	min-height: 400px;
 	text-align: left;
 }
 
@@ -561,16 +655,34 @@ input {
 	font-size: 200px;
 }
 
+.profile-countriesCount {
+	font-size: 14px;
+	width: fit-content;
+}
+
+.profile-countriesList {
+	display: none;
+	font-size: 14px;
+	width: fit-content;
+}
+
+.profile-countriesCount:hover, .profile-countriesList:hover {
+	cursor: pointer;
+}
+
 .profile-userInfo {
 	width: 66%;
 	padding: 20px;
 }
 
+.profile-userDescription {
+	max-height: 23vh;
+}
+
 .profile-edit-icon {
-	float: right;
-	position: relative;
-	top: -380px;
-	right: 5px;
+	position: absolute;
+	top: 55px;
+	right: 10px;
 	color: white;
 }
 
@@ -596,25 +708,6 @@ input {
 	margin-top: 3px;
 }
 
-/*.profile-newListButton {
-	position: static;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}*/
-
-/*.profile-singleList {
-	display: none;
-	width: 100%;*/
-	/*this border prevents jQuery animation jumps*/
-	/*border: 1px solid transparent;
-}*/
-
-/*.profile-listViews>.newListFieldset, .profile-listViews>.editListFieldset {
-	position: absolute;
-	top: 0;
-}*/
-
 .profile-delete-button {
 	font-size: 12px;
 	background-color: black;
@@ -622,11 +715,11 @@ input {
 	margin: 0;
 	padding: 20px;
 	text-align: center;
-	transition: 1s;
+	transition: all .5s;
 }
 
 .profile-delete-button:hover {
-	/*color: red;*/
+	font-size: 14px;
 	background-color: red;
 	cursor: pointer;
 }
@@ -641,7 +734,7 @@ footer {
 	justify-content: space-evenly;
 	flex-wrap: wrap;
 	width: 100%;
-	margin-top: 40px;
+	margin-top: 20px;
 	background-color: black;
 	color: white;
 	font-size: 13px;
@@ -665,6 +758,7 @@ footer h3 {
 .footer-sourcecode {
 	display: block;
 	width: 100%;
+	height: 52px;
 	margin: 0;
 	padding: 15px;
 	text-align: center;
@@ -674,7 +768,7 @@ footer h3 {
 }
 
 .footer-sourcecode:hover {
-	font-size: 20px;
+	font-size: 18px;
 	background-color: #2f8a54;
 }
 
@@ -706,6 +800,14 @@ footer a {
 	input {
 		padding: 4px;
 		margin: 8px auto 15px auto;
+	}
+
+	.index-createAccount {
+		height: 375px;
+	}
+
+	.index-login {
+		height: 300px;
 	}
 
 	.lists-instructions {
@@ -770,5 +872,40 @@ footer a {
 		width: 90%;
 		height: 250px;
 		margin: 15px auto;
+	}
+
+	.profile-avatar {
+		font-size: 50px;
+	}
+
+	.profile-userStats, .profile-userInfo {
+		width: 100%;
+		text-align: center;
+		display: block;
+	}
+
+	.profile-userStats {
+		height: 20vh;
+	}
+
+	.profile-userInfo {
+		height: 40vh;
+	}
+
+	.profile-userName {
+		padding-top: 0;
+	}
+
+	.profile-userDescription {
+		overflow: scroll;
+	}
+
+	.profile-countriesCount, .profile-countriesList {
+		width: 80%;
+		margin: 14px auto;
+	}
+
+	footer section {
+		width: 100%;
 	}
 }

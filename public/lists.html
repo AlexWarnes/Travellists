@@ -9,7 +9,7 @@
 	<!-- STYLES -->
 
 		<!-- Fonts & Icons -->
-			<link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css?family=Arima+Madurai:700|Raleway:200,400,600" rel="stylesheet">
 			<link href="https://use.fontawesome.com/releases/v5.0.0/css/all.css" rel="stylesheet">
 
 		<!-- Stylesheets -->
@@ -20,7 +20,7 @@
 	
 	<nav class="nav-bar" role="navigation">
 		<a href="/" class="navItem"><i class="navIcon fas fa-home"></i>Travellists</a>
-		<a href="/lists" class="navItem auth"><i class="fas fa-list navIcon"></i>Lists</a>
+		<a href="/lists" class="navItem auth nav-currentPage"><i class="fas fa-list navIcon"></i>Lists</a>
 		<a href="/travelers" class="navItem auth"><i class="fas fa-users navIcon"></i>Travelers</a>
 		<a href="/profile" class="navItem auth"><i class="fas fa-user-circle navIcon"></i>Profile</a>
 		<a href="#" class="loginLink navItem login noAuth"><i class="fas fa-sign-in-alt navIcon"></i>Login</a>
@@ -65,13 +65,12 @@
 		<!-- VIEW SINGLE LIST PAGE -->
 
 		<section class="listView view">
-			<i class="list-close close far fa-times-circle"></i>
 
-			<section class="singleList">
+			<section class="listView-header">
 				<!-- List Intro Populates Here -->
 			</section>
 			
-			<ul class="listPlaces">
+			<ul class="listView-places">
 				<!-- List's Places Populate Here -->
 			</ul>
 
@@ -150,10 +149,12 @@
 
 		<!-- DELETE WARNING POP-UP -->
 
-		<div class="deleteWarning list-warning-deleteList">
-			<p>Are you sure you want to delete this list?</p>
-			<button class="list-confirmDelete confirmDelete">Yes, delete this list</button>
-			<button class="list-doNotDelete doNotDelete">No, do not delete this list</button>
+		<div class="deleteList-warning delete-mask">
+			<div class="deleteWarning list-warning-deleteList">
+				<p>Are you sure you want to delete this list?</p>
+				<button class="list-confirmDelete confirmDelete">Yes, delete this list</button>
+				<button class="list-doNotDelete doNotDelete">No, do not delete this list</button>
+			</div>
 		</div>
 
 	</main>

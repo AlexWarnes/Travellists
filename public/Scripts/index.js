@@ -63,6 +63,10 @@ function openCreateAccount() {
 	});
 }
 
+function verifyString(value) {
+	
+}
+
 function createNewAccount() {
 	$('.createNewAccountButton').on('click', function(e) {
 		e.preventDefault();
@@ -80,20 +84,41 @@ function createNewAccount() {
 		}
 		const newUserJson = JSON.stringify(newUser);
 
-		if (password === $('#confirmPassword').val()) {
+		if (typeof userName !== 'string' || typeof password !== 'string') {
+			$('.string-warning').fadeIn(400);
+			setTimeout(function(){
+				$('.string-warning').fadeOut(800)
+			}, 6000);
+		} else if (userName !== userName.trim() || password !== password.trim()) {
+			$('.space-warning').fadeIn(400);
+			setTimeout(function(){
+				$('.space-warning').fadeOut(800)
+			}, 6000);
+		} else if (userName.length < 1 || userName.length > 20) {
+			$('.usernameLength-warning').fadeIn(400);
+			setTimeout(function(){
+				$('.usernameLength-warning').fadeOut(800)
+			}, 6000);
+		} else if (password.length < 10 || password.length > 72) {
+			$('.passwordLength-warning').fadeIn(400);
+			setTimeout(function(){
+				$('.passwordLength-warning').fadeOut(800)
+			}, 6000);
+		} else if (password !== $('#confirmPassword').val()) {
+			$('.passwordMatch-warning').fadeIn(400);
+			setTimeout(function(){
+				$('.passwordMatch-warning').fadeOut(800)
+			}, 6000);
+		} else {
 			const settings = {
 				url: '/api/users',
 				data: newUserJson,
 				contentType: 'application/json',
 				type: 'POST',
-				success: successfulCreateAccount
+				success: successfulCreateAccount,
+				error: createAccountError
 			}
 			$.ajax(settings);
-		} else {
-			$('.passwordWarning').fadeIn(400);
-			setTimeout(function(){
-				$('.passwordWarning').fadeOut(800)
-			}, 6000);
 		}
 	});	
 }
@@ -103,6 +128,12 @@ function successfulCreateAccount() {
 	switchView($('.index-createAccount'), $('.index-login'));
 }
 
+function createAccountError() {
+	$('.duplicateUsername-warning').fadeIn(400);
+		setTimeout(function(){
+			$('.duplicateUsername-warning').fadeOut(800)
+		}, 6000);;
+}
 
 //==================================================
 //========== LOGIN FORM ============================
@@ -133,16 +164,23 @@ function issueToken(userInfo) {
 		data: userInfo,
 		contentType: 'application/json',
 		type: 'POST',
-		success: successfulLogin
+		success: successfulLogin,
+		error: loginError
 	}
 	$.ajax(settings);	
 }
 
 function successfulLogin(data) {
-	alert('SUCCESS!');
 	localStorage.setItem('userToken', data.authToken);
 	localStorage.setItem('userID', data.userID);
 	location.replace('/');
+}
+
+function loginError() {
+	$('.credentials-warning').fadeIn(400);
+		setTimeout(function(){
+			$('.credentials-warning').fadeOut(800)
+		}, 6000);;
 }
 
 $(STARTUP);

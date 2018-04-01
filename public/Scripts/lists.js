@@ -17,7 +17,7 @@ function switchView(currentView, nextView) {
 }
 
 function closeView() {
-	$('.close').on('click', function() {
+	$('.listView').on('click', '.back-arrow', function() {
 		const currentView = $(event.currentTarget).closest('.view');
 		switchView(currentView, $('.gridView'));
 		$('input').val('');
@@ -26,8 +26,8 @@ function closeView() {
 }
 
 function clearListInfo() {
-	$('.singleList').html('');
-	$('.listPlaces').html('');
+	$('.listView-header').html('');
+	$('.listView-places').html('');
 }
 
 function scrollToListViews() {
@@ -79,7 +79,6 @@ function STARTUP() {
 
 
 function showLists() {
-		console.log('Getting some lists...');
 		getListData(displayLists);
 	};
 
@@ -96,7 +95,6 @@ function renderLists(item) {
 }
 
 function displayLists(data) {
-	console.log(data);
 	const results = data.map((item) => renderLists(item));
 	$('.listsGrid').html(results);
 }
@@ -132,18 +130,18 @@ function viewThisList() {
 	$('.listsGrid').on('click', '.listPreview', function(e) {
 		clearListInfo();
 		const listId = this.id;
-		console.log(`Getting info for ${listId}`);
 		getThisListData(listId, displayThisList);
+		switchView($('.gridView'), $('.listView'));
 	})
 }
 
 function displayThisList(data) {
-	console.log(data);
 	const authorID = data.authorID;
 	const listHtml = `
+		<i class="back-arrow fas fa-arrow-left"></i>
 		<div class="listIntro" id=${data.id}>
-			<h1 class="listLocation">${data.city}, ${data.country}</h1>
-			<h2 class="listTitle">${data.title}</h2>
+			<h2 class="listLocation">${data.city}, ${data.country}</h2>
+			<h1 class="listTitle">${data.title}</h1>
 			<p class="listDescription">${data.description}</p>
 			<p class="listAuthor" id=${data.authorID}></p>
 		</div>`;
@@ -154,17 +152,16 @@ function displayThisList(data) {
 				<h3 class="placeName">${item.placeName}</h3>
 				<p class="placeDescription">${item.placeDescription}</p>
 			</li>`;
-		$('.listPlaces').append(place);
+		$('.listView-places').append(place);
 	});
-	$('.singleList').html(listHtml);
+	$('.listView-header').html(listHtml);
 	verifyEditDeletePermission(authorID)
 	scrollToListViews();
-	switchView($('.gridView'), $('.listView'));
 }
 
 function verifyEditDeletePermission(authorID) {
 	if (localStorage.userID === authorID) {
-		$('.editIcons').show();
+		$('.editIcons').fadeIn(300);
 	} else {
 		$('.editIcons').hide();
 	}
@@ -216,7 +213,6 @@ function addAnotherPlace() {
 				<input type="text" name="placeDescription" id="placeDescription-${placeIndex}" class="newListPlaceDescription listInput">
 			</li>
 		`		
-		console.log(placeIndex);
 		$('.listFormPlaces').append(placeFields);
 	});
 }
@@ -295,12 +291,12 @@ function resetListForm() {
 function deleteThisList() {
 	$('.list-trash').on('click', function(e) {
 		e.preventDefault();
-		$('.list-warning-deleteList').fadeIn(500);
+		$('.deleteList-warning').fadeIn(500);
 	});
 
 	$('.list-doNotDelete').on('click', function(e) {
 		e.preventDefault();
-		$('.list-warning-deleteList').fadeOut(500);
+		$('.deleteList-warning').fadeOut(500);
 	});
 
 	$('.list-confirmDelete').on('click', function(e) {
@@ -314,18 +310,16 @@ function deleteThisList() {
 			},
 			success: successfulListDelete
 		}
-		console.log(settings);
 		$.ajax(settings);
 	});	
 }
 
 function successfulListDelete() {
-	$('.list-warning-deleteList').fadeOut(500);
+	$('.deleteList-warning').fadeOut(500);
 	scrollToListViews();
 	switchView($('.listView'), $('.gridView'))		
 	clearListInfo();
 	showLists();
-	console.log('successfully deleted that list');
 }
 
 
@@ -337,7 +331,6 @@ function editList() {
 	$('.editList').on('click', function(e) {
 		e.preventDefault();
 		const listId = $('.listIntro').attr('id');
-		console.log(`Getting info for ${listId}`);
 		scrollToListViews();
 		switchView($('.listView'), $('.editListFieldset'));
 		getThisListData(listId, populateEditFields);
@@ -356,7 +349,6 @@ function populateEditFields(data) {
 function renderPlaces(data) {
 	const numberOfPlaces = data.places.length;
 	for (let i = 0; i < numberOfPlaces; i++) {
-		// console.log(data.places[i]);
 		$('.editListPlaces').append(`
 			<li class="editListPlace">
 				<label for="editPlaceName-${i}">Place Name</label>
@@ -373,7 +365,6 @@ function editAddAnotherPlace() {
 	$('.editAddPlace').on('click', function(e) {
 		e.preventDefault();
 		const placeIndex = $('.editListPlace').length;
-		console.log('place index is ' + placeIndex);
 		const placeFields = `
 			<li class="editListPlace">
 				<label for="editPlaceName-${placeIndex}">Place Name</label>
@@ -383,7 +374,6 @@ function editAddAnotherPlace() {
 				<input type="text" name="placeDescription" id="editPlaceDescription-${placeIndex}" class="editListPlaceDescription listInput">
 			</li>
 		`		
-		console.log(placeIndex);
 		$('.editListPlaces').append(placeFields);
 	});
 }
@@ -415,7 +405,6 @@ function updateList() {
 			},
 			success: successfulUpdate
 		}
-		console.log(updatedListJson);
 		$.ajax(settings);
 	});
 }
@@ -438,12 +427,12 @@ function renderUpdatedListPlaces() {
 }
 
 function successfulUpdate() {
-	switchView($('.editListFieldset'), $('.listView'));
-	scrollToListViews();
 	const listId = $('.listIntro').attr('id');
-	clearListInfo();
 	getThisListData(listId, displayThisList);
+	switchView($('.editListFieldset'), $('.listView'));
 	resetEditListForm();
+	scrollToListViews();
+	clearListInfo();
 }
 
 function resetEditListForm() {
