@@ -39,7 +39,7 @@
 				<input type="text" id="profile-edit-userName">
 
 				<label for="profile-edit-userDescription">Description</label>
-				<input type="text" id="profile-edit-userDescription" placeholder="Tell other travelers about your travel style">
+				<textarea type="text" id="profile-edit-userDescription" placeholder="Tell other travelers about your travel style" rows="3"></textarea> 
 
 				<label for="profile-edit-countries">Countries Visited</label>
 				<p class="profile-instructions">List countries, separated by commas</p>
@@ -106,7 +106,7 @@
 				<input type="text" name="title" id="editListTitle" class="listInput">
 
 				<label for="editListDescription">Description</label>
-				<input type="text" name="description" id="editListDescription" class="listInput">
+				<textarea name="description" id="editListDescription" rows="3" class="listInput"></textarea>
 				
 				<h3>Add some places to your list!</h3>
 
@@ -126,6 +126,7 @@
 
 		<fieldset class="newListFieldset listForm view">
 			<form class="newListForm">
+
 				<label for="newListCity">City</label>
 				<input type="text" name="city" id="newListCity" class="listInput">
 
@@ -136,7 +137,8 @@
 				<input type="text" name="title" id="newListTitle" class="listInput">
 
 				<label for="newListDescription">Description</label>
-				<input type="text" name="description" id="newListDescription" class="listInput">
+				<textarea name="description" id="newListDescription" rows="3" class="listInput"></textarea>
+
 				
 				<h3>Add some places to your list!</h3>
 
@@ -146,7 +148,7 @@
 						<input type="text" name="placeName" id="placeName-0" class="newListPlaceName listInput">
 
 						<label for="placeDescription-0">Place Description</label>
-						<input type="text" name="placeDescription" id="placeDescription-0" class="newListPlaceDescription listInput">
+						<textarea name="placeDescription" id="placeDescription-0" rows="3" class="listInput newListPlaceDescription"></textarea>
 					</li>
 				</ul>
 				<button class="addPlace">+ Add Another Place</button> 

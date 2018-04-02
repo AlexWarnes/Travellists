@@ -21,6 +21,7 @@ function closeView() {
 		const currentView = $(event.currentTarget).closest('.view');
 		switchView(currentView, $('.gridView'));
 		$('input').val('');
+		$('textarea').val('');
 		clearListInfo();
 	});
 }
@@ -31,7 +32,7 @@ function clearListInfo() {
 }
 
 function scrollToListViews() {
-	const locationOfListViews = document.documentElement.clientHeight * 0.60;
+	const locationOfListViews = document.documentElement.clientHeight * 0.65;
 	window.scrollTo({top: locationOfListViews, behavior: 'smooth'});
 }
 
@@ -83,6 +84,7 @@ function showLists() {
 	};
 
 function renderLists(item) {
+	console.log(item);
 	const numberOfPlaces = item.places.length;
 	return `
 		<article class="listPreview" id="${item.id}">
@@ -147,11 +149,13 @@ function displayThisList(data) {
 		</div>`;
 	
 	data.places.forEach((item) => {
+		// console.log(item);
 		let place = `
 			<li class="place">
 				<h3 class="placeName">${item.placeName}</h3>
 				<p class="placeDescription">${item.placeDescription}</p>
 			</li>`;
+
 		$('.listView-places').append(place);
 	});
 	$('.listView-header').html(listHtml);
@@ -210,7 +214,7 @@ function addAnotherPlace() {
 				<input type="text" name="placeName" id="placeName-${placeIndex}" class="newListPlaceName listInput">
 
 				<label for="placeDescription-${placeIndex}">Place Description</label>
-				<input type="text" name="placeDescription" id="placeDescription-${placeIndex}" class="newListPlaceDescription listInput">
+				<textarea name="placeDescription" id="placeDescription-${placeIndex}" rows="3" class="listInput newListPlaceDescription"></textarea>
 			</li>
 		`		
 		$('.listFormPlaces').append(placeFields);
@@ -277,7 +281,7 @@ function resetListForm() {
 			<input type="text" name="placeName" id="placeName-0" class="newListPlaceName listInput">
 
 			<label for="placeDescription-0">Place Description</label>
-			<input type="text" name="placeDescription" id="placeDescription-0" class="newListPlaceDescription listInput">
+			<textarea name="placeDescription" id="placeDescription-0" rows="3" class="listInput newListPlaceDescription"></textarea>
 		</li>
 	`);
 	$('.newListForm input').val('');
@@ -355,9 +359,9 @@ function renderPlaces(data) {
 				<input type="text" value="${data.places[i].placeName}" name="placeName" id="editPlaceName-${i}" class="editListPlaceName listInput">
 
 				<label for="editPlaceDescription-${i}">Place Description</label>
-				<input type="text" value="${data.places[i].placeDescription}" name="placeDescription" id="editPlaceDescription-${i}" class="editListPlaceDescription listInput">
+				<textarea name="placeDescription" id="editPlaceDescription-${i}" rows="3" class="listInput editListPlaceDescription">${data.places[i].placeDescription}</textarea>
 			</li>
-		`);
+		`)
 	}
 }
 
@@ -371,7 +375,7 @@ function editAddAnotherPlace() {
 				<input type="text" name="placeName" id="editPlaceName-${placeIndex}" class="editListPlaceName listInput">
 
 				<label for="editPlaceDescription-${placeIndex}">Place Description</label>
-				<input type="text" name="placeDescription" id="editPlaceDescription-${placeIndex}" class="editListPlaceDescription listInput">
+				<textarea name="placeDescription" id="editPlaceDescription-${placeIndex}" rows="3" class="listInput editListPlaceDescription"></textarea>
 			</li>
 		`		
 		$('.editListPlaces').append(placeFields);

@@ -62,7 +62,7 @@ main {
 
 header {
 	width: 100%;
-	height: 60vh;
+	height: 65vh;
 	margin-top: 0;
 	padding: 0 20px 20px 20px;
 	color: white;
@@ -76,15 +76,13 @@ header h1 {
 }
 
 .close {
-	float: right;
-	clear: right;
 	font-size: 40px;
-	color: #2f8a5480;
+	color: #FFFFFF88;
 	transition: all .3s;
 }
 
 .close:hover {
-	color: #c1c1c1;
+	color: #FFFFFF;
     cursor: pointer;
 }
 
@@ -103,7 +101,7 @@ header h1 {
 
 .editIcons .trash {
 	position: absolute;
-	right: 15px;
+	right: 5%;
 	transition: all .2s;
 }
 
@@ -114,7 +112,7 @@ header h1 {
 
 .editIcons .editList {
 	position: absolute;
-	right: 50px;
+	right: calc(5% + 35px);
 	transition: all .2s;
 }
 
@@ -151,10 +149,6 @@ button:hover {
 
 fieldset {
 	border: none;
-}
-
-form {
-	clear: right;
 }
 
 /*===================================================*/
@@ -195,6 +189,14 @@ form {
 	font-size: 18px;
 }
 
+.createAccountForm, .loginForm {
+	margin-top: 20px;
+}
+
+.createAccountForm input, .loginForm input {
+	border-radius: 3px;
+}
+
 .learn {
 	width: 50%;
 	margin: 55px auto 0 auto;
@@ -208,9 +210,10 @@ form {
 
 .index-createAccount, .index-login {
 	display: none;
-    margin: 0 auto;
-    max-width: 400px;
-    /*height: fit-content;*/
+	position: relative;
+	margin: 0 auto;
+	max-width: 400px;
+	height: 62vh;
 	border: 1px solid transparent;
 	background-color: royalblue;
 	box-shadow: 0px 5px 15px #4040404C;
@@ -219,15 +222,16 @@ form {
 }
 
 .index-createAccount {
-	height: 440px;
+
 }
 
 .index-login {
-	height: 340px;
+
 }
 
 .index-header .close {
-	color: white;
+	position: absolute;
+	right: -50px;
 }
 
 .validation-warning {
@@ -261,7 +265,6 @@ form {
 /*===================================================*/
 
 .lists-header {
-	height: 60vh;
 	background-color: seagreen;
 	color: white;
 	text-align: center;
@@ -423,10 +426,12 @@ form {
 li.place {
 	width: 90%;
 	min-height: 100px;
+	height: fit-content;
 	margin: 10px auto;
 	padding: 5px;
 	border-radius: 3px;
 	border: 1px solid #4169e124;
+	border-left: 5px solid #2f8a5458;
 	box-shadow: -2px 2px 5px #4169e11c;
 }
 
@@ -481,21 +486,30 @@ li.place>p {
 .newListFieldset {
 	display: none;
 	width: 100%;
-	margin-right: auto;
-	margin-left: auto;
-	background-color: white;
+	background-color: #FFFFFF;
 	padding: 20px;
 }
 
-input {
+input, textarea {
 	display: block;
 	width: 90%;
-	padding: 10px;
 	margin: 11px auto 20px auto;
+	padding: 15px 10px;
+	border: 1px solid #cccccc;
 }
 
 .listFormPlaces {
 	list-style: none;
+	padding: 0;
+}
+
+li.newListPlace {
+	margin-bottom: 20px;
+	padding: 10px 5px 5px 10px;
+	border-radius: 3px;
+	border: 1px solid #4169e124;
+	border-left: 5px solid #2f8a5458;
+	box-shadow: -2px 2px 5px #4169e11c;
 }
 
 /*===================================================*/
@@ -561,8 +575,23 @@ input {
 .editListFieldset {
 	display: none;
 	width: 100%;
-	background-color: white;
+	margin: 0;
 	padding: 20px;
+	background-color: #FFFFFF;
+}
+
+.editListPlaces {
+	list-style: none;
+	padding: 0;
+}
+
+li.editListPlace {
+	margin-bottom: 20px;
+	padding: 10px 5px 5px 10px;
+	border-radius: 3px;
+	border: 1px solid #4169e124;
+	border-left: 5px solid #2f8a5458;
+	box-shadow: -2px 2px 5px #4169e11c;
 }
 
 /*===================================================*/
@@ -629,7 +658,6 @@ input {
 
 .profile-header {
 	width: 100%;
-	height: 60vh;
 	background-color: royalblue;
 }
 
@@ -676,7 +704,7 @@ input {
 }
 
 .profile-userDescription {
-	max-height: 23vh;
+	max-height: 60%;
 }
 
 .profile-edit-icon {
@@ -695,6 +723,10 @@ input {
 	display: none;
 	width: 100%;
 	height: 100%;
+}
+
+.profile-editForm {
+	margin-top: 15px;
 }
 
 .profile-instructions {
@@ -789,25 +821,30 @@ footer a {
 		font-size: 11px;
 	}
 
+	header {
+		height: 400px;
+	}
+
 	header h1 {
+		font-size: 48px;
 		padding-top: 35px;
 	}
 
 	.subtitle {
-	    font-size: 14px;
+	    font-size: 16px;
 	}
 
-	input {
-		padding: 4px;
+	input, textarea {
+		padding: 10px 5px 10px 10px;
 		margin: 8px auto 15px auto;
 	}
 
-	.index-createAccount {
-		height: 375px;
+	.index-header .close {
+		right: 5px;
 	}
 
-	.index-login {
-		height: 300px;
+	.index-createAccount, .index-login {
+		height: 400px;
 	}
 
 	.lists-instructions {
@@ -874,6 +911,10 @@ footer a {
 		margin: 15px auto;
 	}
 
+	li.place {
+		width: 95%;
+	}
+
 	.profile-avatar {
 		font-size: 50px;
 	}
@@ -885,24 +926,28 @@ footer a {
 	}
 
 	.profile-userStats {
-		height: 20vh;
+		height: 33%;
 	}
 
 	.profile-userInfo {
-		height: 40vh;
+		height: 66%;
 	}
 
 	.profile-userName {
+		font-size: 36px;
 		padding-top: 0;
 	}
 
 	.profile-userDescription {
+		max-height: 66%;
 		overflow: scroll;
 	}
 
 	.profile-countriesCount, .profile-countriesList {
-		width: 80%;
+		width: 100%;
+		max-height: 60px;
 		margin: 14px auto;
+		overflow: scroll;
 	}
 
 	footer section {
