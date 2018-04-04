@@ -26,8 +26,10 @@ function closeForm() {
 
 function verifyLogin() {
 	if (STORE.userToken !== null) {
+		$('.noAuth').hide();
 		$('.auth').fadeIn(300);
 	} else {
+		$('.auth').hide();
 		$('.noAuth').fadeIn(300);
 	}
 }
@@ -173,7 +175,7 @@ function issueToken(userInfo) {
 function successfulLogin(data) {
 	localStorage.setItem('userToken', data.authToken);
 	localStorage.setItem('userID', data.userID);
-	location.replace('/');
+	location.replace('/lists');
 }
 
 function loginError() {

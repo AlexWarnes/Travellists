@@ -32,14 +32,17 @@ function clearListInfo() {
 }
 
 function scrollToListViews() {
-	const locationOfListViews = document.documentElement.clientHeight * 0.65;
+	const locationOfListViews = window.screen.width > 640 ?
+		document.documentElement.clientHeight * 0.65 : 400;
 	window.scrollTo({top: locationOfListViews, behavior: 'smooth'});
 }
 
 function verifyLogin() {
 	if (STORE.userToken !== null) {
+		$('.noAuth').hide();
 		$('.auth').fadeIn(300);
 	} else {
+		$('.auth').hide();
 		$('.noAuth').fadeIn(300);
 	}
 }
@@ -96,7 +99,6 @@ function renderMyProfileData(data) {
 		'None yet!' : data.countriesVisited.length === 0 ?
 		'None yet!' : data.countriesVisited.join(', ');
 	
-	console.log(data.countriesVisited);
 	const profileHtml = `
 		<div class="profile-userStats">
 			<i class="profile-avatar fas fa-user-circle"></i>
@@ -107,7 +109,7 @@ function renderMyProfileData(data) {
 			<h1 class="profile-userName">${data.userName}</h1>
 			<p class="profile-userDescription">${data.userDescription}</p>
 		</div>
-		<i class="profile-edit-icon fas fa-pencil-alt"></i>`;
+		<p class="profile-edit-icon">edit profile <i class="fas fa-pencil-alt"></i></p>`;
 	fillProfileEditForm(data);
 	return $('.profile-display').html(profileHtml);
 }
@@ -183,9 +185,10 @@ function editProfile() {
 
 function fillProfileEditForm(data) {
 	//This runs with data passed on page-load
+	const countriesList = data.countriesVisited.join(', ')
 	$('#profile-edit-userName').val(`${data.userName}`);
 	$('#profile-edit-userDescription').val(`${data.userDescription}`);
-	$('#profile-edit-countries').val(`${data.countriesVisited}`);
+	$('#profile-edit-countries').val(`${countriesList}`);
 }
 
 function cancelEditProfile() {

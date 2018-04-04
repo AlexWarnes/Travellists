@@ -18,8 +18,10 @@ function switchView(currentView, nextView) {
 
 function verifyLogin() {
 	if (STORE.userToken !== null) {
+		$('.noAuth').hide();
 		$('.auth').fadeIn(300);
 	} else {
+		$('.auth').hide();
 		$('.noAuth').fadeIn(300);
 	}
 }

@@ -32,14 +32,17 @@ function clearListInfo() {
 }
 
 function scrollToListViews() {
-	const locationOfListViews = document.documentElement.clientHeight * 0.65;
+	const locationOfListViews = window.screen.width > 640 ?
+		document.documentElement.clientHeight * 0.65 : 400;
 	window.scrollTo({top: locationOfListViews, behavior: 'smooth'});
 }
 
 function verifyLogin() {
 	if (STORE.userToken !== null) {
+		$('.noAuth').hide();
 		$('.auth').fadeIn(300);
 	} else {
+		$('.auth').hide();
 		$('.noAuth').fadeIn(300);
 	}
 }
