@@ -226,17 +226,17 @@ function addAnotherPlace() {
 
 function renderNewListPlaces() {
 	const arrayOfPlaces = [];
-	
-	for (let i = 0; i < $('.newListPlace').length; i++) {
-		const currentPlaceName = `placeName-${i}`;
-		const currentPlaceDescription = `placeDescription-${i}`;
 
-		if ($('#' + currentPlaceName).val() && $('#' + currentPlaceDescription).val()) {
-			arrayOfPlaces[i] = {
-				placeName: $('#' + currentPlaceName).val(),
-				placeDescription: $('#' + currentPlaceDescription).val()
-			}
-		} else { i++ }
+	for (let i = 0; i < $('.newListPlace').length; i++) {
+		const currentPlaceName = `#placeName-${i}`;
+		const currentPlaceDescription = `#placeDescription-${i}`;
+
+		if ($(currentPlaceName).val() !== null && $(currentPlaceName).val().trim().length > 0) {
+			arrayOfPlaces.push({
+				placeName: $(currentPlaceName).val(),
+				placeDescription: $(currentPlaceDescription).val()
+			})
+		}
 	}
 	return arrayOfPlaces;
 }
@@ -418,18 +418,20 @@ function updateList() {
 
 function renderUpdatedListPlaces() {
 	const arrayOfPlaces = [];
-	
-	for (let i = 0; i < $('.editListPlace').length; i++) {
-		const currentPlaceName = `editPlaceName-${i}`;
-		const currentPlaceDescription = `editPlaceDescription-${i}`;
 
-		if ($('#' + currentPlaceName).val() && $('#' + currentPlaceDescription).val()) {
-			arrayOfPlaces[i] = {
-				placeName: $('#' + currentPlaceName).val(),
-				placeDescription: $('#' + currentPlaceDescription).val()
-			}
-		} else { i++ }
+	for (let i = 0; i < $('.editListPlace').length; i++) {
+		const currentPlaceName = `#editPlaceName-${i}`;
+		const currentPlaceDescription = `#editPlaceDescription-${i}`;
+		console.log(`ENTRIES: ${$('.editListPlace').length}`)
+
+		if ($(currentPlaceName).val() !== null && $(currentPlaceName).val().trim().length > 0) {
+			arrayOfPlaces.push({
+				placeName: $(currentPlaceName).val(),
+				placeDescription: $(currentPlaceDescription).val()
+			})
+		}
 	}
+	console.log(arrayOfPlaces);
 	return arrayOfPlaces;
 }
 
