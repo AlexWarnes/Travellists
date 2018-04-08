@@ -219,7 +219,6 @@ fieldset {
 	position: relative;
 	margin: 0 auto;
 	max-width: 400px;
-	height: 62vh;
 	border: 1px solid transparent;
 	background-color: royalblue;
 	box-shadow: 0px 5px 15px #4040404C;
@@ -227,12 +226,8 @@ fieldset {
 	color: white;
 }
 
-.index-createAccount {
-
-}
-
-.index-login {
-
+.index-createAccount input, .index-login input {
+	border-left: 5px solid #349680B0;
 }
 
 .index-header .close {
@@ -277,7 +272,7 @@ fieldset {
 }
 
 .lists-instructions {
-	width: fit-content;
+	max-width: 455px;
 	margin: 65px auto;
 	text-align: left;
 	font-weight: 200;
@@ -415,7 +410,6 @@ fieldset {
 	padding: 20px;
 	text-align: center;
 	background-color: #4682B4;
-	height: fit-content;
 	margin-bottom: 25px;
 	color: white;
 }
@@ -432,7 +426,6 @@ fieldset {
 li.place {
 	width: 90%;
 	min-height: 100px;
-	height: fit-content;
 	margin: 10px auto;
 	padding: 5px;
 	border-radius: 3px;
@@ -478,18 +471,13 @@ li.place>p {
 	font-size: 20px;
 	border-radius: 3px;
 	border: 1px solid #4169e124;
-	border-left: 5px solid #2f8a5458;
+	border-left: 5px solid #2f8a54B0;
 	box-shadow: -2px 2px 5px #4169e11c;
 }
 
-/*.addPlace {
-	display: block;
-	background-color: white;
-	border-radius: 3px;
-	border: 1px solid navy;
-	margin-left: 40px;
-	margin-bottom: 30px;
-}*/
+.newListButton:hover {
+	border-left: 5px solid #2f8a54F0;
+}
 
 .newListFieldset {
 	display: none;
@@ -504,6 +492,7 @@ input, textarea {
 	margin: 11px auto 20px auto;
 	padding: 15px 10px;
 	border: 1px solid #cccccc;
+	border-left: 5px solid #4169E1B0;
 }
 
 .listFormPlaces {
@@ -608,7 +597,7 @@ li.editListPlace {
 	padding: 10px 5px 5px 10px;
 	border-radius: 3px;
 	border: 1px solid #4169e124;
-	border-left: 5px solid #2f8a5458;
+	border-left: 5px solid #2f8a549F;
 	box-shadow: -2px 2px 5px #4169e11c;
 }
 
@@ -693,6 +682,7 @@ li.editListPlace {
 
 .profile-userStats	{
 	width: 33%;
+	max-width: 300px;
 	padding: 20px;
 	font-size: 16px;
 }
@@ -702,15 +692,14 @@ li.editListPlace {
 }
 
 .profile-countriesCount {
+	display: inline-block;
 	font-size: 14px;
 	text-decoration: underline;
-	width: fit-content;
 }
 
 .profile-countriesList {
 	display: none;
 	font-size: 14px;
-	width: fit-content;
 }
 
 .profile-countriesCount:hover, .profile-countriesList:hover {
@@ -940,11 +929,13 @@ footer a {
 	}
 
 	.profile-avatar {
+		display: block;
 		font-size: 50px;
 	}
 
 	.profile-userStats, .profile-userInfo {
 		width: 100%;
+		margin: 0 auto;
 		text-align: center;
 		display: block;
 	}

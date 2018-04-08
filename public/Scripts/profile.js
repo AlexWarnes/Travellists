@@ -170,7 +170,7 @@ function getMyLists(callback) {
 function viewCountriesVisited() {
 	$('.profile-display').on('click', '.countries', function(){
 		$('.profile-countriesCount').toggle(300);
-		$('.profile-countriesList').toggle(300);
+		$('.profile-countriesList').toggle(300).css('display', 'inline-block');
 	})
 }
 

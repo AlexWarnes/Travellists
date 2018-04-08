@@ -143,7 +143,12 @@ function createAccountError() {
 function openLoginForm() {
 	$('.loginLink').on('click', function(e) {
 		e.preventDefault();
-		switchView($('.index-login'), $('.index-welcome'));
+
+		if ($('.index-createAccount').is(':visible')){
+			switchView($('.index-createAccount'), $('.index-login'))
+		} else {
+			switchView($('.index-welcome'), $('.index-login'));
+		}
 	});
 }
 
