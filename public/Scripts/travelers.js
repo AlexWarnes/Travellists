@@ -39,37 +39,49 @@ function logout() {
 
 function STARTUP() {
 	verifyLogin();
-	showProfiles();
-	viewThisProfile();
-	closeThisWindow();
+	showTravelers();
+	searchTravelers();
+	clearResults();
 	logout();
 }
 
-//========== HOME SCREEN FUNCTIONS ==========
 
-function showProfiles() {
+//====================================================
+//========== TRAVELERS GRID VIEW FUNCTIONS ===========
+
+function showTravelers() {
 		console.log('Getting some profiles...');
-		getProfileData(displayProfiles);
+		getTravelerData(displayTravelers);
 	};
 
-function renderProfiles(item) {
+function renderTravelers(item) {
 	const numberOfCountries = item.countriesVisited.length;
+	const countriesList = item.countriesVisited === null ? 
+			'None yet!' : item.countriesVisited.length === 0 ?
+			'None yet!' : item.countriesVisited.join(', ');
+
 	return `
-		<article class="profilePreview" id="${item.id}">
-			<h4 class="profilePreviewUserName"><i class="fas fa-user"></i>  ${item.userName}</h4>
-			<p class="profilePreviewDescription">${item.userDescription}</p>
-			<p class="profilePreviewCountries">${numberOfCountries} countries visited</p>
-		</article>
+		<a href="/travelers/${item.id}" class="travelerPreview-link">
+			<article class="travelerPreview" id="${item.id}">
+				<div class="travelerPreview-header">
+					<h4 class="travelerPreviewUserName"><i class="fas fa-user"></i>  ${item.userName}</h4>
+				</div>
+				<div class="travelerPreview-body">
+					<p class="travelerPreviewDescription">${item.userDescription}</p>
+					<p class="travelerPreviewCountries">Countries Visited: ${countriesList}</p>
+				</div>
+			</article>
+		</a>
 	`;
 }
 
-function displayProfiles(data) {
+function displayTravelers(data) {
 	console.log(data);
-	const results = data.map((item) => renderProfiles(item));
-	$('.profilesGrid').html(results);
+	const results = data.map((item) => renderTravelers(item));
+	$('.travelersGrid').html(results);
 }
 
-function getProfileData(callback) {
+function getTravelerData(callback) {
 	const settings = {
 		url: '/api/users',
 		dataType: 'JSON',
@@ -92,57 +104,101 @@ function getProfileData(callback) {
 }
 
 
-//========== VIEW INDIVIDUAL PROFILE =========
+//====================================================
+//========== SEARCH TOOL =============================
 
-function clearProfileHtml() {
-	$('.profilePreview').attr('id');
-	$('.singleProfile').html('');
-}
-
-function viewThisProfile() {
-	$('.profilesGrid').on('click', '.profilePreview', function(e) {
-		clearProfileHtml();
-		const profileId = this.id;
-		console.log(`Getting info for ${profileId}`);
-		// $('.profilesGrid').toggle(750);
-		switchView($('.profileGridView'), $('.profileView'));
-		getThisProfileData(profileId, displayThisProfile);
+function searchTravelers() {
+	$('.traveler-search-button').on('click', function(e) {
+		e.preventDefault();
+		getMatchingTravelers(displayMatchedTravelers);
 	})
 }
 
-function displayThisProfile(data) {
-	console.log(data);
-	const countriesVisited = data.countriesVisited //add spacing between words;
-	const profileHtml = `
-		<div class="profileIntro" id="${data.id}">
-			<h1 class="profileUserName">${data.userName}</h1>
-			<h2 class="profileUserDescription">${data.userDescription}</h2>
-			<p class="profileCountries"><span class="profileCoutriesVisited">Countries Visited: </span>${countriesVisited}</p>
-		</div>`;
-
-	$('.singleProfile').html(profileHtml);
+function displayMatchedTravelers(data) {
+	const query = $('#traveler-search').val().toLowerCase();
+	//Return an array of lists that meet criteria
+	//On each list, create an array of values
+	//Return true if any string value contains the query
+	const matchedTravelers =
+		data.filter(traveler => Object.values(traveler)
+			.find(val => typeof val === "string" ? 
+				val.toLowerCase().includes(query) :
+				val.find(arrVal => arrVal.toLowerCase().includes(query))));
+	$('.clearResults').show();
+	$('.travelersGrid').html(matchedTravelers.map(traveler => renderTravelers(traveler)));
+	$('#traveler-search').val("");
 }
 
-function getThisProfileData(id, callback) {
+function getMatchingTravelers(callback) {
 	const settings = {
-		url: `/api/users/${id}`,
+		url: '/api/users',
 		dataType: 'JSON',
 		method: 'GET',
 		beforeSend: function(xhr, settings) { 
 			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+		},
+		statusCode: {
+			401: function() {
+				STORE.userToken = null;
+				localStorage.removeItem('userToken');
+				localStorage.removeItem('userID');
+				location.replace('/');
+				verifyLogin();
+			}
 		},
 		success: callback
 	};
 	$.ajax(settings);
 }
 
-function closeThisWindow() {
-	$('.close').on('click', function() {
-		const currentView = $(event.currentTarget).closest('.view');
-		switchView(currentView, $('.profileGridView'));
-		clearProfileHtml();
-	})
+function clearResults() {
+	$('.clearResults').on('click', function() {
+		$('.clearResults').hide();
+		showTravelers();
+	});
 }
 
+
 $(STARTUP);
+
+
+//========== VIEW INDIVIDUAL PROFILE =========
+
+// function viewThisProfile() {
+// 	$('.profilesGrid').on('click', '.profilePreview', function(e) {
+// 		clearProfileHtml();
+// 		const profileId = this.id;
+// 		console.log(`Getting info for ${profileId}`);
+// 		switchView($('.profileGridView'), $('.profileView'));
+// 		getThisProfileData(profileId, displayThisProfile);
+// 	})
+// }
+
+// function displayThisProfile(data) {
+// 	console.log(data);
+// 	const countriesVisited = data.countriesVisited //add spacing between words;
+// 	const profileHtml = `
+// 		<div class="profileIntro" id="${data.id}">
+// 			<h1 class="profileUserName">${data.userName}</h1>
+// 			<h2 class="profileUserDescription">${data.userDescription}</h2>
+// 			<p class="profileCountries"><span class="profileCoutriesVisited">Countries Visited: </span>${countriesVisited}</p>
+// 		</div>`;
+
+// 	$('.singleProfile').html(profileHtml);
+// }
+
+// function getThisProfileData(id, callback) {
+// 	const settings = {
+// 		url: `/api/users/${id}`,
+// 		dataType: 'JSON',
+// 		method: 'GET',
+// 		beforeSend: function(xhr, settings) { 
+// 			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+// 		},
+// 		success: callback
+// 	};
+// 	$.ajax(settings);
+// }
+
+
 

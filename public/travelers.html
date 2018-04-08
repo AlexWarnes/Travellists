@@ -28,28 +28,42 @@
 	</nav>
 
 
-	<!-- TRAVELER PAGE SHOWING PROFILE TILES -->
+	<header class="travelers-header" role="banner">
+		<h1>Meet Other Travelers</h1>
+		<!-- <h2>Find the best _____</h3> -->
 
-	<main class="profileGridView view">
-		<h1>Travellists</h1>
-		<p>Meet other travelers and check out their lists.</p>
-
-		<section class="profilesGrid">
-			<!-- Traveler Tiles Populate Here -->
+		<section class="travelers-instructions">
+			<ul class="fa-ul">
+				<li><span class="fa-li"><i class="fas fa-search"></i></span>Search for travelers by username, countries visited, or keyword</li>
+				<li><span class="fa-li"><i class="far fa-address-card"></i></span>Click on a traveler to view their profile and lists!</li>
+			</ul>
 		</section>
-	</main>
+
+	</header>
 
 
-	<!-- VIEW SINGLE PROFILE PAGE -->
+	<main class="traveler-views" id="traveler-views">
+		
+		<!-- TRAVELER SEARCH TOOLS AND GRID -->
 
-		<div class="profileView view">
-			<i class="close far fa-times-circle"></i>
+		<section class="gridView view">
 
-			<section class="singleProfile">
-
-			</section>
+			<div class="traveler-tools">
+				<form action="#" class="traveler-searchForm">
+					<label for="traveler-search">Search Travelers</label>
+					<input type="text" id="traveler-search" placeholder="e.g. 'Adventure'">
+					<button class="traveler-search-button"><i class="fas fa-search"></i></button>
+				</form>
+				<button class="clearResults">Clear Results</button>
+			</div>
 			
-		</div>
+			<div class="travelersGrid">
+				<!-- Traveler Tiles Populate Here -->
+			</div>
+
+		</section>
+
+	</main>
 
 	<footer>
 		<section class="aboutTravellists">

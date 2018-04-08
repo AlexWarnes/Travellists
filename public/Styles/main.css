@@ -605,44 +605,141 @@ li.editListPlace {
 /* TRAVELERS PAGE */
 /*===================================================*/
 
-.profilePreview {
-	position: relative;
-	display: inline-block;
-	vertical-align: middle;
-	width: 300px;
-	height: 300px;
-	margin: 10px;
-	padding: 5px;
-	border: 1px solid black;
-	background-color: gray;
+.travelers-header {
+	background-color: #FA8072;
 	color: white;
+	text-align: center;
+}
+
+.travelers-instructions {
+	max-width: 455px;
+	margin: 65px auto;
+	text-align: left;
+	font-weight: 200;
+	font-size: 20px;
+}
+
+.travelers-instructions li {
+	margin: 20px 0;
+}
+
+.traveler-views {
+	width: 100%;
+	min-height: 400px;
+	position: relative;
+}
+
+.traveler-tools {
+	position: relative;
+	width: 100%;
+	height: 155px;
+	margin-bottom: 30px;
+	padding: 10px;
+	border-bottom: 1px solid #00000025;
+	box-shadow: 0 5px 5px #5656561a;
+}
+
+.traveler-searchForm {
+	width: 445px;
+	display: block;
+	margin: 0 auto;
+}
+
+.traveler-searchForm>label {
+	display: block;
+	font-size: 25px;
+	font-weight: 200;
+	margin: 15px 0 0 0;
+}
+
+.traveler-searchForm>input {
+	display: inline-block;
+	width: 400px;
+	height: 50px;
+	padding: 5px;
+	border: none;
+	border-bottom: 1px solid #4169E15F;
+	box-shadow: 0px 0px 2px #4169E130;
+}
+
+.traveler-searchForm>button {
+	height: 40px;
+	width: 40px;
+	margin: 0;
+	background: none;
+	border: none;
+	border-radius: 20px;
+	font-size: 25px;
+	color: #4169E1;
+}
+
+.traveler-searchForm>button:hover {
+	box-shadow: 0px 0px 10px #0404042e;
+}
+
+.travelerPreview {
+	position: relative;
+	display: block;
+	width: 90%;
+	max-width: 500px;
+	height: 300px;
+	margin: 10px auto;
 	cursor: pointer;
+	border-radius: 3px;
+	border: 1px solid #4169e124;
+	box-shadow: 2px 2px 15px #7b849e3c;
+	transition: all .3s;
 }
 
-.profilePreview:hover {
-	background-color: silver;
+.travelerPreview-link {
+	width: 90%;
+	max-width: 500px;
+	height: 300px;
+	text-decoration: none;
+	color: black;
 }
 
-.profilePreviewUserName {
+.travelerPreview:hover .travelerPreview-header {
+	background-color: #2E8B57;
+}
+
+.travelerPreview-header {
+	width: 100%;
+	padding: 20px 5px;
+	border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+	background-color: #4169e1;
+	color: white;
+	transition: all .5s;
+}
+
+.travelerPreview-body {
+	padding: 5px;
+}
+
+.travelerPreviewUserName {
+	margin: 0;
 	font-size: 18px;
 	font-weight: 400;
 	text-align: center;
 }
 
-.profilePreviewDescription {
+.travelerPreviewDescription {
 	font-size: 16px;
 	font-weight: 300;
+	max-height: 160px;
+	overflow: scroll;
 }
 
-.profilePreviewCountries {
+.travelerPreviewCountries {
 	position: absolute;
-	right: 5px;
 	bottom: 0;
+	max-height: 28px;
 	font-size: 12px;
 	opacity: .8;
 }
 
-.profileView {
+.travelerView {
 	display: none;
 	width: 90%;
 	margin-right: auto;
@@ -653,7 +750,7 @@ li.editListPlace {
 	z-index: 1;
 }
 
-.profileCoutriesVisited {
+.travelerCoutriesVisited {
 	font-weight: 600;
 }
 
@@ -926,6 +1023,48 @@ footer a {
 
 	li.place {
 		width: 95%;
+	}
+
+	.travelers-instructions {
+		margin: 35px auto 0 auto;
+		font-size: 16px;
+	}
+
+	.traveler-tools {
+		height: 140px;
+		margin-bottom: 20px;
+	}
+
+	.traveler-tools>.clearResults {
+		bottom: -4px;
+		left: 0;
+	}
+
+	.traveler-searchForm {
+		width: 100%;
+		display: block;
+		margin-left: 0;
+	}
+
+	.traveler-searchForm>label {
+		display: block;
+		font-size: 20px;
+		margin: 5px 0 0 0;
+	}
+
+	.traveler-searchForm>input {
+		display: inline-block;
+		width: 85%;
+		height: 50px;
+		padding: 5px;
+	}
+
+	.traveler-searchForm>button {
+		height: 35px;
+		width: 35px;
+		border-radius: 20px;
+		box-shadow: none;
+		font-size: 22px;
 	}
 
 	.profile-avatar {
