@@ -57,6 +57,17 @@ describe('Serving static public resources', function() {
 			});
 		});
 
+		it('link to (/travelers/:id) should serve HTML', function() {
+			let res;
+			return chai.request(app)
+			.get('/profile')
+			.then(function(_res) {
+				res = _res;
+				expect(res).to.have.status(200);
+				expect(res).to.be.html;
+			});
+		});
+
 		it('link to (/profile) should serve HTML', function() {
 			let res;
 			return chai.request(app)

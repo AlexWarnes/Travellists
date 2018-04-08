@@ -65,6 +65,10 @@ app.get('/travelers', (req, res) => {
 	res.status(200).sendFile(__dirname + '/public/travelers.html');
 });
 
+app.get('/travelers/:id', (req, res) => {
+	res.status(200).sendFile(__dirname + '/public/traveler-profile.html');
+});
+
 app.get('/profile', (req, res) => {
 	res.status(200).sendFile(__dirname + '/public/profile.html');
 });

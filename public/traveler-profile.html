@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" name="Description" content="Travellists is where travelers can find or create lists of their favorite places in cities around the world. Find lists of places that match your travel-style before your next trip. Help others by creating lists of the best places when you get back.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Travellists</title>
+	<link rel="icon" href="./Assets/route.png">
+
+	<!-- STYLES -->
+
+		<!-- Fonts & Icons -->
+			<link href="https://fonts.googleapis.com/css?family=Arima+Madurai:700|Raleway:200,400,600" rel="stylesheet">
+			<link href="https://use.fontawesome.com/releases/v5.0.0/css/all.css" rel="stylesheet">
+
+		<!-- Stylesheets -->
+			<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
+			<link rel="stylesheet" href="../Styles/main.css">
+</head>
+<body>
+
+	<nav class="nav-bar" role="navigation">
+		<a href="/" class="navItem noAuth"><i class="navIcon fas fa-home"></i>Travellists</a>
+		<a href="/lists" class="navItem auth"><i class="fas fa-list navIcon"></i>Lists</a>
+		<a href="/travelers" class="navItem auth nav-currentPage"><i class="fas fa-users navIcon"></i>Travelers</a>
+		<a href="/profile" class="navItem auth"><i class="fas fa-user-circle navIcon"></i>Profile</a>
+		<a href="#" class="loginLink navItem login noAuth"><i class="fas fa-sign-in-alt navIcon"></i>Login</a>
+		<a href="#" class="navItem logout auth"><i class="fas fa-sign-out-alt navIcon"></i>Log Out</a>
+	</nav>
+
+	<header class="traveler-profile-header">
+		<div class="traveler-profile-display view">
+			
+		</div>
+
+	</header>
+	
+	<!-- ALL LIST ACTIVITY HAPPENS HERE -->
+
+	<main class="list-views" id="list-views">
+		
+		<!-- LIST SEARCH TOOLS AND GRID -->
+
+		<section class="gridView view">
+			<div class="list-tools">
+				<form action="#" class="list-searchForm">
+					<label for="lists-search">Search Lists</label>
+					<input type="text" id="lists-search" placeholder="e.g. 'Coffee'">
+					<button class="lists-search-button"><i class="fas fa-search"></i></button>
+				</form>
+				<button class="clearResults">Clear Results</button>
+			</div>
+			
+			<div class="listsGrid">
+				<!-- List Tiles Populate Here -->
+			</div>
+		</section>		
+
+		<!-- VIEW SINGLE LIST PAGE -->
+
+		<section class="listView view">
+
+			<section class="listView-header">
+				<!-- List Intro Populates Here -->
+			</section>
+			
+			<ul class="listView-places">
+				<!-- List's Places Populate Here -->
+			</ul>
+
+			<div class="editIcons">
+				<i class="trash list-trash far fa-trash-alt"></i>
+				<i class="editList fas fa-pencil-alt"></i>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<section class="aboutTravellists">
+			<h3>About Travellists</h3>
+			<p>Travellists is one of three capstone projects created, designed, and coded by Alex Warnes as part of the <a href="https://www.thinkful.com/" target="_blank">Thinkful</a> Full Stack Flex program. To see more projects, head over to <a href="https://www.alexwarnes.com" target="_blank">Alex's personal site.</a></p>
+		</section>
+		<section class="travellistsTech">
+			<h3>Travellists Tech Stack</h3>
+			<h4>Back End</h4>
+			<ul>				
+				<li>MongoDB</li>
+				<li>Express</li>
+				<li>Node.js</li>
+				<li>Mocha and Chai</li>
+				<li>JWT Authentication</li>
+			</ul>
+			
+			<h4>Front End</h4>
+			<ul>
+				<li>HTML5</li>
+				<li>CSS3</li>
+				<li>jQuery</li>
+			</ul>
+		</section>
+		<a href="https://github.com/AlexWarnes/Travellists" target="_blank" class="footer-sourcecode"><i class="footer-github fab fa-github"></i>Sourcecode</a>
+	</footer>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../Scripts/traveler-profile.js"></script>
+</body>
+</html>
