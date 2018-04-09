@@ -220,4 +220,55 @@ function getThisListData(id, callback) {
 }
 
 
+//====================================================
+//========== SEARCH TOOL =============================
+
+function searchLists() {
+	$('.lists-search-button').on('click', function(e) {
+		e.preventDefault();
+		getMatchingLists(displayMatchedLists);
+	})
+}
+
+function displayMatchedLists(data) {
+	const splitURL = window.location.pathname.split( '/' );
+	const thisUserID = splitURL[2];
+
+	const query = $('#lists-search').val().toLowerCase();
+	//Return an array of lists that meet criteria
+	//On each list, create an array of values
+	//Return true if any string value contains the query
+	const matchedLists =
+		data.filter(list => Object.values(list)
+			.find(val => typeof val === "string" && val.toLowerCase().includes(query)));;
+
+	//Filter matchedLists for those that are 
+	//authored by the user
+	const matchedListsByThisUser = matchedLists.filter(list => list.authorID === thisUserID);
+
+	$('.clearResults').show();
+	$('.listsGrid').html(matchedListsByThisUser.map(list => renderLists(list)));
+	$('#lists-search').val("");
+}
+
+function getMatchingLists(callback) {
+	const settings = {
+		url: `/api/lists`,
+		dataType: 'JSON',
+		method: 'GET',
+		beforeSend: function(xhr, settings) { 
+			xhr.setRequestHeader('Authorization', `Bearer ${STORE.userToken}`); 
+		},
+		success: callback
+	};
+	$.ajax(settings);
+}
+
+function clearResults() {
+	$('.clearResults').on('click', function() {
+		$('.clearResults').hide();
+		getThisUserLists(displayThisUserLists);
+	});
+}
+
 $(STARTUP);
