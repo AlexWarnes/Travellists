@@ -96,7 +96,7 @@ function renderThisProfileData(data) {
 			<h1 class="profile-userName">${data.userName}</h1>
 			<p class="profile-userDescription">${data.userDescription}</p>
 		</div>
-		<p class="profile-edit-icon">edit profile <i class="fas fa-pencil-alt"></i></p>`;
+		`;
 
 	return $('.traveler-profile-display').html(profileHtml);
 }
@@ -243,7 +243,7 @@ function displayMatchedLists(data) {
 			.find(val => typeof val === "string" && val.toLowerCase().includes(query)));;
 
 	//Filter matchedLists for those that are 
-	//authored by the user
+	//authored by the user you are viewing
 	const matchedListsByThisUser = matchedLists.filter(list => list.authorID === thisUserID);
 
 	$('.clearResults').show();
