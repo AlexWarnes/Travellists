@@ -31,7 +31,7 @@
 		<h1>Browse Lists</h1>
 		<!-- <h2>Find the best _____</h3> -->
 
-		<section class="lists-instructions">
+		<section class="lists-instructions" role="region">
 			<ul class="fa-ul">
 				<li><span class="fa-li"><i class="fas fa-search"></i></span>Search for lists by city, country, or keyword</li>
 				<li><span class="fa-li"><i class="fas fa-plus-circle"></i></span>Or make your own list for others to find</li>
@@ -46,15 +46,15 @@
 		
 		<!-- LIST SEARCH TOOLS AND GRID -->
 
-		<section class="gridView view">
+		<section class="gridView view" role="region">
 			<div class="list-tools">
 				<form action="#" class="list-searchForm">
 					<label for="lists-search">Search Lists</label>
 					<input type="text" id="lists-search" placeholder="e.g. 'Coffee'">
-					<button class="lists-search-button"><i class="fas fa-search"></i></button>
+					<button role="button" class="lists-search-button"><i class="fas fa-search"></i></button>
 				</form>
-				<button class="clearResults">Clear Results</button>
-				<button class="newListButton">+ New List</button>
+				<button role="button" class="clearResults">Clear Results</button>
+				<button role="button" class="newListButton">+ New List</button>
 			</div>
 			
 			<div class="listsGrid">
@@ -64,9 +64,9 @@
 
 		<!-- VIEW SINGLE LIST PAGE -->
 
-		<section class="listView view">
+		<section class="listView view" role="region">
 
-			<section class="listView-header">
+			<section class="listView-header" role="region">
 				<!-- List Intro Populates Here -->
 			</section>
 			
@@ -102,13 +102,13 @@
 				<ul class="editListPlaces">
 					
 				</ul>
-				<button class="editAddPlace">+ Add Another Place</button> 
+				<button role="button" class="editAddPlace">+ Add Another Place</button> 
 				
 			</form>
 			
 			<div class="buttonBox">
-				<button class="updateListButton completeButton">Update this List!</button>
-				<button class="cancelEditButton cancelButton">Cancel</button>
+				<button role="button" class="updateListButton completeButton">Update this List!</button>
+				<button role="button" class="cancelEditButton cancelButton">Cancel</button>
 			</div>
 		</fieldset>
 
@@ -142,13 +142,13 @@
 						<textarea name="placeDescription" id="placeDescription-0" rows="3" class="listInput newListPlaceDescription"></textarea>
 					</li>
 				</ul>
-				<button class="addPlace">+ Add Another Place</button> 
+				<button role="button" class="addPlace">+ Add Another Place</button> 
 				
 			</form>
 
 			<div class="buttonBox">
-				<button class="submitListButton completeButton">Submit this List!</button>
-				<button class="cancelNewButton cancelButton">Cancel</button>
+				<button role="button" class="submitListButton completeButton">Submit this List!</button>
+				<button role="button" class="cancelNewButton cancelButton">Cancel</button>
 			</div>
 
 		</fieldset>
@@ -159,20 +159,20 @@
 		<div class="deleteList-warning delete-mask">
 			<div class="deleteWarning list-warning-deleteList">
 				<p>Are you sure you want to delete this list?</p>
-				<button class="list-confirmDelete confirmDelete">Yes, delete this list</button>
-				<button class="list-doNotDelete doNotDelete">No, do not delete this list</button>
+				<button role="button" class="list-confirmDelete confirmDelete">Yes, delete this list</button>
+				<button role="button" class="list-doNotDelete doNotDelete">No, do not delete this list</button>
 			</div>
 		</div>
 
 	</main>
 
 
-	<footer>
-		<section class="aboutTravellists">
+	<footer role="contentinfo">
+		<section class="aboutTravellists" role="region">
 			<h3>About Travellists</h3>
 			<p>Travellists is one of three capstone projects created, designed, and coded by Alex Warnes as part of the <a href="https://www.thinkful.com/" target="_blank">Thinkful</a> Full Stack Flex program. To see more projects, head over to <a href="https://www.alexwarnes.com" target="_blank">Alex's personal site.</a></p>
 		</section>
-		<section class="travellistsTech">
+		<section class="travellistsTech" role="region">
 			<h3>Travellists Tech Stack</h3>
 			<h4>Back End</h4>
 			<ul>				
