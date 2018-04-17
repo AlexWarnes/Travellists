@@ -219,6 +219,7 @@ fieldset {
 	position: relative;
 	margin: 0 auto;
 	max-width: 400px;
+	height: 65vh;
 	border: 1px solid transparent;
 	background-color: royalblue;
 	box-shadow: 0px 5px 15px #4040404C;
@@ -848,7 +849,7 @@ li.editListPlace {
 	margin-top: 15px;
 }
 
-.profile-instructions {
+.input-instructions {
 	margin: 0;
 	font-size: 12px;
 	font-style: italic;
