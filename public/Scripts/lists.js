@@ -94,6 +94,7 @@ function renderLists(item) {
 			<p class="listPreviewLocation">${item.city}, ${item.country}</p>
 			<h4 class="listPreviewTitle">${item.title}</h4>
 			<p class="listPreviewDescription">${item.description}</p>
+			<p class="listPreviewAuthor">By ${item.author}</p>
 			<p class="listPreviewPlacesCount">${numberOfPlaces} places in this list</p>
 		</article>
 	`;
@@ -148,7 +149,9 @@ function displayThisList(data) {
 			<h2 class="listLocation">${data.city}, ${data.country}</h2>
 			<h1 class="listTitle">${data.title}</h1>
 			<p class="listDescription">${data.description}</p>
-			<p class="listAuthor" id=${data.authorID}></p>
+			
+			<a href="/travelers/${authorID}" class="listAuthor">By ${data.author}</a>
+			
 		</div>`;
 	
 	data.places.forEach((item) => {
