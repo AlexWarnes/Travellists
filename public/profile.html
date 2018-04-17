@@ -33,7 +33,7 @@
 		</div>
 		
 		<!-- EDIT PROFILE FORM -->
-		<fieldset class="profile-editFields view">
+		<fieldset class="profile-editFields view" aria-live="polite">
 			<form action="#" class="profile-editForm">
 				<label for="profile-edit-userName">Username</label>
 				<input type="text" id="profile-edit-userName">
@@ -80,7 +80,7 @@
 
 		<!-- VIEW SINGLE LIST PAGE -->
 
-		<section class="listView view" role="region">
+		<section class="listView view" role="region" aria-live="polite">
 
 			<section class="listView-header" role="region">
 				<!-- List Intro Populates Here -->
@@ -99,7 +99,7 @@
 
 		<!-- EDIT LIST PAGE -->
 
-		<fieldset class="editListFieldset listForm view">
+		<fieldset class="editListFieldset listForm view" aria-live="polite">
 			<form class="editListForm">
 				<label for="editListCity">City</label>
 				<input type="text" name="city" id="editListCity" class="listInput">
@@ -131,7 +131,7 @@
 
 		<!-- CREATE NEW LIST FORM -->
 
-		<fieldset class="newListFieldset listForm view">
+		<fieldset class="newListFieldset listForm view" aria-live="polite">
 			<form class="newListForm">
 
 				<label for="newListCity">City</label>
@@ -172,7 +172,7 @@
 
 		<!-- DELETE WARNING POP-UP -->
 
-		<div class="deleteList-warning delete-mask">
+		<div class="deleteList-warning delete-mask" role="alert" aria-live="assertive">
 			<div class="deleteWarning list-warning-deleteList">
 				<p>Are you sure you want to delete this list?</p>
 				<button role="button" class="list-confirmDelete confirmDelete">Yes, delete this list</button>
@@ -182,7 +182,7 @@
 
 	</main>
 
-	<div class="deleteProfile-warning delete-mask">
+	<div class="deleteProfile-warning delete-mask" role="alert" aria-live="assertive">
 		<div class="deleteWarning profile-warning-deleteProfile">
 			<p>Are you sure you want to delete your profile?</p>
 			<p>Note: Your lists will still be visible to other users. If you don't want that, delete your lists individually before deleting your profile.</p>
@@ -217,7 +217,7 @@
 		<a href="https://github.com/AlexWarnes/Travellists" target="_blank" class="footer-sourcecode"><i class="footer-github fab fa-github"></i>Sourcecode</a>
 	</footer>
 
-	<p class="profile-delete-button">Delete my Travellists profile <i class="trash profile-trash far fa-trash-alt"></i></p>
+	<p role="button" class="profile-delete-button">Delete my Travellists profile <i class="trash profile-trash far fa-trash-alt"></i></p>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="./Scripts/profile.js"></script>

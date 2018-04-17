@@ -64,7 +64,7 @@
 
 		<!-- VIEW SINGLE LIST PAGE -->
 
-		<section class="listView view" role="region">
+		<section class="listView view" role="region" aria-live="polite">
 
 			<section class="listView-header" role="region">
 				<!-- List Intro Populates Here -->
@@ -83,7 +83,7 @@
 
 		<!-- EDIT LIST PAGE -->
 
-		<fieldset class="editListFieldset listForm view">
+		<fieldset class="editListFieldset listForm view" aria-live="polite">
 			<form class="editListForm">
 				<label for="editListCity">City</label>
 				<input type="text" name="city" id="editListCity" class="listInput">
@@ -115,7 +115,7 @@
 
 		<!-- CREATE NEW LIST FORM -->
 
-		<fieldset class="newListFieldset listForm view">
+		<fieldset class="newListFieldset listForm view" aria-live="polite">
 			<form class="newListForm">
 
 				<label for="newListCity">City</label>
@@ -156,7 +156,7 @@
 
 		<!-- DELETE WARNING POP-UP -->
 
-		<div class="deleteList-warning delete-mask">
+		<div class="deleteList-warning delete-mask" role="alert" aria-live="assertive">
 			<div class="deleteWarning list-warning-deleteList">
 				<p>Are you sure you want to delete this list?</p>
 				<button role="button" class="list-confirmDelete confirmDelete">Yes, delete this list</button>
