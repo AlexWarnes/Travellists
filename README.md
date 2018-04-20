@@ -2,9 +2,11 @@
 _Where travelers can find or create lists of their favorite places in cities around the world._
 
 ## What is Travellists?
-Inspired by good and bad travel recommendations, **_Travellists_** is a platform to find recommendations for places to go from people whose travel-styles match your own. You can create lists after a trip, or prepare for an upcoming trip by finding lists from travelers whose descriptions and travel history seem like your cup of tea (or coffee, whichever you prefer). 
+Inspired by good and bad travel recommendations, **_Travellists_** is a platform to find recommendations for places to go from people whose travel-styles match your own. You can create lists after a trip, or prepare for an upcoming trip by finding lists from travelers. Get the right lists for you by finding authors whose descriptions and travel history seem like your cup of tea (or coffee, whichever you prefer). 
 
-## How do I Use It?
+Your lists can be whatever you want: itineraries, top spots, places with specific features, or whatever else you can think of!
+
+## How do I Use Travellists?
 1. **Create an Account.** From the home page, click the "Create an Account" button. Provide a username, password, and password confirmation. Once validated, you'll be asked to enter your new username and password once more to log in and get started!  
   (**Note:** The pilot version has no password reset capability, so choose wisely!)
 
@@ -12,7 +14,7 @@ Inspired by good and bad travel recommendations, **_Travellists_** is a platform
 
 ![Navigation Bar](/public/Assets/screenshot_nav.png?raw=true "Navigation Bar")
 
-* **Lists.** Use the Lists tab to _find_ or _create_ lists for upcoming trips. This page provides a basic search tool you can use to search lists by city, country, or keyword. Click the "+ New List" button to create a new list!  
+* **Lists.** Use the Lists tab to _find_ lists for upcoming trips or _create_ lists of your favorite places for others. This page provides a basic search tool you can use to search lists by city, country, or keyword. Click the "+ New List" button to create a new list!  
   
 * **Travelers.** From the Travelers tab, you can browse other users to see their descriptions, countries they've visited, and lists they've created.  
   
@@ -43,7 +45,7 @@ There are a lot of features I would love to add to **_Travellists_**! I'll retur
 
 ### Back-End
   * MongoDB
-  * Express Framework  
+  * Express  
   * Node.js
   * Mocha and Chai
   * JWT Authentication
@@ -68,11 +70,11 @@ Calls to this endpoint will return JSON data resembling the following example:
 
 ```javascript
 {
-	"countriesVisited": ["Mexico", "Portugal"],
-	"dateJoined": "2018-03-17T17:21:30.007Z",
-	"id": "4jrd4h8kfgw91u0014c03204",
-	"userDescription": "My favorite travel site is Travellists!",
-	"userName": "ExampleUser"
+"countriesVisited": ["Mexico", "Portugal"],
+"dateJoined": "2018-03-17T17:21:30.007Z",
+"id": "4jrd4h8kfgw91u0014c03204",
+"userDescription": "My favorite travel site is Travellists!",
+"userName": "ExampleUser"
 }
 ```
 
@@ -83,24 +85,24 @@ Calls to this endpoint will return JSON data resembling the following example:
 
 ```javascript
 {
-	"author": "ExampleUser",
-	"authorID": "4jrd4h8kfgw91u0014c03204",
-	"city": "Lisbon",
-	"country": "Portugal",
-	"dateCreated": "2018-04-04T13:03:16.401Z",
-	"description": "A random assortment of my favorite coffee and food spots in Lisbon!",
-	"id": "4rty4f8lodu91p0014p0927"
-	"places": [
-		{"placeDescription": "Great taco place with unique taco fillings and a cool atmosphere. A perfect spot to take a break from walking up and down the hills of Lisbon. The music is great, too!",
-		"placeLocation":[],
-		"placeName": "Pistola y Corazon Taqueria",
-		"_id":"5pow0l8losd87u0024c0093"}
-	]
-	"title": "Great Food & Coffee Spots"
+"author": "ExampleUser",
+"authorID": "4jrd4h8kfgw91u0014c03204",
+"city": "Lisbon",
+"country": "Portugal",
+"dateCreated": "2018-04-04T13:03:16.401Z",
+"description": "A random assortment of my favorite coffee and food spots in Lisbon!",
+"id": "4rty4f8lodu91p0014p0927"
+"places": [
+  {"placeDescription": "Great taco place with unique taco fillings and a cool atmosphere. A perfect spot to take a break from walking up and down the hills of Lisbon. The music is great, too!",
+  "placeLocation":[],
+  "placeName": "Pistola y Corazon Taqueria",
+  "_id":"5pow0l8losd87u0024c0093"}
+]
+"title": "Great Food & Coffee Spots"
 }
 ```
 
 ## Feedback?
-I would love to hear what you think! Shoot me a message through GitHub or email through my personal site with constructive feedback, new ideas, or anything else you'd like to share. 
+I would love to hear what you think! Shoot me a message through GitHub or email through my personal site with feedback, new ideas, or anything else you'd like to share. 
 
 Safe travels! - A
