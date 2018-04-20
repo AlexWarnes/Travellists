@@ -87,7 +87,6 @@ function showLists() {
 	};
 
 function renderLists(item) {
-	console.log(item);
 	const numberOfPlaces = item.places.length;
 	return `
 		<article class="listPreview" id="${item.id}">
@@ -155,7 +154,6 @@ function displayThisList(data) {
 		</div>`;
 	
 	data.places.forEach((item) => {
-		// console.log(item);
 		let place = `
 			<li class="place">
 				<h3 class="placeName">${item.placeName}</h3>
@@ -425,7 +423,6 @@ function renderUpdatedListPlaces() {
 	for (let i = 0; i < $('.editListPlace').length; i++) {
 		const currentPlaceName = `#editPlaceName-${i}`;
 		const currentPlaceDescription = `#editPlaceDescription-${i}`;
-		console.log(`ENTRIES: ${$('.editListPlace').length}`)
 
 		if ($(currentPlaceName).val() !== null && $(currentPlaceName).val().trim().length > 0) {
 			arrayOfPlaces.push({
@@ -434,7 +431,6 @@ function renderUpdatedListPlaces() {
 			})
 		}
 	}
-	console.log(arrayOfPlaces);
 	return arrayOfPlaces;
 }
 

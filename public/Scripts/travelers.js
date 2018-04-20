@@ -50,7 +50,6 @@ function STARTUP() {
 //========== TRAVELERS GRID VIEW FUNCTIONS ===========
 
 function showTravelers() {
-		console.log('Getting some profiles...');
 		getTravelerData(displayTravelers);
 	};
 
@@ -76,7 +75,6 @@ function renderTravelers(item) {
 }
 
 function displayTravelers(data) {
-	console.log(data);
 	const results = data.map((item) => renderTravelers(item));
 	$('.travelersGrid').html(results);
 }

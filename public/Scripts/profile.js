@@ -574,7 +574,6 @@ function renderUpdatedListPlaces() {
 	for (let i = 0; i < $('.editListPlace').length; i++) {
 		const currentPlaceName = `#editPlaceName-${i}`;
 		const currentPlaceDescription = `#editPlaceDescription-${i}`;
-		console.log(`ENTRIES: ${$('.editListPlace').length}`)
 
 		if ($(currentPlaceName).val() !== null && $(currentPlaceName).val().trim().length > 0) {
 			arrayOfPlaces.push({
@@ -583,7 +582,6 @@ function renderUpdatedListPlaces() {
 			})
 		}
 	}
-	console.log(arrayOfPlaces);
 	return arrayOfPlaces;
 }
 
