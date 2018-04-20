@@ -1,4 +1,4 @@
-# Travellists ![Icon](/public/Assets/route.png?raw=true)
+# ![Icon](/public/Assets/route-small.png?raw=true)Travellists
 _Where travelers can find or create lists of their favorite places in cities around the world._
 
 ## What is Travellists?
@@ -10,7 +10,7 @@ Inspired by good and bad travel recommendations, **_Travellists_** is a platform
 
 2. **Navigate the App.** Once you're logged in, you should see four tabs in the navigation bar:
 
-![Navigation Bar](/public/Assets/screenshot_nav.jpg?raw=true "Navigation Bar")
+![Navigation Bar](/public/Assets/screenshot_nav.png?raw=true "Navigation Bar")
 
 * **Lists.** Use the Lists tab to _find_ or _create_ lists for upcoming trips. This page provides a basic search tool you can use to search lists by city, country, or keyword. Click the "+ New List" button to create a new list!  
   
