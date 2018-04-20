@@ -1,4 +1,4 @@
-# ![Icon](/public/Assets/route-small.png?raw=true)Travellists
+# Travellists
 _Where travelers can find or create lists of their favorite places in cities around the world._
 
 ## What is Travellists?
