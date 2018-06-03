@@ -17,7 +17,7 @@ function switchView(currentView, nextView) {
 }
 
 function closeView() {
-	$('.listView').on('click', '.back-arrow', function() {
+	$('.listView').on('click', '.back-arrow', function(event) {
 		const currentView = $(event.currentTarget).closest('.view');
 		switchView(currentView, $('.gridView'));
 		$('input').val('');

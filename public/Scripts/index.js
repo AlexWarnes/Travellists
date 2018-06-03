@@ -17,7 +17,7 @@ function switchView(currentView, nextView) {
 }
 
 function closeForm() {
-	$('.close').on('click', function() {
+	$('.close').on('click', function(event) {
 		const currentView = $(event.currentTarget).closest('.view');
 		switchView(currentView, $('.index-welcome'));
 		$('input').val('');
